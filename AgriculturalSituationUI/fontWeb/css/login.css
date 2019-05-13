@@ -1,0 +1,226 @@
+.app-land {
+    position: relative;
+   
+    background-repeat: no-repeat;
+    background-size: cover;
+    width: 100%;
+    padding-top: 75px;
+}
+.app-land .login_header {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 75px;
+    background-color: #fff;
+    text-align: left;
+    padding-left: 30px;
+}
+.el-checkbox__label{
+    color: #fff;
+}
+.before:before, .logo {
+    display: inline-block;
+    vertical-align: middle;
+}
+.before:before {
+    content: "";
+    height: 100%;
+}
+.app-land .login_header img.logo {
+    vertical-align: middle;
+    display: inline-block;
+    height: 60px;
+}
+.app-land .login_header .name_web {
+    vertical-align: middle;
+    display: inline-block;
+    font-size: 30px;
+    color: #00b7ee;
+    padding-left: 20px;
+    font-family: webfont;
+}
+.app-land .login_header .fr {
+    padding-right: 15px;
+}
+.app-land .login_header .fr .fl {
+    height: 75px;
+    margin-right: 20px;
+}
+.app-land .login_header .fr .fl span {
+    vertical-align: bottom;
+    display: inline-block;
+    line-height: 20px;
+    font-size: 12px;
+}
+.app-land .login_header .fr .fl span i {
+    display: inline-block;
+    width: 12px;
+    height: 14px;
+    background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAASCAIAAADdWck9AAAAGXRFW…C+OZgvKMCO3BOIE7hjN0B0SKQRE0gCgaqp9EuSvFN/BBgAta/NT0UvBbMAAAAASUVORK5CYII=);
+    background-size: 100%;
+    margin-left: 10px;
+}
+.app-land .login_header .fr .fr span {
+    vertical-align: bottom;
+    display: inline-block;
+    text-align: center;
+}
+.app-land .login_header .fr .fr span p {
+    font-size: 12px;
+}
+.app-land .app-land-main {
+    max-width: 1200px;
+    overflow: hidden;
+    margin: 0 auto;
+    height: 100%;
+}
+.app-land .app-land-main .land-ico {
+    width: 49%;
+    text-align: left;
+}
+.app-land .land-ico {
+    display: inline-block;
+    vertical-align: middle;
+    font-size: 0;
+}
+.app-land .app-land-main .land-form {
+    width: 400px;
+    padding: 15px 0;
+    display: inline-block;
+    vertical-align: middle;
+    width: 49%;
+    text-align: right;
+}
+.app-land .app-land-main .land-form div.normal_div {
+    background-color: rgba(0, 0, 0, 0.5019607843137255);
+    display: inline-block;
+    width: 400px;
+    padding-bottom: 25px;
+}
+.app-land .app-land-main .land-form div.normal_div .land-form-top {
+    width: 100%;
+    height: 53px;
+    color: #fff;
+    font-size: 18px;
+    line-height: 53px;
+}
+.app-land .app-land-main .land-form div.normal_div .land-form-group {
+    width: 325px;
+    margin: 0 auto;
+}
+.app-land .app-land-main .land-form div.normal_div .land-form-group .land-box-group {
+    width: 100%;
+    overflow: hidden;
+    margin-bottom: 15px;
+}
+.app-land .app-land-main .land-form div.normal_div .land-form-group .land-box-group label {
+    display: block;
+    font-size: 0;
+    width: 48px;
+    height: 48px;
+    float: left;
+}
+.app-land *{
+    box-sizing: border-box;
+}
+.app-land .app-land-main .land-form div.normal_div .land-form-group .land-box-group input[type=password], .app-land .app-land-main .land-form div.normal_div .land-form-group .land-box-group input[type=text] {
+    border: 1px solid #eee;
+    display: block;
+    height: 48px;
+    line-height: 48px;
+    padding-left: 10px;
+    float: left;
+    width: 270px;
+    font-size: 16px;
+}
+.app-land .app-land-main .land-form div.normal_div .land-form-group .check-group {
+    text-align: right;
+}
+.login_footer {
+    overflow: hidden;
+    padding-top: 20px;
+    padding-bottom: 20px;
+}
+.land-form-group .btn-land {
+    background-color: #00b7ee!important;
+    border: none!important;
+    color: #fff!important;
+    width: 100%;
+    border-radius: 0!important;
+    margin-top: 30px!important;
+    height: 48px;
+    font-size: 16px;
+}
+
+.authcenter-head {
+	position: relative;
+	width: 100%;
+	height: 28px;
+	line-height: 28px;
+	background: #1E1B29;
+	color: #fff
+}
+
+.authcenter-head .container {
+	width: 990px;
+	height: 27px;
+	margin: 0 auto
+}
+
+.authcenter-head .container-left {
+	float: left
+}
+
+.authcenter-head .container-right {
+	float: right
+}
+
+.authcenter-head .container-left-item,
+.authcenter-head .container-right-item {
+	float: left;
+	padding: 0 7px;
+	line-height: 26px;
+	height: 26px
+}
+
+.authcenter-head .container-left-first {
+	padding-left: 0
+}
+
+.authcenter-head .container-right-last {
+	paddig-right: 0
+}
+
+.authcenter-head .container-seperator {
+	float: left;
+	height: 12px;
+	width: 1px;
+	line-height: 14px;
+	margin: 7px 4px 8px;
+	background: #61676d;
+	overflow: hidden
+}
+.authcenter {
+    width: 100%;
+    height: 100%;
+    background: url(../image/staff_1024.jpg) no-repeat center / cover;
+	position: relative
+}
+.authcenter-head a {
+	color: #AAABAF;
+	text-decoration: none
+}
+
+.authcenter-head a:hover {
+	color: #AAABAF
+}
+
+.authcenter-head a.on {
+	color: #0AE
+}
+
+.authcenter-head .iconfont {
+	color: #fff;
+	cursor: pointer
+}

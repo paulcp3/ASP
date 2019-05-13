@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>病虫害资料 - 黄山现代农业示范区专家咨询知识库平台</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">  
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+    <link rel="stylesheet" type="text/css" media="screen" href="public/css/index.css">
+    <link rel="stylesheet" href="online/css/index.css">
+    <link rel="stylesheet" href="element-ui/index.css">
+    <!-- <link rel="stylesheet" href="search/search.css"> -->
+    <!-- <link rel="stylesheet" href="online/css/cl-list.css"> -->
+
+    <link rel="stylesheet" href="public/css/dislib.css">
+
+    <script src="element-ui/vue.min.js"></script>
+    <script src="element-ui/index.js"></script>
+  
+    <!-- add by liulei -->
+    <script src="public/js/public.js"></script>
+    
+    <style>
+    .message{
+        width: 960px;
+        margin: 20px auto;
+    }
+    
+    </style>
+</head>
+
+<body>
+    <div id="root">
+        <div class="header">
+            <div class="header-container h-main">
+                <div class="h-map">
+
+                </div>
+                <div class="h-register" v-if="isLogin">
+                    <a href="#" class="h-welcom">你好，欢迎访问本网站！</a>
+                    <a href="./personal.html" v-if="userType ==4 ">会员中心</a>
+                    <a href="./personal_expert.html" v-if="userType ==3 ">专家中心</a>
+                </div>
+                <div class="h-register" v-else>
+                        <a href="#" class="h-welcom">你好，欢迎访问本网站！</a>
+                        <a href="./login.html">登录</a> | <a href="./register.html">注册</a>
+                </div>
+            </div>
+        </div>
+        <div class="header-main">
+            <div class="h-mainContainer h-serrchMain">
+                <div class="h-logo">
+                    <img src="public/image/logo-2.png">
+                </div>
+                <div class="search-bar">
+                        <el-tabs  type="card"  v-model="SearchName" @tab-click="searchClick" >
+                                <el-tab-pane label="预警" name="预警"></el-tab-pane>
+                                <el-tab-pane label="防治" name="防治"></el-tab-pane>
+                                <el-tab-pane label="病虫害" name="病虫害"></el-tab-pane>
+                                <el-tab-pane label="知识库" name="知识库"></el-tab-pane>
+                                <el-tab-pane label="专家" name="专家"></el-tab-pane>
+                        </el-tabs>
+                    <div class="h-search">
+                        <i class="el-icon-search h-searchIco"></i>
+                        <input type="text" class="h-searchText" v-model="keyWords" :placeholder="'请输入关键词搜索'+SearchName+'信息'">
+                        <button class="h-searchBtn"  @click="onSearch">搜索</button>
+
+                    </div>
+                </div>
+                <div  class="h-qrcode">
+                        <img src="public/image/qrcode.png">
+                    </div>
+             
+                <!-- <div class="h-msg" >
+                        <a v-if="!isLogin" href="./login.html" class="h-message">立即提问</a>
+                        <a v-else-if="isLogin && userType==4" href="./personal.html?epId=0" class="h-message">立即提问</a>
+                    </div> -->
+            </div>
+            <div class="h-menu h-mainContainer">
+                <ul class="h-menuMain">
+                        <li><a href="./index.html" >首页</a></li>
+                        <li><a href="./zhuanjia.html">专家库</a></li>
+                        <li><a href="./online.html" >在线问答</a></li>
+                        <li><a href="./knowloge.html" >农业知识库</a></li>
+                        <li><a href="./video.html" >视频培训</a></li>
+                        <!-- <a href="#" class="h-ask">我要提问</a> -->
+                </ul>
+            </div>
+        </div>
+        <div class="container main-top">
+            <el-container>
+                <el-main class="cl-main">
+                    <div>
+                        <div class="cl-title"> <i class="el-icon-menu"></i> <span>病虫害资料</span></div>
+                        <div class="cl-titlleInfo clear">
+                            <div class="cl-titleimg left">
+                                <img src="public/image/cureList.jpg" alt="">
+                            </div>
+                            <div class="cl-info left">
+                               <p>名称：{{article.name}}</p>
+                               <p v-if="article.diseasesType == 1">类别：虫害</p>
+                               <p v-if="article.diseasesType == 2">类别：病害</p>
+                               <!-- <p>类属：鳞翅目螟蛾科</p> -->
+                            </div>
+                        </div>
+                        <div>    
+                            <div class="cl-item">
+                                <!-- <div class="cl-head">
+                                    <i class="el-icon-menu"></i> <a href="">相关图片</a>
+                                </div>
+                                <div class="cl-item-info clear">
+                                    <a href="" class="left">
+                                        <img src="public/image/cl-item.jpg" alt="">
+                                        <br>
+                                        白斑翅野螟
+                                    </a>
+                                    <a href="" class="left">
+                                        <img src="public/image/cl-item.jpg" alt="">
+                                        <br>
+                                        白斑翅野螟
+                                    </a>
+                                </div> -->
+                            </div>
+                            <div class="cl-item">
+                                <div class="cl-head">
+                                   <i class="el-icon-menu"></i> <a href="">分布与危害</a>
+                                </div>
+                                <div class="cl-item-info">
+                                    {{article.distributionHazards}}
+                                </div>
+                            </div>
+                            <div class="cl-item">
+                                <div class="cl-head">
+                                    <i class="el-icon-menu"></i> <a href="">形态特征</a>
+                                </div>
+                                <div class="cl-item-info">
+                                    {{article.symptom}}
+                                </div>
+                            </div>
+                            <div class="cl-item">
+                                <div class="cl-head">
+                                   <i class="el-icon-menu"></i> <a href="">发生规律</a>
+                                </div>
+                                <div class="cl-item-info">
+                                    {{article.occurrenceRegularity}}
+                                </div>
+                            </div>
+                            <div class="cl-item">
+                                <div class="cl-head">
+                                    <i class="el-icon-menu"></i> <a href="">防治方法</a>
+                                </div>
+                                <div class="cl-item-info">
+                                    {{article.controlMethod}}
+                                </div>
+                            </div>
+                            <!-- <div class="cl-item">
+                                <div class="cl-head">
+                                    <i class="el-icon-menu"></i> <a href="">防治药械</a>
+                                </div>
+                                <div class="cl-item-info">
+                                    <p>杀虫剂</p>
+                                </div>
+                            </div> -->
+                        </div>
+                    </div>
+                </el-main>
+                <el-aside width="250px">
+                    <el-container class="cl-asid">
+                        <el-header class="cl-asidHead"> <i class="el-icon-menu"></i> 目录</el-header>
+                        <el-main class="cl-asidMain">
+                            <ul>
+                                <!-- <li><a href="">1. 相关图片</a></li> -->
+                                <li><a>1. 分布与危害</a></li>
+                                <li><a>2. 形态特征</a></li>
+                                <li><a>3. 发生规律</a></li>
+                                <li><a>4. 防治方法</a></li>
+                                <li><a>5. 防治药械</a></li>
+                            </ul>
+                        </el-main>
+                    </el-container>
+                    <el-container class="cl-asid">
+                        <el-header class="cl-asidHead"> <i class="el-icon-menu"></i> 病虫害预警</el-header>
+                        <el-main class="cl-asidMain cl-asidList">
+                            <ul>
+                                <li v-for="item in alarmList">
+                                    <i class="glyphicon glyphicon-grain"></i> 
+                                    <a :href="'./alarm_detail.html?identifier=' + item.id" target="_blank">{{item.title}}</a>
+                                </li>
+                            </ul>
+                        </el-main>
+                    </el-container>
+                    <el-container class="cl-asid">
+                        <el-header  class="cl-asidHead"> <i class="el-icon-menu"></i> 病虫害防治</el-header>
+                        <el-main  class="cl-asidMain cl-asidList">
+                            <ul class="">
+                                <li v-for="item in cureList">
+                                    <i class="glyphicon glyphicon-grain"></i> 
+                                    <a :href="'./cure_detail.html?identifier=' + item.id" target="_blank">{{item.title}}</a>
+                                </li>
+                            </ul>
+                        </el-main>
+                    </el-container>
+                </el-aside>
+            </el-container>
+        </div>
+        <div class="message">
+        </div>
+
+        <div class="footer">
+            <!-- <div class="f-concate">
+                    <div class="f-cUs">
+                        <p class="f-cTitle">联系我们</p>
+                        <p class="f-cInfo"> <i class="el-icon-phone"></i> 400-xxx-xxxx</p>
+                    </div>
+                    <div class="f-cAD">
+                        <p class="f-cTitle">广告合作</p>
+                        <p class="f-cInfo"> <i class="el-icon-phone-outline"></i> 0792-xxxxxxxx</p>
+                    </div>
+                    <div class="f-cWEB">
+                        <p class="f-cTitle">投稿热线、网战运营</p>
+                        <p class="f-cInfo"> <i class="el-icon-message"></i> 400-xxx-xxxx</p>
+                    </div>
+                </div> -->
+                <div class="f-info">
+                        <p></p>
+                        <span>Copyright © 2019 黄山现代农业产业园管委会 版权所有</span>
+                        <p></p>
+                    </div>
+        </div>
+    </div>
+</body>
+<script>
+
+    // window.filterHelper = new FilterValueHelper();
+    var GETBASE,GETUUID,GETREGIONID,GETAPIROOT;
+    if(typeof(window.getBaseUrl) !='undefined'){
+        GETBASE= window.getBaseUrl();
+        GETUUID= window.getUuid();
+        GETREGIONID= window.getRegionId();
+        GETAPIROOT = window.getApiRoot();
+    }else{
+
+
+        GETBASE= 'http://36.7.159.225:16000/api/expert/file/';
+        GETUUID= '24acfc1215da435cbe76c69beb07f32b';
+        GETREGIONID= '101221002';
+        GETAPIROOT = 'http://36.7.159.225:16000/api/expert';
+    }
+
+    // 获取url键值 传入key 返回 value
+    var identifier = getParameters('identifier');
+
+    var dislib = new Vue({ //vue对象
+        el: '#root',
+        data: {
+            baseUrl:GETBASE,
+            uuid:GETUUID,
+            regionID:GETREGIONID,
+            getApiRoot:GETAPIROOT,
+
+            isLogin:false,
+            userType:4,
+            currentPage3: 5,
+            SearchName: '预警',
+            keyWords:'',
+            article:{
+                "id":11,
+                "name":"凤仙花褐斑病",
+                "imageUrl":"content.jpg",
+                "distributionHazards":"危害凤仙花。",
+                "symptom":"为害叶片。叶片枯死。",
+                "symptomTypeId":1,
+                "vegetationTypeId":1,
+                "diseasesBody":1,
+                "diseasesType":2,
+                "uUserInfoId":"24acfc1215da435cbe76c69beb07f32b",
+                "pathogeny":"病原为福士尾孢。",
+                "occurrenceRegularity":null,
+                "controlMethod":null,
+                "symptomType":null,
+                "vegetationType":null,
+                "body":null,
+            },
+            alarmList:[],
+            cureList:[],
+
+            
+        },
+        methods: {
+            onSubmit:function() {
+              
+            },
+
+            searchClick: function() {
+
+            },
+            onSearch:function(){
+                if (this.SearchName == '预警') {
+                location.href = './searchList.html?type=1&keyword=' + this.keyWords;
+            } else if (this.SearchName == '防治') {
+                location.href = './searchList.html?type=2&keyword=' + this.keyWords;
+            } else if (this.SearchName == '病虫害') {
+                location.href = './searchList.html?type=3&keyword=' + this.keyWords;
+            }else if (this.SearchName == '知识库') {
+                location.href = './searchList.html?type=4&keyword=' + this.keyWords;
+            }else if (this.SearchName == '专家') {
+                location.href = './searchList.html?type=5&keyword=' + this.keyWords;
+            }
+            },
+
+            //加载文章详情
+            loadDislibDeatil:function(){
+                var self = this;
+                var param = '{}';
+
+                var url =  this.getApiRoot + '/diseaseslib/get/' + identifier;
+                // debugger
+                $.ajax({
+                    method:'GET',
+                    url:url,
+                    dataType:'JSON',
+                    contentType:'application/json',
+                    success:function(res){
+                      
+                        self.article = res.data;
+                    },
+                    error:function(){
+    
+                    }
+                })
+            },
+
+            // 病虫害预警 add by liulei
+            loadAlarm:function(){
+                var self = this;
+                var param = '{}';
+
+                var url = this.getApiRoot + '/alarm/getpage/'+self.uuid+'/1/7';
+        
+                $.ajax({
+                    method:'GET',
+                    url:url,
+                    dataType:'JSON',
+                    contentType:'application/json',
+                    success:function(res){
+                      
+                        self.alarmList = res.data.list;
+                    },
+                    error:function(){
+    
+                    }
+                })
+            },
+
+
+            // 病虫害防治 add by liulei
+            loadCure:function(){
+                var self = this;
+                var param = '{}';
+
+                var url = this.getApiRoot + '/cure/getpage/'+self.uuid+'/1/7';
+        
+                $.ajax({
+                    method:'GET',
+                    url:url,
+                    dataType:'JSON',
+                    contentType:'application/json',
+                    success:function(res){
+                      
+                        self.cureList = res.data.list;
+                    },
+                    error:function(){
+    
+                    }
+                })
+            },
+
+        },
+
+        filters:{
+            //add by liulei
+            formatDate:function(time) {
+                var date = new Date(time);
+                return formatDate(date, 'yyyy-MM-dd hh:mm');
+            }
+        },
+        created:function(){
+
+        },
+        mounted: function () {
+            var self = this;
+
+            var token = sessionStorage.getItem("token"); 
+            var userType = sessionStorage.getItem("userType"); 
+            if(token == undefined || token == ''){
+            }else{
+                this.isLogin = true;
+                this.userType = userType;
+            }
+       
+
+            self.loadDislibDeatil();
+            self.loadAlarm();
+            self.loadCure();
+        }
+
+    });
+</script>
+
+</html>

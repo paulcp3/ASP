@@ -1,0 +1,100 @@
+
+/* left */
+.container {
+    width: 960px!important;
+    position: relative;
+    margin-right: auto;
+    margin-left: auto;
+    overflow: hidden;
+}
+
+.main-top {
+    padding: 15px 0;
+    margin-top: 15px;
+    /* background-color: #fff; */
+}
+
+.el-container {
+    /* background-color: #fff; */
+}
+.el-main {
+    padding: 10px 20px;
+    background-color: #fff;
+}
+.cl-title{
+    font-size: 15px;
+    font-weight: bold;
+}
+
+.cl-titlleInfo{
+    margin: 10px;
+}
+
+.cl-titleimg{
+
+}
+
+.cl-titleimg img{
+    width: 200px;
+    height: 200px;
+    border: 1px solid #333;
+}
+
+.cl-info{
+    padding: 0 20px;
+    font-size: 14px;
+}
+
+.cl-item{
+    margin: 10px 0;
+}
+
+.cl-head{
+    font-weight: bold;
+    font-size: 15px;
+}
+
+.cl-item-info{
+    font-size: 14px;
+    padding: 10px 20px;
+}
+
+/* right */
+
+.cl-asidHead{
+    height: 20px !important;
+}
+
+.el-header {
+    padding: 0;
+    font-size: 15px;
+    font-weight: bold;
+}
+.cl-asidMain{
+    font-size: 14px;
+}
+
+.cl-asidList{
+
+
+}
+
+.el-aside{
+    background-color: #fff;
+    padding: 10px 10px;
+    margin-left: 10px;
+}
+
+.cl-asidList li {
+    font-size: 14px;
+    padding: 4px 0;
+    overflow: hidden;/*超出部分隐藏*/
+    white-space: nowrap;/*不换行*/
+    text-overflow:ellipsis;/*超出部分文字以...显示*/
+}
+
+.cl-asidList li a{
+    font-size: 14px;
+    color: #175199;
+    line-height: 12px;
+}

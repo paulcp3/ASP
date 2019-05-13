@@ -1,0 +1,102 @@
+body{
+    background: #f6f6f6;
+}
+a:hover{
+    text-decoration: none;
+}
+.main{
+    width: 960px;
+    margin: 0 auto;
+}
+.banner{
+    width: 100%;
+    height: 200px;
+}
+.banner img{
+    width: 100%;
+    height: 100%;
+}
+.zj-navbar{
+    background: #fff;
+    margin-top: 20px;
+}
+.zj-desItem{
+    width: 100%;
+    height: auto;
+    background: #fff;
+    padding: 15px;   
+}
+.zj-con{
+    width:960px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+}
+.zj-info {
+    align-items: flex-start;
+    width: 69%;
+    border-bottom: 1px dashed #ddd;
+}
+.zj-desRec{
+    width: 30%;
+    align-items: flex-start;
+    background: #fff;
+    min-height: 100px;
+    max-height: 400px;
+    padding: 10px;
+}
+.zj-desRec h3{
+    margin: 0 0 10px 0;
+    font-size: 15px;
+    font-weight: bold;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #ddd;
+}
+.zj-desRec ul li {
+    margin-bottom: 10px;
+    overflow: hidden;/*超出部分隐藏*/
+    white-space: nowrap;/*不换行*/
+    text-overflow:ellipsis;/*超出部分文字以...显示*/
+}
+.zj-img{
+    width: 100px;
+    height: 100px;
+}
+.zj-img img{
+    width: 100%;
+    height: 100%;
+}
+.zj-img,.zj-btn,.zj-text{
+    float: left;
+}
+.zj-text{
+    width: 62%;
+    padding-left: 20px;
+    box-sizing: border-box;
+}
+.zj-text h3{
+    color: #444;
+}
+.zj-text h3 span{
+    font-size: 16px;
+    color: #555;
+    padding-left: 20px;
+}
+.zj-text p{
+    color: #050f40;
+    font-size: 14px;
+    font-weight: 900;
+}
+.zj-text p span{
+    color: #666;
+    font-weight: 400;
+}
+.zj-btn{
+    width: 120px;
+    text-align: right;
+    margin-top: 30px;
+}
+
+.zj-btn .btn{
+    margin-left: 20px;
+}

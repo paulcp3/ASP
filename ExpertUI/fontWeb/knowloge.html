@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>农业知识库 - 黄山现代农业示范区专家咨询知识库平台</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" media="screen" href="public/css/index.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">  
+    <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous"> -->
+    <script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="zhuanjia/css/index.css">
+    <link rel="stylesheet" href="nongye/css/index.css">
+    <link rel="stylesheet" href="element-ui/index.css">
+    <link rel="stylesheet" href="search/search.css">
+    <script src="./element-ui/vue.min.js"></script>
+    <script src="./element-ui/index.js"></script>
+    <script src="public/js/swiper.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+    <script src="public/js/main.js"></script>
+
+    <!-- add by liulei -->
+    <script src="public/js/public.js"></script>
+    <style>
+        .el-pagination {
+            white-space: nowrap;
+            color: #303133;
+            font-weight: 700;
+            text-align: center;
+            margin-bottom: 20px;
+            background: #fff;
+            padding: 10px;
+        }
+    </style>
+</head>
+<body>
+<div id="root">
+<div class="header">
+    <div class="header-container h-main">
+        <div class="h-map">
+            <!-- <a href="#" class="h-mappic">网站地图</a> -->
+            <!-- <a href="#" class="h-phone">手机APP</a>  -->
+        </div>
+        <div class="h-register" v-if="isLogin">
+                <a href="#" class="h-welcom">你好，欢迎访问本网站！</a>
+                <a href="./personal.html" v-if="userType ==4 ">会员中心</a>
+                <a href="./personal_expert.html" v-if="userType ==3 ">专家中心</a>
+            </div>
+            <div class="h-register" v-else>
+                    <a href="#" class="h-welcom">你好，欢迎访问本网站！</a>
+                    <a href="./login.html">登录</a> | <a href="./register.html">注册</a>
+            </div>
+    </div>           
+</div>        
+<div class="header-main">
+    <div  class="h-mainContainer h-serrchMain">
+    <div  class="h-logo">
+        <img src="public/image/logo-2.png">
+    </div>
+    <div class="search-bar">
+            <el-tabs  type="card"  v-model="SearchName" @tab-click="searchClick" >
+                    <el-tab-pane label="预警" name="预警"></el-tab-pane>
+                    <el-tab-pane label="防治" name="防治"></el-tab-pane>
+                    <el-tab-pane label="病虫害" name="病虫害"></el-tab-pane>
+                    <el-tab-pane label="知识库" name="知识库"></el-tab-pane>
+                    <el-tab-pane label="专家" name="专家"></el-tab-pane>
+            </el-tabs>
+        <div class="h-search">
+        <i class="el-icon-search h-searchIco"></i>
+        <input type="text" class="h-searchText" v-model="keyWords" :placeholder="'请输入关键词搜索'+SearchName+'信息'"> 
+        <button class="h-searchBtn"  @click="onSearch">搜索</button>
+        <!-- <div class="h-searchHot">
+            <a href="#">水稻防治</a> <a href="#">小麦防治</a> <a href="#">玉米防治</a> <a href="#">蔬菜防治</a>
+        </div> -->
+        </div>
+
+    </div>
+    <div  class="h-qrcode">
+            <img src="public/image/qrcode.png">
+        </div>
+    <!-- <div class="h-msg" >
+            <a v-if="!isLogin" href="./login.html" class="h-message">立即提问</a>
+            <a v-else-if="isLogin && userType==4" href="./personal.html?epId=0" class="h-message">立即提问</a>
+        </div> -->
+</div>
+    <div class="h-menu h-mainContainer">
+    <ul class="h-menuMain">
+        <li><a href="./index.html">首页</a></li>
+        <li><a href="./zhuanjia.html">专家库</a></li>
+        <li><a href="./online.html" >在线问答</a></li>
+        <li class="active"><a href="./knowloge.html" >农业知识库</a></li>
+        <li><a href="./video.html" >视频培训</a></li>
+        <!-- <a href="#" class="h-ask">我要提问</a> -->
+    </ul>
+    </div>
+</div>
+    <div class="main">
+        <div class="banner">
+            <img src="zhuanjia/image/u12.jpg" alt="">
+        </div>
+        <div class="zj-nav">
+                <div class="navAll">
+                    <ul class="nav-top clear">
+                        <li class="nav-topItem" :class="index == menuActive ? 'active':''" v-for="(item,index) in typeList" @click="handlerClick(index)">{{item.label}}</li>
+                    </ul>
+                    <ul class="nav-bot">
+                        <li class="nav-itemBox on">
+                            <ul class="nav-item clear">
+                                <li :class="-1 == currtActive ? 'active':''"  @click="handlerSubClick(-1)">全部</li>
+                                <li :class="index == currtActive ? 'active':''" v-for="(sub,index) in currentType.children" @click="handlerSubClick(index)">{{sub.label}}</li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        <div class="kn-main">
+            
+            <div class="kn-content" v-if="kgList.length > 0">
+                <div class="kn-item"  v-for="item in kgList">
+                    <div class="kn-img" v-if="item.fileList && item.fileList.length >0">
+                        <img src="nongye/image/kn.jpg" :title="item.title">
+                    </div>
+                    <!-- <div class="kn-img"><img :src="item.imgUrl" :title="item.title"></div> -->
+                    <div class="kn-info">
+                        <h3><a :href="'./kg_detail.html?identifier=' + item.id">{{item.title}}</a></h3>
+                        <p class="hp"><span>{{item.visit}}人阅读</span><span>2019年03月26日</span></p>
+                        <p class="text">{{item.content}}</p>
+                    </div>
+                </div>
+                
+                <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page.sync="currentPage" :page-size="pageSize" layout="prev, pager, next, jumper"
+                 :total="total">
+                 </el-pagination>
+            </div>
+            <div class="kn-content noData"  v-else>
+                <img src="public/image/nodata.png" width="150"/>
+                <p>暂无数据</p>
+            </div>    
+            <div class="kn-nav">
+                    <h3>推荐学习</h3>
+                    <ul>
+                        <li v-for="item in kgRecom">
+                            <i class="glyphicon glyphicon-grain"></i>
+                            <a :href="'./kg_detail.html?identifier=' + item.id">{{item.title}}</a>
+                        </li>
+                    </ul>
+                </div>
+        </div>
+    </div>
+    <div class="footer">
+        <!-- <div class="f-concate">
+                    <div class="f-cUs">
+                        <p class="f-cTitle">联系我们</p>
+                        <p class="f-cInfo"> <i class="el-icon-phone"></i> 400-xxx-xxxx</p>
+                    </div>
+                    <div class="f-cAD">
+                        <p class="f-cTitle">广告合作</p>
+                        <p class="f-cInfo"> <i class="el-icon-phone-outline"></i> 0792-xxxxxxxx</p>
+                    </div>
+                    <div class="f-cWEB">
+                        <p class="f-cTitle">投稿热线、网战运营</p>
+                        <p class="f-cInfo"> <i class="el-icon-message"></i> 400-xxx-xxxx</p>
+                    </div>
+                </div> -->
+                <div class="f-info">
+                        <p></p>
+                        <span>Copyright © 2019 黄山现代农业产业园管委会 版权所有</span>
+                        <p></p>
+                    </div>
+    </div>
+</div>
+
+</body>
+<script>
+
+    // window.filterHelper = new FilterValueHelper();
+    var GETBASE,GETUUID,GETREGIONID,GETAPIROOT;
+    if(typeof(window.getBaseUrl) !='undefined'){
+        GETBASE= window.getBaseUrl();
+        GETUUID= window.getUuid();
+        GETREGIONID= window.getRegionId();
+        GETAPIROOT = window.getApiRoot();
+    }else{
+        GETBASE= 'http://36.7.159.225:16000/api/expert/file/';
+        GETUUID= '24acfc1215da435cbe76c69beb07f32b';
+        GETREGIONID= '101221002';
+        GETAPIROOT = 'http://36.7.159.225:16000/api/expert';
+
+        // GETBASE= 'http://localhost:16000/api/expert/file/';
+        // GETUUID= '24acfc1215da435cbe76c69beb07f32b';
+        // GETREGIONID= '101221002';
+        // GETAPIROOT = 'http://localhost:16000/api/expert';
+    }
+
+    var knl = new Vue({
+        el:"#root",
+        data:{
+
+            isLogin:false,
+            userType:4,
+            
+            baseUrl:GETBASE,
+            uuid:GETUUID,
+            regionID:GETREGIONID,
+            getApiRoot:GETAPIROOT,
+
+            currtActive:-1,
+            menuActive:0,
+            SearchName: '预警',
+            keyWords:'',
+            currentPage: 1,
+            pageSize: 10,
+            total: 0,
+
+            typeList:[//分类
+                
+            ],
+            currentType:{
+            },
+
+            currentSubType:{
+            },
+
+            kgList:[
+                {
+                    "id":1,
+                    "title":"1小麦叶片发黄?",
+                    "content":"小麦在种下两周长出发黄叶片，施肥浇水情况正常",
+                    "imgUrl":"nongye/image/kn.jpg"
+                }
+            ],
+
+            kgRecom:[
+                {
+                    "id":1,
+                    "title":"小麦叶片发黄?",
+                    "content":"小麦在种下两周长出发黄叶片，施肥浇水情况正常"
+                }
+            ],
+
+        },
+
+        methods:{
+
+            handleSizeChange:function(val) {
+            
+            },
+            handleCurrentChange:function(val) {
+             
+                this.loadKgList();
+            },
+
+            handlerClick:function(index){
+                this.menuActive = index;
+
+                this.currentType = this.typeList[index];
+                this.currtActive = -1;
+
+                this.currentSubType = this.currentType.children[0];
+            },
+
+            handlerSubClick:function(index){
+                this.currtActive = index;
+
+                this.currentSubType = this.currentType.children[index];
+                this.currentPage = 0;
+                this.loadKgList();
+            },
+
+            searchClick: function() {
+
+            },
+            onSearch:function(){
+                if (this.SearchName == '预警') {
+                location.href = './searchList.html?type=1&keyword=' + this.keyWords;
+            } else if (this.SearchName == '防治') {
+                location.href = './searchList.html?type=2&keyword=' + this.keyWords;
+            } else if (this.SearchName == '病虫害') {
+                location.href = './searchList.html?type=3&keyword=' + this.keyWords;
+            }else if (this.SearchName == '知识库') {
+                location.href = './searchList.html?type=4&keyword=' + this.keyWords;
+            }else if (this.SearchName == '专家') {
+                location.href = './searchList.html?type=5&keyword=' + this.keyWords;
+            }
+            },
+
+             // 加载分类列表 add by liulei
+             loadIndustrytype:function(){
+                var self = this;
+                var param = '{}';
+
+                var url =  this.getApiRoot + '/industrytype/gettree/';
+         
+                $.ajax({
+                    method:'GET',
+                    url:url,
+                    dataType:'JSON',
+                    contentType:'application/json',
+                    success:function(res){
+                    
+                        self.typeList = res.data.list;
+                        self.currentType = self.typeList[0];
+                        self.currtActive = -1;
+                    },
+                    error:function(){
+    
+                    }
+                })
+            },
+
+            // 加载知识列表 add by liulei
+            loadKgList:function(){
+                var self = this;
+                var param = '{}';
+
+                var insId = 0;
+                if(self.currtActive >= 0){
+                    insId = self.currentSubType.id;
+                }
+
+                var url =  this.getApiRoot + '/knowledge/getpage/'+insId+'/'+self.currentPage+'/5';
+         
+                $.ajax({
+                    method:'GET',
+                    url:url,
+                    dataType:'JSON',
+                    contentType:'application/json',
+                    success:function(res){
+                        console.log('返回结果-知识列表:' + JSON.stringify(res));
+                        // debugger
+                        self.kgList = res.data.list;
+                        self.total = res.data.total;
+                    },
+                    error:function(){
+    
+                    }
+                })
+            },
+
+            // 加载知识列表-推荐 add by liulei
+            loadKgRecom:function(){
+                var self = this;
+                var param = '{}';
+
+                var url =  this.getApiRoot + '/knowledge/getpage/0/0/5';
+         
+                $.ajax({
+                    method:'GET',
+                    url:url,
+                    dataType:'JSON',
+                    contentType:'application/json',
+                    success:function(res){
+                        console.log('返回结果-知识热门:' + JSON.stringify(res));
+                        // debugger
+                        self.kgRecom = res.data.list;
+                    },
+                    error:function(){
+    
+                    }
+                })
+            },
+        },
+        filters:{
+
+        },
+        created:function(){
+
+        },
+        mounted: function () {
+            var self = this;
+
+            var token = sessionStorage.getItem("token"); 
+            var userType = sessionStorage.getItem("userType"); 
+            if(token == undefined || token == ''){
+            }else{
+                this.isLogin = true;
+                this.userType = userType;
+            }
+       
+
+            self.loadIndustrytype();
+            self.loadKgList();
+            self.loadKgRecom();
+        }
+
+    })
+</script>
+</html>

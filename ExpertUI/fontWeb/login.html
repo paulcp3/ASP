@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>登录 - 黄山现代农业示范区专家咨询知识库平台</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" media="screen" href="public/css/index.css">
+    <link rel="stylesheet" href="login/css/index.css">
+    <link rel="stylesheet" href="element-ui/index.css">
+    <link rel="stylesheet" href="search/search.css">
+    <script src="./element-ui/vue.min.js"></script>
+    <script src="./element-ui/index.js"></script>
+    <script src="public/js/swiper.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+    <script src="public/js/main.js"></script>
+
+    <!-- add by liulei -->
+    <script src="public/js/public.js"></script>
+</head>
+<body>
+<div class="r-main" id="root">
+    <img src="public/image/r-bg.jpg" alt="" style="width:100%;height:100%;z-index:-1;position:fixed;_position:absolute;left:0;right:0;bottom:0;top:0;">
+    <div class="r-bg"></div>
+    <div class="r-contant">
+        <div class="r-title">
+            <a href="./index.html" class="r-back">返回首页</a>
+            <span>  没有账户 ? <a href="./register.html">去注册</a> </span>   
+        </div>
+        <div class="r-info">
+            <div class="r-logo">
+            </div>
+            
+            <div class="r-wrap">
+                <ul class="clear login-box-title">
+                    <!-- <li class="active">
+                        <a href="#">账号密码登陆</a>
+                    </li> -->
+                    <!-- <li >
+                        <a href="#">手机动态码登录</a>
+                    </li> -->
+                </ul>
+                <div class="login-content">
+                    <div class="userpwd-login">
+                        <!-- <form action=""> -->
+                            <ul class="formInput">
+                                <!-- <li class="mobileLoginLi mobilenumberLi" style="display: none;">
+                                    <input class="passport-login-input inputNull" type="text" size="20" maxlength="11" placeholder="手机号">
+                                    <input type="button" class="getcode" value="获取动态码">
+                                </li>
+                                <li class="mobileLoginLi mobilecodeLi" style="display: none;">
+                                    <input class="passport-login-input inputNull" type="text" size="20" maxlength="6" placeholder="动态码">
+                                </li> -->
+                                <li class="usernameliUser">
+                                    <input type="text" class="passport-login-input username_new inputNull"  v-model="form.account" size="20" placeholder="账户名" autocomplete="off" >
+                                </li>
+                                <li class="passwordliUser">
+                                    <input type="password" class="passport-login-input username_new inputNull" size="20"  v-model="form.password" maxlength="16" placeholder="密码">
+                                </li>
+                                <li class="commitcode_new">
+                                    <!-- <a href="#">忘记密码</a> -->
+                                    <input type="checkbox">
+                                    <span>下次自动登录</span>
+                                </li>
+                                <li class="submit_new">
+                                    <!-- <input type="submit" class="submit"  @click="onSubmit" value="登录"> -->
+                                    <input type="button" value="登录"  @click="onSubmit" class="regButton">
+                                    <div class="xieyi">
+                                        <p> 登录即同意
+                                            <a href="#">《使用协议》</a> 和 <a href="#">《隐私权条款》</a>
+                                        </p>
+                                    </div>
+                                </li>
+                            </ul>
+                            <ul>
+                                <li></li>
+                            </ul>
+                        <!-- </form> -->
+                    </div>  
+                    <div class="third-login clear">
+                        <!-- <a href="#" class="qq-login"><i></i> <span>QQ登录</span> </a>
+                        <a href="#" class="wx-login"><i></i> <span>微信登录</span> </a>
+                        <a href="#" class="wb-login"><i></i> <span>微博登录</span> </a> -->
+                    </div>  
+                </div>
+
+            </div>
+        </div>
+        <div class="login-footer">
+                <div class="f-info">
+                        <p></p>
+                        <span>Copyright © 2019 黄山现代农业产业园管委会 版权所有</span>
+                        <p></p>
+                    </div>
+        </div>
+    </div>
+</div>
+</body>
+<script>
+    // window.filterHelper = new FilterValueHelper();
+    var GETBASE,GETUUID,GETREGIONID,GETAPIROOT;
+    if(typeof(window.getBaseUrl) !='undefined'){
+        GETBASE= window.getBaseUrl();
+        GETUUID= window.getUuid();
+        GETREGIONID= window.getRegionId();
+        GETAPIROOT = window.getApiRoot();
+    }else{
+        // GETBASE= 'http://localhost:16000/api/expert/file/';
+        // GETUUID= '24acfc1215da435cbe76c69beb07f32b';
+        // GETREGIONID= '101221002';
+        // GETAPIROOT = 'http://localhost:16000/api/expert';
+
+        GETBASE= 'http://36.7.159.225:16000/api/expert/file/';
+        GETUUID= '24acfc1215da435cbe76c69beb07f32b';
+        GETREGIONID= '101221002';
+        GETAPIROOT = 'http://36.7.159.225:16000/api/expert';
+    }
+
+    var log = new Vue({
+        el: "#root",
+        data:{
+            baseUrl:GETBASE,
+            uuid:GETUUID,
+            regionID:GETREGIONID,
+            getApiRoot:GETAPIROOT,
+
+            form: {
+                uuid:GETUUID,
+                account:'',
+                password:''
+            }
+
+        },
+
+        methods:{
+
+            onSubmit: function () {
+                var self = this;
+
+                if($.trim(this.form.account)===''){
+                    // alert("账号必填");
+                    showMsg(this,'账号必填');
+                    return false;
+                }
+                if($.trim(this.form.password)===''){
+                    // alert("密码必填");
+                    showMsg(this, '密码必填');
+                    return false;
+                }
+                this.doAction(this);
+
+            },
+
+            // 注册 add by liulei
+            doAction:function(obj){
+                var self = this;
+                var param = '{}';
+                var url = this.getApiRoot + '/user/login';
+                
+                $.ajax({
+                    type:'POST',
+                    url:url,
+                    data:JSON.stringify(self.form),
+                    dataType:'JSON',
+                    contentType:'application/json',
+                    success:function(res){
+                        console.log('返回结果:' + JSON.stringify(res));
+
+                        if(res.code == 1000000){    
+                            sessionStorage.setItem("token",res.data.token);  
+                            sessionStorage.setItem("userType",res.data.type);  
+                            var token = sessionStorage.getItem("token"); 
+
+                            if(res.data.type == 3){
+                                location.href = './personal_expert.html';
+                            }else{
+                                location.href = './personal.html';
+                            }
+                            
+                           
+                            showMsg(obj, '登录成功');
+                        }else if(res.code = -100001){
+                            // alert(res.msg);
+                            showAlert(obj, '提示', res.msg, '确定')
+                        }else{
+                            // alert('登录失败,请重试');
+                            showAlert(obj, '提示', '登录失败,请重试', '确定')
+                        }
+                        
+                    },
+                    error:function(){
+                        showMsg(obj, '服务异常,请稍后再试');
+                    }
+                })
+            },
+
+
+        },
+        filters:{
+
+        },
+        created:function(){
+
+        },
+        mounted: function () {
+            var self = this;
+
+        }
+    })
+</script>
+</html>

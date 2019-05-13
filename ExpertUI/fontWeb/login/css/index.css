@@ -1,0 +1,307 @@
+input {
+    border: none;
+    background: 0 0;
+}
+.r-main{
+    width: 100%;
+    height: 100%;
+}
+.r-bg{
+    margin: 0;
+    padding: 0;
+    border: none;
+    width: 100%;
+    height: 100%;
+    opacity: .5;
+    filter: alpha(opacity=50);
+    z-index: 99;
+    position: fixed;
+    top: 0;
+    left: 0;
+    display: block;
+    background: #333;
+}
+.r-contant{
+    position: relative;
+    z-index: 102;
+}
+.r-title{
+    position: relative;
+    width: 520px;
+    margin: 12px auto;
+    height: 20px;
+    margin-bottom: 10px;
+    font-size: 14px;
+    color: #F6F6F6;
+}
+.r-title a.r-back{
+    display: block;
+    position: absolute;
+    left: 0;
+    top: 0;
+    color: #F6F6F6;
+}
+.r-title span{
+    display: block;
+    position: absolute;
+    right: 0;
+    color: #F6F6F6;
+}
+.r-title span a{
+    color: #F6F6F6;
+}
+.r-info{
+    padding-top: 48px;
+    width: 520px;
+    opacity: 1;
+    margin: 0 auto;
+    background: #fff;
+    z-index: 999;
+}
+.r-logo{
+    height: 75px;
+    width: 220px;
+    /*析数科技 134px; */
+    margin: 48px auto;
+    margin-top: 0;
+    /* 析数科技 /Logo.png */
+    background: url('../../public/image/logo-2.png') no-repeat;
+    background-size: 100% 100%; 
+}
+.regLi{
+    position: relative;
+    background: #FFF;
+    border: 2px solid #EBEBEB;
+    border-radius: 2px;
+    width: 422px;
+    height: 50px;
+    margin: 0 auto 16px auto;
+    line-height: 50px;
+    padding-left: 15px;
+}
+.regLable {
+    display: none;
+    color: #fff;
+}
+.regLi input{
+    font-size: 16px;
+}
+.regInput {
+    height: 20px;
+    padding: 15px 0;
+    width: 400px;
+}
+.regGetcodeBtn {
+    position: absolute;
+    cursor: pointer;
+    background: #F6F6F6;
+    border-radius: 3px;
+    width: 110px;
+    height: 34px;
+    font-size: 14px!important;
+    color: #CCC;
+    letter-spacing: -.01px;
+    right: 8px;
+    top: 8px;
+}
+.regButtonLi{
+    padding: 0;
+    height: 142px;
+    border: 0;
+    width: 440px;
+}
+.regAgreementBox{
+    height: 17px;
+    line-height: 17px;
+    margin: 30px 0;
+    text-align: center;
+    font-size: 14px;
+    color: #999;
+}
+.regAgreementBox span{
+    margin-left: 10px;
+}
+.regAgreementBox a {
+    color: #666;
+}
+.regButton {
+    font-size: 18px!important;
+    width: 440px;
+    height: 54px;
+    color: #fff;
+    border-radius: 2px;
+    background: #ff552e;
+    cursor: pointer;
+}
+.login-footer {
+    margin-top: 30px;
+    text-align: center;
+    padding-bottom: 25px;
+}
+.login-footer span {
+    color: #bdb9b9;
+    padding: 0 35px;
+}
+.login-footer span:first-child{
+    padding: 0;
+}
+.login-footer a {
+    color: #bdb9b9
+}
+.loginBox {
+    width: 440px;
+    margin: 0 auto;
+}
+.login-box-title, .login-content {
+    width: 440px;
+    margin: 0 auto;
+}
+.login-content{
+    padding-bottom: 20px;
+}
+.clear {
+    zoom: 1;
+}
+.clear::after, .clear::before{
+    content: '';
+    display: block;
+    clear: both;
+}
+.login-box-title li {
+    float: left;
+    width: 50%;
+    height: 58px;
+}
+.login-box-title li.active {
+    border-bottom: 1px solid #FF552E;
+}
+
+.login-box-title li a {
+    display: inline-block;
+    width: 100%;
+    height: 58px;
+    line-height: 58px;
+    text-align: center;
+    font-size: 18px;
+    color: #666;
+}
+.login-box-title li.active a {
+    color: #FF552E;
+}
+.formInput {
+    margin-top: 15px;
+    overflow: hidden;
+}
+.formInput li {
+    margin-top: 16px;
+    position: relative;
+    overflow: hidden;
+}
+.formInput li input.passport-login-input {
+    display: inline-block;
+    width: 420px;
+    height: 50px;
+    background: #FFF;
+    border: 2px solid #EBEBEB;
+    border-radius: 2px;
+    -webkit-border-radius: 2px;
+    -moz-border-radius: 2px;
+    font-size: 16px;
+    color: #ccc;
+    padding-left: 15px;
+    margin-bottom: 14px;
+}
+.formInput li.commitcode_new{
+    margin-top: 0;
+    line-height: 44px;
+    color: #999;
+    font-size: 14px;
+}
+.formInput li.commitcode_new a {
+    float: right;
+    color: #666;
+}
+.formInput li.commitcode_new input{
+    display: block;
+    float: left;
+    margin: 15px 10px 0 0;
+}
+.formInput li.commitcode_new {
+    margin-top: 0;
+    line-height: 44px;
+    color: #999;
+    font-size: 14px;
+}
+.formInput li input.submit {
+    cursor: pointer;
+    border: none;
+    background: #FF552E;
+    border-radius: 2px;
+    -webkit-border-radius: 2px;
+    -moz-border-radius: 2px;
+    text-align: center;
+    font-size: 18px;
+    width: 440px;
+    height: 54px;
+    color: #fff;
+}
+.getcode {
+    cursor: pointer;
+    border: 0;
+    position: absolute;
+    right: 10px;
+    top: 10px;
+    display: block;
+    width: 110px;
+    height: 34px;
+    text-align: center;
+    background: #F6F6F6;
+    border-radius: 3px;
+    font-size: 14px;
+    line-height: 34px;
+    color: #ccc;
+}
+.xieyi{
+    text-align: center;
+    margin-top: 10px;
+    color: #999;
+    font-size: 14px;
+}
+.xieyi a{
+    color: #ff552e;
+}
+.third-login {
+    height: 45px;
+    margin-top: 30px;
+}
+.third-login a {
+    float: left;
+    color: #999;
+    font-size: 14px;
+    margin-right: 69px;
+}
+.third-login a:last-child{
+    margin-right :0;
+}
+.third-login span {
+    position: relative;
+    top: -15px;
+    left: 10px;
+}
+.third-login i {
+    display: inline-block;
+    width: 42px;
+    height: 42px;
+}
+.third-login .qq-login i {
+    background-image: url('../../public/image/ico.png');
+    background-position: -138px -248px;
+}
+.third-login .wx-login i {
+    background-image: url("../../public/image/ico.png");
+    background-position: -306px -248px;
+}
+.third-login .wb-login i {
+    background-image: url("../../public/image/ico.png");
+    background-position: -264px -248px;
+}

@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>注册 - 黄山现代农业示范区专家咨询知识库平台</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" media="screen" href="public/css/index.css">
+    <link rel="stylesheet" href="login/css/index.css">
+    <link rel="stylesheet" href="element-ui/index.css">
+    <link rel="stylesheet" href="search/search.css">
+    <script src="./element-ui/vue.min.js"></script>
+    <script src="./element-ui/index.js"></script>
+    <script src="public/js/swiper.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+    <script src="public/js/main.js"></script>
+    <!-- add by liulei -->
+    <script src="public/js/public.js"></script>
+</head>
+<body>
+<div class="r-main" id="root">
+    <img src="public/image/r-bg.jpg" alt="" style="width:100%;height:100%;z-index:-1;position:fixed;_position:absolute;left:0;right:0;bottom:0;top:0;">
+    <div class="r-bg"></div>
+    <div class="r-contant">
+        <div class="r-title">
+            <a href="./index.html" class="r-back">返回首页</a>
+            <span>  已有账户 ? <a href="./login.html">去登录</a> </span>   
+        </div>
+        <div class="r-info">
+            <div class="r-logo">
+            </div>
+            <div class="r-wrap">
+                <ul class="">
+                    <!-- <li class="regLi regMobile">
+                        <span class="regLable">手机号</span>
+                        <input type="text" class="regMobile regInput" maxlength="11" autocomplete="off" placeholder="手机号">
+                        <input type="button" class="regGetcodeBtn" value="获取动态码"> 
+                    </li>
+                    <li class="regMobileTip regTip regMobileTipKeep" style="display: none;">
+                        <span class="regTipText regMobileTipTextKeep">请填写正确的手机号</span>
+                    </li> -->
+                    
+                    <li class="regLi regMobileUsernameLi">
+                        <span class="regLable">用户名</span>
+                        <input type="text" class="regMobileUsername regInput"  v-model="form.account" maxlength="20" autocomplete="off" placeholder="用户名">
+                    </li>
+
+                    <li class="regLi regMobileCodeLi">
+                        <span class="regLable">手机号</span>
+                        <input type="text" class="regMobileCode regInput"  v-model="form.telphone" maxlength="11" autocomplete="off" placeholder="手机号">
+                    </li>
+
+                    <li class="regLi regMobileUsernameLi">
+                            <span class="regLable">姓名</span>
+                            <input type="text" class="regMobileUsername regInput"  v-model="form.realName" maxlength="20" autocomplete="off" placeholder="真实姓名">
+                        </li>
+
+                    <li class="regLi">
+                        <span class="regLable">设置密码</span>
+                        <input type="password" class="regPassword regInput"  v-model="form.password" maxlength="16" autocomplete="off" placeholder="设置密码">
+                    </li>
+                    <li class="regLi">
+                        <span class="regLable">确认密码</span>
+                        <input type="password" class="regRepassword regInput"  v-model="form.passWordAgian" maxlength="16" autocomplete="off" placeholder="确认密码">
+                    </li>
+                    <li class="regButtonLi regLi">
+                        <div class="regAgreementBox">
+                            <input type="checkbox" checked="checked" >
+                            <span>
+                                我已阅读并同意
+                                <a href="#">《本平台使用协议》</a> 和 <a href="#"> 《隐私权条款》</a>
+                            </span>
+                        </div>
+                        <div claaa="regButtonBox">
+                            <input type="button" value="注册"  @click="onSubmit" class="regButton">
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="login-footer">
+                <div class="f-info">
+                        <p></p>
+                        <span>Copyright © 2019 黄山现代农业产业园管委会 版权所有</span>
+                        <p></p>
+                    </div>
+        </div>
+    </div>
+</div>
+</body>
+
+<script>
+
+        // window.filterHelper = new FilterValueHelper();
+        var GETBASE,GETUUID,GETREGIONID,GETAPIROOT;
+        if(typeof(window.getBaseUrl) !='undefined'){
+            GETBASE= window.getBaseUrl();
+            GETUUID= window.getUuid();
+            GETREGIONID= window.getRegionId();
+            GETAPIROOT = window.getApiRoot();
+        }else{
+        //     GETBASE= 'http://localhost:16000/api/expert/file/';
+        // GETUUID= '24acfc1215da435cbe76c69beb07f32b';
+        // GETREGIONID= '101221002';
+        // GETAPIROOT = 'http://localhost:16000/api/expert';
+
+        GETBASE= 'http://36.7.159.225:16000/api/expert/file/';
+        GETUUID= '24acfc1215da435cbe76c69beb07f32b';
+        GETREGIONID= '101221002';
+        GETAPIROOT = 'http://36.7.159.225:16000/api/expert';
+        }
+        
+        var app = new Vue({ //vue对象
+            el: '#root',
+            data: {
+                baseUrl:GETBASE,
+                uuid:GETUUID,
+                regionID:GETREGIONID,
+                getApiRoot:GETAPIROOT,
+
+                currentPage3: 5,
+                form:{
+                    uUserInfoId:GETUUID,
+                    account:'',
+                    realName:'',
+                    password:'',
+                    passWordAgian:'',
+                    telphone:''
+                },
+
+
+            },
+
+            methods:{
+
+                onSubmit:function(){
+
+                    var self = this;
+
+                    if($.trim(this.form.account)===''){
+                        // alert("账号必填");
+                        showMsg(this, '账号必填');
+                        return false;
+                    }
+
+
+                    if($.trim(this.form.password)===''){
+                        // alert("密码必填");
+                        showMsg(this, '密码必填');
+                        return false;
+                    }
+
+                    if($.trim(this.form.passWordAgian)===''){
+                        // alert("密码必填");
+                        showMsg(this, '请再次输入密码');
+                        return false;
+                    }
+
+                    if($.trim(this.form.passWordAgian)!=$.trim(this.form.password)){
+                        // alert("密码必填");
+                        showMsg(this, '两次输入密码不一样');
+                        return false;
+                    }
+
+
+
+                    //modify by liulei
+                    this.doAction(this);
+                },
+
+                // 注册 add by liulei
+                doAction:function(obj){
+                    var self = this;
+                    var param = '{}';
+
+                    var url = this.getApiRoot + '/user/register';
+                
+                    $.ajax({
+                        type:'POST',
+                        url:url,
+                        data:JSON.stringify(self.form),
+                        dataType:'JSON',
+                        contentType:'application/json',
+                        success:function(res){
+                            console.log('返回结果:' + JSON.stringify(res));
+                            if(res.code == 1000002){
+                                location.href = './login.html';
+                                // alert('注册成功,请登录');
+                                showMsg(obj, '注册成功,请登录');
+                            }else{
+                                // alert('注册失败,请重试');
+                                showAlert(obj, '提示', '注册失败,请重试', '确定')
+                            }
+                        },
+                        error:function(){
+                            showMsg(obj, '服务异常,请稍后再试');
+                        }
+                    })
+                },
+
+                
+
+            },
+            filters:{
+
+            },
+            created:function(){
+
+            },
+            mounted: function () {
+                var self = this;
+
+            }
+
+
+        });
+    </script>
+
+</html>

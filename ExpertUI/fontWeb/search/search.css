@@ -1,0 +1,226 @@
+.wrap-left {
+    position: relative;
+    width: 100%;
+    margin: 0 auto;
+    margin-bottom: 20px;
+}
+.pull-left {
+    float: left!important;
+}
+.search-wrap-list-ul li {
+    border-bottom: 1px solid #f0f0f0;
+    padding: 5px 0 12px 0;
+}
+.search-wrap-list-ul h2 {
+    font-size: 18px;
+    line-height: 28px;
+}
+.search-wrap-list-ul em {
+    color: #f63756;
+    font-style: normal;
+}
+.search-wrap-list-ul .mob-summay {
+    font-size: 14px;
+    color: #bbb;
+    line-height: 24px;
+}
+.search-wrap-list-ul .mob-author {
+    color: #bbb;
+    margin: 10px 0;
+}
+.search-wrap-list-ul .mob-author .name a {
+    color: #bbb;
+}
+.mob-author .author-name, .mob-author .time, .mob-author em {
+    color: #bbb;
+    line-height: 24px;
+    margin-left: 7px;
+    font-style: normal;
+    word-break: break-all;
+}
+.mob-author .time {
+    margin-left: 0px;
+}
+.container {
+   
+    width: 960px!important;
+    position: relative;
+    margin-right: auto;
+    margin-left: auto;
+    overflow: hidden;
+}
+.JieGuo {
+    height: 40px;
+    line-height: 40px;
+    background: #f6f6f6;
+    padding: 0px 10px;
+    color: #666;
+    overflow: hidden;
+    font-size: 14px;
+    margin: 0 20px;
+}
+.JieGuo_01 {
+    float: left;
+}
+.JieGuo_02 {
+    float: right;
+}
+.Huang {
+    color: #ff7700;
+    font-weight: bold;
+}
+.main-top{
+    padding: 15px 0;
+    margin-top: 15px;
+    background-color: #fff;
+}
+.search-wrap-list-ul{
+    margin: 10px 20px;
+}
+.text-center{
+    text-align: center;
+}
+.mt15{
+    margin-top: 15px;
+}
+.detail-contair h2.title {
+    text-align: center;
+    font-weight: normal;
+    line-height: 40px;
+    font-size: 18px;
+    font-weight: bold;
+}
+.xinXi_02 {
+    text-align: center;
+    padding: 10px 0px 15px;
+    border-bottom: 1px solid #ccc;
+    margin-bottom: 20px;
+}
+.wenZi_02 {
+    font-size: 16px;
+    line-height: 30px;
+    margin-top: 25px;
+    text-align: justify;
+    margin: 0 10px;
+}
+.index-card-container {
+    float: left;
+    margin-left: 18px;
+    border-radius: 4px;
+    margin-bottom: 12px;
+    width: 216px;
+    height:212px;
+    position: relative;
+    transition: .3s all linear;
+}
+.course-card-container .course-card-top.hashadow {
+    overflow: hidden;
+}
+.course-card-container .course-card-top {
+    width: 216px;
+    height: 120px;
+    position: relative;
+    border-radius: 8px;
+    transition: all .3s;
+}
+.course-card-container .course-card-top .course-banner {
+    width: 100%;
+    height: 100%;
+    background-color: #f3f5f7;
+    border-radius: 8px;
+}
+
+
+.course-card-container .course-card-top .course-label {
+    position: absolute;
+    bottom: 6px;
+    left: 8px;
+    font-size: 12px;
+    color: #fff;
+    line-height: 16px;
+}
+.course-card-container .course-card-top .course-label label {
+    display: inline-block;
+    background: rgba(7,17,27,.4);
+    border-radius: 12px;
+    padding: 4px 8px;
+    margin-right: 4px;
+    margin-bottom: 2px;
+    margin-right: 0;
+    font-weight: 200;
+}
+.course-card-container .course-card-content {
+    padding: 12px 8px;
+}
+.course-card-container .course-card-content .course-card-name {
+    font-size: 16px;
+    color: #07111b;
+    line-height: 24px;
+    word-wrap: break-word;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    max-height: 46px;
+    transition: all .3s;
+}
+.course-card-container .course-card-content .course-card-info {
+    font-size: 12px;
+    color: #93999f;
+    line-height: 24px;
+
+    font-weight: 400;
+}
+.course-card-price.sales {
+    color: #f01414!important;
+}
+.course-card-price {
+    font-size: 12px;
+    color: #4d555d;
+    line-height: 20px;
+}
+.course-card-container .course-card-content .course-card-info span {
+    display: inline-block;
+    margin-right: 12px;
+}
+
+.course-card-container .course-card-content .course-card-info .icon-set_sns {
+    margin-right: 2px;
+}
+.search-list-warp{
+    overflow: hidden;
+}
+.video-list{
+    margin: 20px 0;
+}
+.course-card-container:hover .course-card-top.hashadow {
+    box-shadow: 0 8px 16px 0 rgba(7,17,27,.1);
+}
+.course-card-container:hover .course-card-name {
+    color: #f01414!important;
+}
+.index-card-container{
+    margin-bottom: 10px;
+    overflow: hidden;
+}
+
+
+
+.kn-img {
+    width: 150px;
+    height: 120px;
+    float: left;
+    margin-left: 10px;
+}
+
+.kn-img img {
+    width: 100%;
+    height: 100%;
+}
+
+.kn-info {
+    float: left;
+    width: 70%;
+    margin-left: 10px;
+}

@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="./css/index.css">
+    <link rel="stylesheet" href="./css/login.css">
+    <link rel="stylesheet" href="./css/public.css">
+    <script src="./js/jquery-1.8.3.js" type="text/javascript"></script>
+    <script src="./js/vue.min.js"></script>
+    <script src="./js/public.js"></script>
+    <script src="./js/index.js"></script>
+    <script src="./js/axios.min.js"></script>
+    <script src="./js/axios.min.js"></script>
+    <title>登录</title>
+</head>
+
+<body>
+    <div id="root" class="authcenter">
+        <div class="authcenter-head">
+            <div class="container fn-clear">
+                <ul class="container-left">
+                    <li class="container-left-item container-left-first">
+                        <a href="./index.html" class="on" seed="authcenter-mobile">农情分析信息平台</a>
+                    </li>
+                </ul>
+                <ul class="container-right">
+                    <li class="container-right-item"><a href="./index.html" target="_blank" seed="alipay-homepage" title="首页">首页</a></li>
+                    <li class="container-seperator"></li>
+                    <li class="container-right-item"><a href="./productList.html?catid=0" target="_blank" seed="authcenter-help" title="供应">供应</a></li>
+                    <li class="container-seperator"></li>
+                    <li class="container-right-item container-right-last"><a href="./seek_list.html" target="_blank" seed="authcenter-advice" title="求购">求购</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="app-land text-center">
+            <div class="app-land-main before">
+                <div class="land-ico"></div>
+                <div class="land-form animation">
+                    <div class="normal_div">
+                        <div class="land-form-top text-center">
+                            用户登录
+                        </div>
+                        <div class="land-form-group">
+                            <div class="land-box-group">
+                                <label><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAIAAADYYG7QAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAA3FpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMy1jMDExIDY2LjE0NTY2MSwgMjAxMi8wMi8wNi0xNDo1NjoyNyAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wTU09Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9tbS8iIHhtbG5zOnN0UmVmPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvc1R5cGUvUmVzb3VyY2VSZWYjIiB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtcE1NOk9yaWdpbmFsRG9jdW1lbnRJRD0ieG1wLmRpZDo4OGYyMGU5OS04ZGE0LWU4NDktYWEyOS0xZWQ3NDA2MGJlYTkiIHhtcE1NOkRvY3VtZW50SUQ9InhtcC5kaWQ6NTg1RDYyOEYyNjM2MTFFN0IwNTJFRjQwM0Q2ODA2OEEiIHhtcE1NOkluc3RhbmNlSUQ9InhtcC5paWQ6NTg1RDYyOEUyNjM2MTFFN0IwNTJFRjQwM0Q2ODA2OEEiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENDIChXaW5kb3dzKSI+IDx4bXBNTTpEZXJpdmVkRnJvbSBzdFJlZjppbnN0YW5jZUlEPSJ4bXAuaWlkOjg4ZjIwZTk5LThkYTQtZTg0OS1hYTI5LTFlZDc0MDYwYmVhOSIgc3RSZWY6ZG9jdW1lbnRJRD0ieG1wLmRpZDo4OGYyMGU5OS04ZGE0LWU4NDktYWEyOS0xZWQ3NDA2MGJlYTkiLz4gPC9yZGY6RGVzY3JpcHRpb24+IDwvcmRmOlJERj4gPC94OnhtcG1ldGE+IDw/eHBhY2tldCBlbmQ9InIiPz4weHPeAAAB8ElEQVR42uyXPUvDQBjHL7mkJY21tNAWnNTBikptwU3BWQdBnF3ET6CfQpF+AV8GxU1BBykOOripaxG7tIo6qG1toW/pJTmfKoiggdakV4f7kyHkyV1+3D3P/8lJKFlA/0ki+mfiQByIA3EgDsSB2pRkZ3DYJU4HpAkfhvvrknFR0J8bZteAZoJyYlgZVvHXk5uysXJbO82RLmzZlF86iKnfaUAjPfgwrk76JdZAAkIbEcWDhZ8hFQvrEYU1ULwXj3qxVTTqxbFezBRoSMWSYBkFlojKFqhIqE4towZCb4QyBboq6bmG5SchBC8wBSoQuvOoWUW3HrUi4xUCrWXr278xbT5o65l6F4wRDHk5Vb0sGXMhGVKYUpqumMcvZNt65Vr2FNvnskFPc5kzVbtNw4Fe9imnUOwCgSlHVLFfEQOy+JHpZrZmwsZVDcoOCPwQCGaDMlyjPRiY3CKSxaZLEpNqJqoYNFU2kq/k5JXc10yddjKHoJWuDrgX+9zuFkqzbtLdp0biTktXjI4ALYRdm2Mevyy0NTtY9lKqcvRMHPYhaJZ70bZpQDBkP6qOe7HDQPMhl4KFvyUp/KXMh10OA/lkwU7h+CTBYSBKETO1VPZneeiW9G/+Alt9ntc7Uvb8oMiBOBAH4kAciAO1oncBBgDEZab1sgzjzAAAAABJRU5ErkJggg=="></label>
+                                <input placeholder="用户名" name="username" type="text" v-model="form.account" id="username">
+                            </div>
+                            <div class="land-box-group">
+                                <label><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAIAAADYYG7QAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAA3FpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMy1jMDExIDY2LjE0NTY2MSwgMjAxMi8wMi8wNi0xNDo1NjoyNyAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wTU09Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9tbS8iIHhtbG5zOnN0UmVmPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvc1R5cGUvUmVzb3VyY2VSZWYjIiB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtcE1NOk9yaWdpbmFsRG9jdW1lbnRJRD0ieG1wLmRpZDo4OGYyMGU5OS04ZGE0LWU4NDktYWEyOS0xZWQ3NDA2MGJlYTkiIHhtcE1NOkRvY3VtZW50SUQ9InhtcC5kaWQ6NUU2MjVFQkYyNjM2MTFFNzhBMEZEQTg0NzQ4ODQ5OEYiIHhtcE1NOkluc3RhbmNlSUQ9InhtcC5paWQ6NUU2MjVFQkUyNjM2MTFFNzhBMEZEQTg0NzQ4ODQ5OEYiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENDIChXaW5kb3dzKSI+IDx4bXBNTTpEZXJpdmVkRnJvbSBzdFJlZjppbnN0YW5jZUlEPSJ4bXAuaWlkOjg4ZjIwZTk5LThkYTQtZTg0OS1hYTI5LTFlZDc0MDYwYmVhOSIgc3RSZWY6ZG9jdW1lbnRJRD0ieG1wLmRpZDo4OGYyMGU5OS04ZGE0LWU4NDktYWEyOS0xZWQ3NDA2MGJlYTkiLz4gPC9yZGY6RGVzY3JpcHRpb24+IDwvcmRmOlJERj4gPC94OnhtcG1ldGE+IDw/eHBhY2tldCBlbmQ9InIiPz7myEUCAAABbklEQVR42uzWP0vDQBQA8FzaxtgOraDJWjfBjn6CroIF3TsI1VUE/RIiztLvoKhgF8kXEB0kDk665uKfFBItuabPhxmkk2lL/hje4ziOI4Ef797LhUm9dylLIUsZCwIRiEAEIhCBJoziLC9v6cpefW6tWsD1bT84eRmcW2JGEJv6tj9emd+vq7joDwHnapHhfPQ8OHz6SuHIMDeoeROwfucu3Dg4Nu7dDwEHy2pLK6UAwpPCuf3gXdsC84Pjiott08PNMG1Jg7Bu8KR69ljFXHLhBRCWVNIgVWbuEGB8cwSSG0C5wHLV9pN12aZeOl2tLCp/58D2oWN6F1zEC7KbtSiaMLgPuuHEe2TRNRiawvJQQ7kDnVliyXA0w5mifmMB7T56rz5gT+38fKbTB7HfBcsEqNuoYDfpitxtlNP/H8LAu73VrFGXZRaE3RT9YcsfxQ7C+5JHM6GmY34m+k9NNUQgAhGIQAQi0P8AfQswAPF9gDhzAD2CAAAAAElFTkSuQmCC"></label>
+                                <input type="password" name="password" placeholder="密码" v-model="form.password" id="password">
+                            </div>
+                            <!-- <el-checkbox v-model="checked">记住密码</el-checkbox> -->
+                            <el-button native-type="submit" class="btn-land" @click="onSubmit">登录</el-button>
+                            <p><a href="./reg.html">没有账号? 去注册</a></p>
+                            <div class="msg">
+                                <span id="message"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+<script>
+    var GETBASE, GETUUID, GETREGIONID, GETAPIROOT;
+    if (typeof(window.getBaseUrl) != 'undefined') {
+        GETBASE = window.getBaseUrl();
+        GETUUID = window.getUuid();
+        GETREGIONID = window.getRegionId();
+        GETAPIROOT = window.getApiRoot();
+    } else {
+        GETBASE = 'http://36.7.159.225:16000/api/as/file/';
+        GETUUID = '24acfc1215da435cbe76c69beb07f32b';
+        GETREGIONID = '101221002';
+        GETAPIROOT = 'http://36.7.159.225:16000/api/as';
+    }
+    var app = new Vue({ //vue对象
+        el: '#root',
+        data: {
+            checked: false,
+            getApiRoot: GETAPIROOT,
+            baseUrl: GETBASE,
+            uuid: GETUUID,
+            regionID: GETREGIONID,
+            form: {
+                uuid: this.uuid,
+                account: '',
+                password: ''
+            }
+        },
+        methods: {
+            onSubmit: function() {
+                if ($.trim(this.form.account) === '') {
+                    alert("账号必填");
+                    return false;
+                }
+                if ($.trim(this.form.password) === '') {
+                    alert("密码必填");
+                    return false;
+                }
+                this.doAction(this);
+
+            },
+
+            // 注册 add by liulei
+            doAction: function(obj) {
+                var self = this;
+                var param = '{}';
+                var url = this.getApiRoot + '/user/login';
+
+                $.ajax({
+                    type: 'POST',
+                    url: url,
+                    data: JSON.stringify(self.form),
+                    dataType: 'JSON',
+                    contentType: 'application/json',
+                    success: function(res) {
+                        if (res.code == 1000000) {
+                            sessionStorage.setItem("token", res.data.token);
+                            var token = sessionStorage.getItem("token");
+                            location.href = './user_center.html';
+
+                            self.showMsg('登录成功');
+                        } else if (res.code = -100001) {
+                            // alert(res.msg);
+                            self.showAlert('提示', res.msg, '确定')
+                        } else {
+                            // alert('登录失败,请重试');
+                            self.showAlert('提示', '登录失败,请重试', '确定')
+                        }
+
+                    },
+                    error: function() {
+                        alert('服务异常,请稍后再试');
+                    }
+                })
+            },
+
+            //提示框
+            showAlert: function(title, msg, btnTitle) {
+                this.$alert(msg, title, {
+                    confirmButtonText: btnTitle
+                        // callback: action => {
+                        //     // this.$message({
+                        //     //     type: 'info',
+                        //     //     message: `action: ${ action }`
+                        //     // });
+                        // }
+                });
+            },
+
+            showMsg: function(msg) {
+                this.$message({
+                    type: 'info',
+                    message: msg
+                });
+            }
+
+        },
+
+        mounted: function() {
+
+
+        }
+    });
+</script>
+
+</html>

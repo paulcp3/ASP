@@ -1,0 +1,38 @@
+.el-container{
+  width: 960px;
+  margin: 0 auto;
+}
+.el-menu-item.is-active {
+  color: #03A050;
+  min-width: 150px;
+
+}
+#personal .personal_main {
+  width: 960px;
+  margin: 0 auto;
+  padding: 20px 0 0 0 ;
+}
+#personal .personal_content {
+  /* padding: 20px; */
+  background: #fff;
+}
+
+#personal .personal_content1 {
+  /* padding: 20px; */
+  /* background: #fff; */
+}
+#personal .personal_content .content_title {
+  border-bottom: 1px solid #eee;
+  color: #333;
+  padding: 10px 20px;
+  margin-bottom: 20px;
+  background-color: #fff;
+}
+#personal .personal_content .form {
+  width: 55%;
+  padding: 0 40px 20px 0;
+}
+#personal .personal_content .form.large {
+  width: 80%;
+
+} 

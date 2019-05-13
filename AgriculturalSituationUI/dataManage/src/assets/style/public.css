@@ -1,0 +1,359 @@
+/*
+ 清除内外边距
+*/
+html,
+body,
+div,
+span,
+applet,
+object,
+iframe,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+blockquote,
+a,
+abbr,
+acronym,
+address,
+big,
+cite,
+code,
+del,
+dfn,
+em,
+img,
+ins,
+kbd,
+q,
+s,
+samp,
+small,
+strike,
+strong,
+sub,
+sup,
+tt,
+var,
+b,
+u,
+i,
+center,
+/* structural elements 结构元素 */
+dl,
+dt,
+dd,
+ul,
+ol,
+li,
+/* list elements 列表元素 */
+pre,
+/* text formatting elements 文本格式元素 */
+form,
+fieldset,
+legend,
+button,
+input,
+textarea,
+/* form elements 表单元素 */
+table,
+caption,
+tbody,
+tfoot,
+thead,
+tr,
+th,
+td
+
+/* table elements 表格元素 */
+  {
+  margin: 0;
+  padding: 0;
+}
+
+/*
+ 设置默认字体
+*/
+* {
+  box-sizing: border-box;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-size: 100%;
+}
+
+address,
+cite,
+dfn,
+em,
+var,
+i {
+  font-style: normal;
+}
+
+/* 将斜体扶正 */
+code,
+kbd,
+pre,
+samp {
+  font-family: courier new, courier, monospace;
+}
+
+/* 统一等宽字体 */
+small {
+  font-size: 12px;
+}
+
+/* 小于 12px 的中文很难阅读，让 small 正常化 */
+/*
+ 重置列表元素
+*/
+
+ul,
+ol,
+li {
+  list-style: none;
+}
+
+/*
+ 重置文本格式元素
+*/
+a {
+  text-decoration: none;
+  color: #333333;
+}
+
+a:hover {
+  text-decoration: none;
+  color: #333333;
+}
+
+sup {
+  vertical-align: text-top;
+}
+
+/* 重置，减少对行高的影响 */
+sub {
+  vertical-align: text-bottom;
+}
+
+/*
+ 重置表单元素
+*/
+legend {
+  color: #000;
+}
+
+/* for ie6 */
+fieldset,
+img {
+  border: 0;
+}
+
+/* img 搭车：让链接里的 img 无边框 */
+
+textarea {
+  resize: none;
+}
+
+/* 使得表单元素在 ie 下能继承字体大小 */
+input {
+  vertical-align: middle;
+  border: none;
+}
+
+/*input, select, textarea { box-shadow: none; appearance: normal; -moz-appearance: normal; -webkit-appearance : none; resize: none; }*/
+/* 注：optgroup 无法扶正 */
+/* 清除浮动 */
+.clearfix:after {
+  content: ".";
+  display: block;
+  height: 0;
+  clear: both;
+  visibility: hidden;
+}
+
+.clearfix {
+  display: inline-table;
+}
+
+/* Hides from IE-mac \*/
+
+.clearfix {
+  display: block;
+}
+
+/* End hide from IE-mac */
+.clear {
+  padding: 0;
+  margin: 0;
+  clear: both;
+  overflow: hidden;
+}
+
+/*
+ 重置表格元素
+*/
+
+/*
+ 右侧滚动条
+*/
+.height100 {
+  height: 100%;
+}
+
+* {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  font-size: 12px;
+}
+
+body {
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size: 14px;
+  line-height: 1.42857143;
+  color: #333;
+  background-color: #fff;
+}
+
+.text-left {
+  text-align: left;
+}
+
+.padding10 {
+  padding: 10px;
+}
+
+.text-right {
+  text-align: right;
+}
+
+::-ms-clear {
+  display: none;
+}
+
+h4 {
+  margin-top: 0 !important;
+  margin-bottom: 0 !important;
+}
+
+.ellipsis-3 {
+  display: -webkit-box;
+  display: -moz-box;
+  overflow: hidden;
+  white-space: normal !important;
+  text-overflow: ellipsis;
+  -moz-line-clamp: 3;
+  word-wrap: break-word;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+}
+
+.ellipsis-2 {
+  display: -webkit-box;
+  display: -moz-box;
+  overflow: hidden;
+  white-space: normal !important;
+  text-overflow: ellipsis;
+  -moz-line-clamp: 2;
+  word-wrap: break-word;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+}
+
+.ellipsis-1 {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.tran200 {
+  -webkit-transition: all 0.2s linear;
+  -moz-transition: all 0.2s linear;
+  transition: all 0.2s linear;
+}
+
+.auto {
+  margin: 0 auto;
+}
+
+.fl {
+  float: left;
+}
+
+.fr {
+  float: right;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.wd100 {
+  width: 100%;
+}
+
+.border-top-none {
+  border-top: none !important;
+}
+
+.wd50 {
+  width: 50%;
+}
+
+.hidden {
+  overflow: hidden;
+}
+
+html,
+body {
+  height: 100%;
+  padding: 0;
+  margin: 0;
+  overflow-x: hidden;
+}
+
+html {
+  overflow-y: hidden;
+  overflow-x: hidden;
+}
+
+body {
+  overflow-y: auto;
+}
+
+.animation {
+  transition: all 1.5s;
+  -webkit-transition: all 1.5s;
+  -o-transition: all 1.5s;
+  -moz-transition: all 1.5s;
+}
+
+.ani {
+  transition: all 0.5s;
+  -webkit-transition: all 0.5s;
+  -o-transition: all 0.5s;
+  -moz-transition: all 0.5s;
+}
+
+.cursor {
+  cursor: pointer;
+}
+
+.fl {
+  float: left;
+}
+
+.fr {
+  float: right;
+}

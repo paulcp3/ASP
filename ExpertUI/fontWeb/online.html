@@ -1,0 +1,605 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>在线问答 - 黄山现代农业示范区专家咨询知识库平台</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" media="screen" href="public/css/index.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <!-- <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet"> -->
+    <link href="online/css/quill.snow.css" rel="stylesheet">
+
+    <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous"> -->
+    <script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+    <!-- <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script> -->
+    <script src="online/js/highlight.min.js"></script>
+    <!-- <script src="https://cdn.quilljs.com/1.3.6/quill.js"></script> -->
+    <script src="online/js/quill.js"></script>
+
+    <link rel="stylesheet" href="zhuanjia/css/index.css">
+    <link rel="stylesheet" href="online/css/index.css">
+    <link rel="stylesheet" href="element-ui/index.css">
+    <link rel="stylesheet" href="search/search.css">
+    <script src="./element-ui/vue.min.js"></script>
+    <script src="./element-ui/index.js"></script>
+    <script src="public/js/swiper.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+    <script src="public/js/main.js"></script>
+    
+    <!-- add by liulei -->
+    <script src="public/js/public.js"></script>
+    <script src="layer/layer.js"></script>
+    <style>
+        .el-pagination {
+            white-space: nowrap;
+            color: #303133;
+            font-weight: 700;
+            text-align: center;
+            margin-bottom: 20px;
+            background: #fff;
+            padding: 10px;
+        }
+        #standalone-container {
+            max-width: 720px;
+        }
+        #editor-container {
+            height: 120px;
+        }
+        #custom-button{
+            width: 60px;
+            background: #00a1ff;
+            color: #fff;
+            margin-left: 10px;
+        }
+    </style>
+</head>
+<body>
+<div id="root">
+    <div class="header">
+        <div class="header-container h-main">
+            <div class="h-map">
+                <!-- <a href="#" class="h-mappic">网站地图</a> -->
+                <!-- <a href="#" class="h-phone">手机APP</a>  -->
+            </div>
+            <div class="h-register" v-if="isLogin">
+                    <a href="#" class="h-welcom">你好，欢迎访问本网站！</a>
+                    <a href="./personal.html" v-if="userType ==4 ">会员中心</a>
+                    <a href="./personal_expert.html" v-if="userType ==3 ">专家中心</a>
+                </div>
+                <div class="h-register" v-else>
+                        <a href="#" class="h-welcom">你好，欢迎访问本网站！</a>
+                        <a href="./login.html">登录</a> | <a href="./register.html">注册</a>
+                </div>
+        </div>           
+    </div>        
+    <div class="header-main">
+        <div  class="h-mainContainer h-serrchMain">
+        <div  class="h-logo">
+            <img src="public/image/logo-2.png">
+        </div>
+        <div class="search-bar">
+                <el-tabs  type="card"  v-model="SearchName" @tab-click="searchClick" >
+                        <el-tab-pane label="预警" name="预警"></el-tab-pane>
+                        <el-tab-pane label="防治" name="防治"></el-tab-pane>
+                        <el-tab-pane label="病虫害" name="病虫害"></el-tab-pane>
+                        <el-tab-pane label="知识库" name="知识库"></el-tab-pane>
+                        <el-tab-pane label="专家" name="专家"></el-tab-pane>
+                </el-tabs>
+            <div class="h-search">
+            <i class="el-icon-search h-searchIco"></i>
+            <input type="text" class="h-searchText" v-model="keyWords" :placeholder="'请输入关键词搜索'+SearchName+'信息'"> 
+            <button class="h-searchBtn"  @click="onSearch">搜索</button>
+            <!-- <div class="h-searchHot">
+                <a href="#">水稻防治</a> <a href="#">小麦防治</a> <a href="#">玉米防治</a> <a href="#">蔬菜防治</a>
+            </div> -->
+            </div>
+        </div>
+        <div  class="h-qrcode">
+                <img src="public/image/qrcode.png">
+            </div>
+        <!-- <div class="h-msg" >
+                <a v-if="!isLogin" href="./login.html" class="h-message">立即提问</a>
+                <a v-else-if="isLogin && userType==4" href="./personal.html?epId=0" class="h-message">立即提问</a>
+            </div> -->
+    </div>
+        <div class="h-menu h-mainContainer">
+        <ul class="h-menuMain">
+            <li><a href="./index.html">首页</a></li>
+            <li><a href="./zhuanjia.html" >专家库</a></li>
+            <li class="active"><a href="./online.html">在线问答</a></li>
+            <li><a href="./knowloge.html" >农业知识库</a></li>
+            <li><a href="./video.html" >视频培训</a></li>
+            <!-- <a href="#" class="h-ask">我要提问</a> -->
+        </ul>
+        </div>
+    </div>
+    <div class="main">
+        <div class="banner">
+            <img src="zhuanjia/image/u12.jpg" alt="">
+        </div>
+        <!-- <div class="zj-nav">
+                <div class="navAll">
+                    <ul class="nav-top clear">
+                        <li class="nav-topItem" :class="index == menuActive ? 'active':''" v-for="(item,index) in typeList" @click="handlerClick(index)">{{item.label}}</li>
+                    </ul>
+                    <ul class="nav-bot">
+                        <li class="nav-itemBox on">
+                            <ul class="nav-item clear">
+                                <li :class="-1 == currtActive ? 'active':''"  @click="handlerSubClick(-1)">全部</li>
+                                <li :class="index == currtActive ? 'active':''" v-for="(sub,index) in currentType.children" @click="handlerSubClick(index)">{{sub.label}}</li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+            </div> -->
+        <div class="ol-content">
+            <div class="ol-ans">
+                <div class="ol-ansItem" v-for="(item, index) in questionList">
+                    <h3><a :href="'./answer.html?identifier=' + item.id">{{item.title}}</a></h3>
+                    <div class="ol-ansItemInfo clear">
+                        <!-- <img src="online/image/142.jpg" alt=""> -->
+                        <span>{{item.user.realName}}</span>
+                        <p>{{item.content}}</p>
+                    </div>
+                    <!-- v-if="item.fileList[0] && item.fileList[0].url.length>0" -->
+                    <div class="eq-img" v-if="item.fileList && item.fileList.length > 0">
+                        <img  v-for="img in item.fileList" :src= "baseUrl + img.url" @click="onShowImage(img.url)" />
+                    </div>
+                    <div class="ol-des"> 
+                        <span > <i class="glyphicon glyphicon-comment"></i> {{item.answerList.length}}</span> 
+                        <span class="btn-answer"  @click="onQuickAnswer(index)"> 快速回答</span>
+                        <span>{{item.createTime | formatDate}}</span> </div>
+                    <h4  v-if="item.answerList.length > 0">回答：</h4>
+                    <div class="ol-ansListInfo" v-if="item.answerList.length > 0" v-for="answer in item.answerList">
+                        <div class="ol-ansListItemInfo clear">
+                            <img src="public/image/doctor_hds.jpg" alt="">
+                            <span v-if="answer.user != null">{{answer.user.realName}}</span>
+                            <p>{{answer.content}}</p>
+                        </div>
+                        <!-- <div class="ol-des" style="margin-bottom:10px;"> <span> <i class="glyphicon glyphicon-comment"></i> 3</span> <span>2019-03-02 13:23</span> </div> -->
+                    </div>
+                    <el-form ref="form" :model="replyForm" v-if="formIndex == index" style="width:90%;margin:20px auto; display: flex;">
+                            <el-input
+                                style="width: 560px"
+                                type="textarea"
+                                autosize
+                                placeholder="快速回答..."
+                                v-model="replyForm.content">
+                            </el-input>
+                            <el-button type="primary" @click="onSubmitAnswer(index)" style="height:33px;line-height:33px;padding:0px;width:60px;margin-left:15px;">回答</el-button>
+                    </el-form> 
+                    <!-- <div id="standalone-container"> -->
+                    <!-- </div> -->
+                </div>
+                <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page.sync="currentPage" :page-size="pageSize" layout="prev, pager, next, jumper"
+            :total="total">
+                </el-pagination>      
+            </div>
+            <div class="ol-tuijian">
+                <div class="ol-tjItem"> 
+                    <h3>热门问题</h3>
+                    <ul class="ol-list">
+                        <li v-for="item in questionHot">
+                            <i class="glyphicon glyphicon-grain"></i> 
+                            <a :href="'./answer.html?identifier=' + item.id">{{item.title}}</a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="ol-tjItem"> 
+                    <h3>推荐问题</h3>
+                    <ul class="ol-list">
+                        <li v-for="item in questionRecom">
+                            <i class="glyphicon glyphicon-grain"></i> 
+                            <a :href="'./answer.html?identifier=' + item.id">{{item.title}}</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="footer">
+        <!-- <div class="f-concate">
+                    <div class="f-cUs">
+                        <p class="f-cTitle">联系我们</p>
+                        <p class="f-cInfo"> <i class="el-icon-phone"></i> 400-xxx-xxxx</p>
+                    </div>
+                    <div class="f-cAD">
+                        <p class="f-cTitle">广告合作</p>
+                        <p class="f-cInfo"> <i class="el-icon-phone-outline"></i> 0792-xxxxxxxx</p>
+                    </div>
+                    <div class="f-cWEB">
+                        <p class="f-cTitle">投稿热线、网战运营</p>
+                        <p class="f-cInfo"> <i class="el-icon-message"></i> 400-xxx-xxxx</p>
+                    </div>
+                </div> -->
+                <div class="f-info">
+                        <p></p>
+                        <span>Copyright © 2019 黄山现代农业产业园管委会 版权所有</span>
+                        <p></p>
+                    </div>
+    </div>
+</div>
+</body>
+<script>
+    var token = '';
+    // window.filterHelper = new FilterValueHelper();
+    var GETBASE,GETUUID,GETREGIONID,GETAPIROOT;
+    if(typeof(window.getBaseUrl) !='undefined'){
+        GETBASE= window.getBaseUrl();
+        GETUUID= window.getUuid();
+        GETREGIONID= window.getRegionId();
+        GETAPIROOT = window.getApiRoot();
+    }else{
+        // GETBASE= 'http://localhost:16000/api/expert/file/';
+        // GETUUID= '24acfc1215da435cbe76c69beb07f32b';
+        // GETREGIONID= '101221002';
+        // GETAPIROOT = 'http://localhost:16000/api/expert';
+
+        GETBASE= 'http://36.7.159.225:16000/api/expert/file/';
+        GETUUID= '24acfc1215da435cbe76c69beb07f32b';
+        GETREGIONID= '101221002';
+        GETAPIROOT = 'http://36.7.159.225:16000/api/expert';
+    }
+
+    var line = new Vue({
+        el:"#root",
+        data:{
+            baseUrl:GETBASE,
+            uuid:GETUUID,
+            regionID:GETREGIONID,
+            getApiRoot:GETAPIROOT,
+
+            isLogin:false,
+            userType:4,
+            currtActive:-1,
+            menuActive:0,
+            SearchName: '预警',
+            keyWords:'',
+            currentPage: 1,
+            pageSize: 3,
+            total: 0,
+            replyForm:{
+                questionId:'1',
+                uUserInfoId:GETUUID,
+                content:'',
+            },
+            replyIndex:0,
+
+            formIndex:-1,
+            replyForm:{
+                questionId:'1',
+                uUserInfoId:GETUUID,
+                content:'',
+            },
+            
+
+            typeList:[//分类
+
+            ],
+            currentType:{
+       
+            },
+
+            currentSubType:{
+            },
+
+            questionList:[
+                
+ 
+            ],
+
+            currentQuestion:{},
+
+            questionHot:[
+               
+            ],
+
+            questionRecom:[
+               
+            ],
+            ansList:[
+                
+            ]
+
+            
+        },
+
+        methods:{
+
+            handleSizeChange:function(val) {
+              
+            },
+            handleCurrentChange:function(val) {
+                
+                // add by liulei
+                this.loadQuestion();
+            },
+
+            handlerClick:function(index){
+                this.menuActive = index;
+
+                this.currentType = this.typeList[index];
+                this.currtActive = -1;
+
+                this.currentSubType = this.currentType.children[0];
+            },
+
+            handlerSubClick:function(index){
+                this.currtActive = index;
+
+                this.currentSubType = this.currentType.children[index];
+                this.currentPage = 0;
+
+                this.loadQuestion();
+            },
+
+            onShowImage:function(name){
+
+                var url = this.baseUrl + name;
+                // alert(url);
+                this.showImg(url);
+            },
+
+            searchClick: function() {
+
+            },
+            onSearch:function(){
+                if (this.SearchName == '预警') {
+                location.href = './searchList.html?type=1&keyword=' + this.keyWords;
+            } else if (this.SearchName == '防治') {
+                location.href = './searchList.html?type=2&keyword=' + this.keyWords;
+            } else if (this.SearchName == '病虫害') {
+                location.href = './searchList.html?type=3&keyword=' + this.keyWords;
+            }else if (this.SearchName == '知识库') {
+                location.href = './searchList.html?type=4&keyword=' + this.keyWords;
+            }else if (this.SearchName == '专家') {
+                location.href = './searchList.html?type=5&keyword=' + this.keyWords;
+            }
+            },
+
+            onSubmitAnswer:function(index) {
+                var self = this;
+                // console.log('submit!' + index);
+                // alert('submit!' + index);
+                if($.trim(self.replyForm.content)===''){
+                    // alert("账号必填");
+                    showMsg(this,'请输入内容');
+                    return false;
+                }
+
+                self.replyIndex = index;
+                self.currentQuestion = self.questionList[index];
+                self.replyForm.questionId = self.currentQuestion.id;
+
+                this.doAddAction(this);
+            },
+
+            onQuickAnswer:function(index){
+                // alert('快速回答' + index);
+
+                if(this.formIndex == index)
+                    this.formIndex = -1;
+                else
+                    this.formIndex = index;
+            },
+
+
+            showImg:function(url){
+
+                // $('.show').on('click',function(){
+                    var img = '<img src="'+url+'">'
+                    layer.open({
+                        type: 1,//Page层类型
+                        area: [img.width + 'px', img.height + 'px'],
+                        title: false,
+                        shade: 0.6 ,//遮罩透明度
+                        maxmin: false ,//允许全屏最小化
+                        anim: 1 ,//0-6的动画形式，-1不开启
+                        content: img
+                    }); 
+                // });
+
+            },
+
+            // 加载分类列表 add by liulei
+            loadIndustrytype:function(){
+                var self = this;
+                var param = '{}';
+
+                var url =  this.getApiRoot + '/industrytype/gettree/';
+         
+                $.ajax({
+                    method:'GET',
+                    url:url,
+                    dataType:'JSON',
+                    contentType:'application/json',
+                    success:function(res){
+                        console.log('返回结果-分类tree:' + JSON.stringify(res));
+                        self.typeList = res.data.list;
+                        self.currentType = self.typeList[0];
+                        self.currtActive = -1;
+                    },
+                    error:function(){
+    
+                    }
+                })
+            },
+
+            // 加载问题列表 add by liulei
+            loadQuestion:function(){
+                var self = this;
+                var param = '{}';
+
+                var insId = 0;
+                // if(self.currtActive >= 0){
+                //     insId = self.currentSubType.id;
+                // }
+                // debugger
+                var url =  this.getApiRoot + '/question/getpage/' +insId+'/'+self.currentPage+'/' + self.pageSize;
+         
+                $.ajax({
+                    method:'GET',
+                    url:url,
+                    dataType:'JSON', 
+                    contentType:'application/json',
+                    success:function(res){
+                        console.log('返回结果-问题列表:' + JSON.stringify(res));
+                        self.questionList = res.data.list;
+                        self.total = res.data.total;
+                    },
+                    error:function(){
+    
+                    }
+                })
+            },
+
+            // 加载 某个问题的 最新回答
+            loadQuestionAnswer:function(quiestionId){
+                var self = this;
+                var param = '{}';
+
+            //   debugger
+                var url =  this.getApiRoot + '/answer/getbyquestion/' +quiestionId+'/0/5';
+         
+                $.ajax({
+                    method:'GET',
+                    url:url,
+                    dataType:'JSON', 
+                    contentType:'application/json',
+                    success:function(res){
+                        console.log('返回结果-问题最新回答:' + JSON.stringify(res));
+                        // debugger
+                        self.questionList[self.replyIndex].answerList = res.data.list;
+                        // self.total = res.data.total;
+                    },
+                    error:function(){
+    
+                    }
+                })
+            },
+
+            // 加载问题列表-热门 add by liulei
+            loadQuestionHot:function(){
+                var self = this;
+                var param = '{}';
+
+                var url =  this.getApiRoot + '/question/gethot/0/5';
+         
+                $.ajax({
+                    method:'GET',
+                    url:url,
+                    dataType:'JSON',
+                    contentType:'application/json',
+                    success:function(res){
+                        console.log('返回结果-问题热门:' + JSON.stringify(res));
+                        self.questionHot = res.data.list;
+                    },
+                    error:function(){
+    
+                    }
+                })
+            },
+
+            // 加载问题列表-推荐 add by liulei
+            loadQuestionRecom:function(){
+                var self = this;
+                var param = '{}';
+
+                var url =  this.getApiRoot + '/question/getrecom/0/5';
+         
+                $.ajax({
+                    method:'GET',
+                    url:url,
+                    dataType:'JSON',
+                    contentType:'application/json',
+                    success:function(res){
+                        console.log('返回结果-问题推荐:' + JSON.stringify(res));
+                        self.questionRecom = res.data.list;
+                    },
+                    error:function(){
+    
+                    }
+                })
+            },
+
+            // 回答 add by liulei
+            doAddAction:function(obj){
+                var self = this;
+                var param = '{}';
+                var url = this.getApiRoot + '/answer/add';
+                
+                $.ajax({
+                    type:'POST',
+                    url:url,
+                    data:JSON.stringify(self.replyForm),
+                    dataType:'JSON',
+                    contentType:'application/json',
+                    headers: {
+                        Accept:"application/json; charset=utf-8",
+                        token:token
+                    },
+                    success:function(res){
+                        console.log('返回结果:' + JSON.stringify(res));
+                        // debugger
+                        if(res.code == 1000002){    
+                            showMsg(obj, '回答成功');
+
+                            self.replyForm.content = '';
+                            self.loadQuestionAnswer(self.replyForm.questionId);
+
+                        }else if(res.code == -100001){
+                            // alert(res.msg);
+                            showAlert(obj, '提示', res.msg, '确定')
+                        }else if(res.code == -100002){
+                            // alert(res.msg);
+                            showAlert(obj, '提示', '请登录账号', '确定')
+                            location.href = './login.html';
+                        }else{
+                            // alert('登录失败,请重试');
+                            showAlert(obj, '提示', res.msg, '确定')
+                        }
+                        
+                    },
+                    error:function(){
+                        showMsg(obj, '服务异常,请稍后再试');
+                    }
+                })
+            },
+
+            
+        },
+        
+        filters:{
+            //add by liulei
+            formatDate:function(time) {
+                var date = new Date(time);
+                return formatDate(date, 'yyyy-MM-dd hh:mm');
+            }
+        },
+        created:function(){
+
+        },
+        mounted: function () {
+            var self = this;
+
+            token = sessionStorage.getItem("token"); 
+            var userType = sessionStorage.getItem("userType"); 
+            if(token == undefined || token == ''){
+            }else{
+                this.isLogin = true;
+                this.userType = userType;
+            }
+
+            self.loadIndustrytype();
+            self.loadQuestion();
+            self.loadQuestionHot();
+            self.loadQuestionRecom();
+        }
+
+
+    });
+    
+</script>
+</html>

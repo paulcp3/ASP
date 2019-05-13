@@ -1,0 +1,256 @@
+@import 'http://at.alicdn.com/t/font_1038724_vp0l19mkppi.css';
+
+/* 公共头部样式 */
+#app {
+  height: 100%;
+}
+
+.head {
+  height: 65px;
+  background-color: #001529;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 99;
+}
+
+.right-user-infor {
+  height: 100%;
+  padding-right: 15px;
+  .el-dropdown-link{
+    font-size: 12px;
+    color: #fff;
+  }
+  
+}
+.nav-list{
+  .el-dropdown-menu__item{
+    font-size: 12px;
+    text-align: center;
+  }
+}
+
+.right-user-infor>div {
+  display: inline-block;
+  vertical-align: middle;
+  color: #fff;
+  margin: 0 10px;
+  cursor: pointer;
+}
+
+.right-user-infor>div:hover {
+  text-decoration: underline;
+}
+
+/*body 样式*/
+.home {
+  width: 100%;
+  height: 100%;
+}
+
+.body-contair {
+  width: 100%;
+  height: 100%;
+  padding-top: 64px;
+  overflow: hidden;
+  background-color: #dddddd;
+
+  .el-menu {
+    border-right: none;
+  }
+}
+
+.left-menu {
+  width: 200px;
+  height: 100%;
+  background-color: #001529;
+  position: relative;
+  box-shadow: 2px 0 6px rgba(0,21,41,.35);
+}
+
+.left-menu .el-menu-item,
+.left-menu .el-submenu__title {
+  font-size: 12px;
+}
+
+.left-menu .el-submenu .el-menu-item {
+  min-width: 100%;
+  background: #000c17!important;
+
+}
+
+.right-contair {
+  width: calc(~"100% - 205px");
+  height: 100%;
+  position: relative;
+
+  .el-form {
+    * {
+      font-size: 12px;
+    }
+  }
+
+  .box-padding {
+    padding: 10px 5px;
+  }
+}
+.el-dialog__body{
+    padding: 10px 20px!important; 
+}
+.cursor-pointer{
+  cursor: pointer;
+}
+.dialog-form {
+  .el-form {
+    padding: 20px 0;
+    .el-select{
+        width: 100%;
+    }
+    .el-form-item__label {
+      padding-right: 10px;
+    }
+    .el-date-editor.el-input{
+      width: 100%;
+    }
+    .el-form-item__label{
+      font-size: 12px;
+    }
+    .inner-label {
+      padding-right: 15px;
+    }
+
+    .el-input__inner {
+      font-size: 12px;
+    }
+    .el-input-number{
+      width: 100%;
+      .el-input__inner{
+        text-align: left;
+      }
+      
+    }
+  }
+  .el-checkbox{
+      margin-right: 10px;
+  }
+}
+.company-msg{
+  width: 100%;
+  height: 100%;
+  background-color: #fff;
+  .el-form {
+    padding: 20px 0;
+    .el-select{
+        width: 100%;
+    }
+    .el-form-item__label {
+      padding-right: 10px;
+    }
+    .el-date-editor.el-input{
+      width: 100%;
+    }
+  }
+  .el-checkbox{
+      margin-right: 10px;
+  }
+  .search-bar {
+    padding: 10px 0;
+
+    // border-bottom: 1px solid #dcdfe6;
+    .inner-label {
+      padding-right: 15px;
+    }
+
+    .el-input__inner {
+      font-size: 12px;
+    }
+  }
+
+  .table-contair {
+    width: 100%;
+
+    .el-table thead th {
+      background: #FAFAFA;
+    }
+   
+    .el-table td,
+    .el-table th {
+      padding: 10px 0;
+
+      .cell {
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+      }
+    }
+  }
+  /*供应商管理*/
+  &.supplier-manage {}
+  /*客户管理*/
+  &.customer-manage {}
+  &.production-config{
+    .el-form-item{
+        margin-bottom: 10px;
+    }
+  }
+}
+.el-table th {
+  background: #FAFAFA!important;
+}
+.el-table td,
+    .el-table th {
+      padding: 10px 0!important;
+      .cell {
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+      }
+    }
+.el-table .cell{
+        overflow: hidden!important;
+        white-space: nowrap!important;
+        text-overflow: ellipsis!important;
+}
+.el-dialog__header {
+  box-shadow: 0px 1px 1px 0px #e7e9ee;
+}
+.el-tabs__header{
+  .el-tabs__nav{
+    .el-tabs__item{
+      font-size: 12px;
+      height: 35px;
+      line-height: 35px;
+      &:first-child{
+        .el-icon-close{
+          display: none;
+        }
+      }
+    }
+  }
+  
+}
+.purchaseTabs{
+  .el-tabs__header{
+    display: none;
+  }
+}
+.public-form{
+  .el-form-item__label,.el-input__inner{
+    font-size: 12px;
+  }
+}
+.wd620.el-dialog{
+  width: 620px;
+  .el-form-item{
+    margin-bottom: 10px;
+  }
+  .el-date-editor.el-input, .el-date-editor.el-input__inner {
+    width: 186px;
+}
+}
+.el-cascader__label{
+  font-size: 12px!important;
+}
+
+

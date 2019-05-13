@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>问答 - 黄山现代农业示范区专家咨询知识库平台</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+    <link href="online/css/quill.snow.css" rel="stylesheet">
+    <script src="online/js/highlight.min.js"></script>
+    <script src="online/js/quill.js"></script>
+
+
+
+    <link rel="stylesheet" type="text/css" media="screen" href="public/css/index.css">
+    <link rel="stylesheet" href="online/css/index.css">
+    <link rel="stylesheet" href="element-ui/index.css">
+    <link rel="stylesheet" href="search/search.css">
+    <script src="element-ui/vue.min.js"></script>
+    <script src="element-ui/index.js"></script>
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+    <!-- add by liulei -->
+    <script src="public/js/public.js"></script>
+    <script src="layer/layer.js"></script>
+    
+    <style>
+        .message{
+            width: 960px;
+            margin: 20px auto;
+        }
+
+        .el-pagination {
+            white-space: nowrap;
+            color: #303133;
+            font-weight: 700;
+            text-align: center;
+            margin-bottom: 20px;
+            background: #fff;
+            padding: 10px;
+        }
+
+        .btn-sum{
+            padding: 20px;
+            text-align: center;
+        }
+        #standalone-container {
+            /* max-width: 720px; */
+        }
+        #editor-container {
+            height: 120px;
+        }
+        #custom-button{
+            width: 60px;
+            background: #00a1ff;
+            color: #fff;
+            margin-left: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="root">
+        <div class="header">
+            <div class="header-container h-main">
+                <div class="h-map">
+                    <!-- <a href="#" class="h-mappic">网站地图</a> -->
+                    <!-- <a href="#" class="h-phone">手机APP</a> -->
+                </div>
+                <div class="h-register" v-if="isLogin">
+                    <a href="#" class="h-welcom">你好，欢迎访问本网站！</a>
+                    <a href="./personal.html" v-if="userType ==4 ">会员中心</a>
+                    <a href="./personal_expert.html" v-if="userType ==3 ">专家中心</a>
+                </div>
+                <div class="h-register" v-else>
+                    <a href="#" class="h-welcom">你好，欢迎访问本网站！</a>
+                    <a href="./login.html">登录</a> | <a href="./register.html">注册</a>
+                </div>
+            </div>
+        </div>
+        <div class="header-main">
+            <div class="h-mainContainer h-serrchMain">
+                <div class="h-logo">
+                    <img src="public/image/logo-2.png">
+                </div>
+                <div class="search-bar">
+                        <el-tabs  type="card"  v-model="SearchName" @tab-click="searchClick" >
+                                <el-tab-pane label="预警" name="预警"></el-tab-pane>
+                                <el-tab-pane label="防治" name="防治"></el-tab-pane>
+                                <el-tab-pane label="病虫害" name="病虫害"></el-tab-pane>
+                                <el-tab-pane label="知识库" name="知识库"></el-tab-pane>
+                                <el-tab-pane label="专家" name="专家"></el-tab-pane>
+                        </el-tabs>
+                    <div class="h-search">
+                        <i class="el-icon-search h-searchIco"></i>
+                        <input type="text" class="h-searchText" v-model="keyWords" :placeholder="'请输入关键词搜索'+SearchName+'信息'">
+                        <button class="h-searchBtn"  @click="onSearch">搜索</button>
+                        <!-- <div class="h-searchHot">
+                            <a href="#">水稻防治</a> <a href="#">小麦防治</a> <a href="#">玉米防治</a> <a href="#">蔬菜防治</a>
+                        </div> -->
+                    </div>
+                </div>
+                <div  class="h-qrcode">
+                        <img src="public/image/qrcode.png">
+                    </div>
+                <!-- <div class="h-msg" >
+                        <a v-if="!isLogin" href="./login.html" class="h-message">立即提问</a>
+                        <a v-else-if="isLogin && userType==4" href="./personal.html?epId=0" class="h-message">立即提问</a>
+                    </div> -->
+            </div>
+            <div class="h-menu h-mainContainer">
+                <ul class="h-menuMain">
+                        <li><a href="./index.html" >首页</a></li>
+                        <li><a href="./zhuanjia.html">专家库</a></li>
+                        <li><a href="./online.html" >在线问答</a></li>
+                        <li><a href="./knowloge.html" >农业知识库</a></li>
+                        <li><a href="./video.html" >视频培训</a></li>
+                        <!-- <a href="#" class="h-ask">我要提问</a> -->
+                </ul>
+            </div>
+        </div>
+        <div class="container main-top">
+            <div class="wrap-left pull-left">
+                <div style="margin: 10px 20px;">
+                    <el-breadcrumb separator-class="el-icon-arrow-right">
+                        <el-breadcrumb-item>您现在的位置：</el-breadcrumb-item>
+                        <el-breadcrumb-item>问答</el-breadcrumb-item>
+                    </el-breadcrumb>
+                </div>
+
+                <div class="detail-contair">
+                    <h2 class="title">{{question.title}}</h2>
+                    <p id="lianxi" class="xinXi_02"><a>123</a>&nbsp;&nbsp;&nbsp;{{question.createTime | formatDate}}
+                    </p>
+                    <div class="wenZi_02">
+                        {{question.content}}
+                    </div>
+                    <div style="padding:10px 10px;" class="eq-img" v-if="question.fileList && question.fileList.length > 0">
+                        <img  v-for="img in question.fileList" :src= "baseUrl + img.url" @click="onShowImage(img.url)" />
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="message">
+            
+            <div class="m-list">
+                <el-card class="clear" :body-style="{ padding: '20px', borderBottom:'1px solid #DDD',margin: '0 auto'}" v-for="(item, index) in tableData">
+                    <img src="./public/image/doctor_hds.jpg" class="avatar">
+                    <div class="m-listInfo">
+                        <p class="m-autorInfo">{{item.user.realName}}<img src="online/image/rz.png"> {{item.export}}</p>
+                        <!-- style="text-indent: 2em" -->
+                        <p>{{item.content}}</p>
+                        <div class="m-time">{{ item.createTime | formatDate}}</div>
+                        <div class="eq-img" v-if="item.fileList && item.fileList.length > 0">
+                                <img  v-for="img in item.fileList" :src= "baseUrl + img.url" @click="onShowImage(img.url)" />
+                            </div>
+                        <div class="bottom clearfix">
+                            <!-- <el-button type="text" class="button"  @click="onApply(index)" > <i class="el-icon-edit"></i> 回复</el-button> -->
+                        </div>
+                    </div>
+                    
+                    <div style="clear:both"></div>
+                </el-card>
+            </div>
+            <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page.sync="currentPage" :page-size="pageSize" layout="prev, pager, next, jumper"
+                    :total="total">
+            </el-pagination> 
+            <div class="m-reply">
+                <div id="standalone-container">
+                        <div id="toolbar-container">
+                              <span class="ql-formats">
+                                <button class="ql-bold"></button>
+                                <button class="ql-italic"></button>
+                                <button class="ql-underline"></button>
+                                <button class="ql-strike"></button>
+                              </span>
+                              <span class="ql-formats">
+                                <button class="ql-list" value="ordered"></button>
+                                <button class="ql-list" value="bullet"></button>
+                              </span>
+                              <span class="ql-formats">
+                                <button class="ql-link"></button>
+                              </span>
+                              <span class="ql-formats">
+                              </span>
+                            </div>
+                            <div id="editor-container"></div>
+                </div> 
+                <div style="padding:10px 0px;">
+                        <el-upload
+                        class="upload-demo"
+                        action="http://36.7.159.225:16000/api/expert/file/upload"
+                        :on-preview="handlePreview"
+                        :on-remove="handleRemove"
+                        :before-remove="beforeRemove"
+                        multiple
+                        :limit="3"
+                        :on-success = 'handleSuccess'
+                        :on-exceed="handleExceed"
+                        :file-list="uploadList">
+                        <el-button size="small" type="primary">上传图片</el-button>
+                        <div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不超过1MB</div>
+                      </el-upload>
+                </div>
+                
+                <div class="btn-sum">
+                    <el-button type="primary" @click="onSubmitAnswer">确认提交</el-button>
+                </div>
+                
+            </div>
+        </div>
+        <div class="footer">
+                <div class="f-info">
+                        <p></p>
+                        <span>Copyright © 2019 黄山现代农业产业园管委会 版权所有</span>
+                        <p></p>
+                    </div>
+        </div>
+    </div>
+</body>
+<script>
+    var token = '';
+    // window.filterHelper = new FilterValueHelper();
+    var GETBASE,GETUUID,GETREGIONID,GETAPIROOT;
+    if(typeof(window.getBaseUrl) !='undefined'){
+        GETBASE= window.getBaseUrl();
+        GETUUID= window.getUuid();
+        GETREGIONID= window.getRegionId();
+        GETAPIROOT = window.getApiRoot();
+    }else{
+        // GETBASE= 'http://localhost:16000/api/expert/file/';
+        // GETUUID= '24acfc1215da435cbe76c69beb07f32b';
+        // GETREGIONID= '101221002';
+        // GETAPIROOT = 'http://localhost:16000/api/expert';
+
+        GETBASE= 'http://36.7.159.225:16000/api/expert/file/';
+        GETUUID= '24acfc1215da435cbe76c69beb07f32b';
+        GETREGIONID= '101221002';
+        GETAPIROOT = 'http://36.7.159.225:16000/api/expert';
+    }
+
+    // 获取url键值 传入key 返回 value
+    var identifier = getParameters('identifier');
+
+   var ans =  new Vue({ //vue对象
+        el: '#root',
+        data: {
+            baseUrl:GETBASE,
+            uuid:GETUUID,
+            regionID:GETREGIONID,
+            getApiRoot:GETAPIROOT,
+
+            isLogin:false,
+            userType:4,
+            SearchName: '预警',
+            keyWords:'',
+            currentPage: 0,
+            pageSize: 5,
+            total: 0,
+
+            question:{
+ 
+            },
+
+            currentAnswer:{},
+
+            replyForm: {
+                questionId:'1',
+                uUserInfoId:GETUUID,
+                content:'',
+                userType:4,
+                imgUrlList:[]
+            },
+            tableData: [
+                
+            ],
+            uploadList: []
+        },
+        methods: {
+
+            handleRemove:function(file, fileList) {
+                debugger
+                console.log(file, fileList);
+                this.uploadList = fileList;
+            },
+            handlePreview:function(file) {
+                console.log('handlePreview' + file);
+            },
+            handleExceed:function(files, fileList) {
+                this.$message.warning(`当前限制选择 3 个文件，本次选择了 ${files.length} 个文件，共选择了 ${files.length + fileList.length} 个文件`);
+            },
+            beforeRemove:function(res, file, fileList) {
+                // debugger
+                // this.uploadList.
+                return this.$confirm(`确定移除 ${ file.name }？`);
+            },
+
+            handleSuccess:function(res, file, fileList){
+            //  debugger
+                this.uploadList.push(res.data.name);
+        // alert(this.fileList[0].url);
+
+                this.uploadList = fileList;
+            },
+
+            handleSizeChange:function(val) {
+             
+            },
+            handleCurrentChange:function(val) {
+               
+                // add by liulei
+                this.loadAnswer();
+            },
+
+            onSubmit:function() {
+               
+            },
+
+            onShowImage:function(name){
+
+var url = this.baseUrl + name;
+// alert(url);
+this.showImg(url);
+},
+
+            searchClick: function() {
+
+            },
+            onSearch:function(){
+                if (this.SearchName == '预警') {
+                location.href = './searchList.html?type=1&keyword=' + this.keyWords;
+            } else if (this.SearchName == '防治') {
+                location.href = './searchList.html?type=2&keyword=' + this.keyWords;
+            } else if (this.SearchName == '病虫害') {
+                location.href = './searchList.html?type=3&keyword=' + this.keyWords;
+            }else if (this.SearchName == '知识库') {
+                location.href = './searchList.html?type=4&keyword=' + this.keyWords;
+            }else if (this.SearchName == '专家') {
+                location.href = './searchList.html?type=5&keyword=' + this.keyWords;
+            }
+            },
+
+            showImg:function(url){
+
+// $('.show').on('click',function(){
+    var img = '<img src="'+url+'">'
+    layer.open({
+        type: 1,//Page层类型
+        area: [img.width + 'px', img.height + 'px'],
+        title: false,
+        shade: 0.6 ,//遮罩透明度
+        maxmin: false ,//允许全屏最小化
+        anim: 1 ,//0-6的动画形式，-1不开启
+        content: img
+    }); 
+// });
+
+},
+
+            onSubmitAnswer:function(){
+                var self = this;
+                let content = quill.getText();//quill.container.firstChild.text;
+                
+                // alert(content);
+                // return;
+
+                if(!this.isLogin){
+                    location.href = './login.html';
+                    return;
+                }
+
+                if($.trim(content)===''){
+                    // alert("账号必填");
+                    showMsg(this,'请输入内容');
+                    return false;
+                }
+                
+                self.replyForm.questionId = self.question.id;
+                self.replyForm.content = content;
+
+                this.doAddAction(this);
+            },
+
+            onApply(index){
+                var self = this;
+                
+                // quill.container.firstChild.innerHTML;
+                self.currentAnswer = self.tableData[index];
+
+                // alert(self.currentAnswer.user.realName);
+
+                var placeholder = '回复：' + self.currentAnswer.user.realName;
+                // quill.setText(placeholder);
+                quill.root.dataset.placeholder = placeholder;
+
+            },
+
+            // 加载问题列表 add by liulei
+            loadQuestion:function(){
+                var self = this;
+                var param = '{}';
+
+                var url =  this.getApiRoot + '/question/get/' + identifier;
+         
+                $.ajax({
+                    method:'GET',
+                    url:url,
+                    dataType:'JSON',
+                    contentType:'application/json',
+                    success:function(res){
+                        console.log('返回结果-问题:' + JSON.stringify(res));
+                        self.question = res.data;
+                    },
+                    error:function(){
+    
+                    }
+                })
+            },
+
+            //加载回答列表
+            loadAnswer:function(){
+                var self = this;
+                var param = '{}';
+
+                var url =  this.getApiRoot + '/answer/getbyquestion/' + identifier +'/'+self.currentPage+'/' + self.pageSize;
+         
+                $.ajax({
+                    method:'GET',
+                    url:url,
+                    dataType:'JSON',
+                    contentType:'application/json',
+                    success:function(res){ 
+                      
+                        self.tableData = res.data.list;
+                        self.total = res.data.total;
+                    },
+                    error:function(){
+    
+                    }
+                })
+            },
+
+            // 回答 add by liulei
+            doAddAction:function(obj){
+                var self = this;
+                var param = '{}';
+                var url = this.getApiRoot + '/answer/add';
+
+                // debugger
+                self.replyForm.userType = self.userType;
+                for(var i = 0; i<self.uploadList.length; i++){
+                    var item = self.uploadList[i];
+                    self.replyForm.imgUrlList[i] = item.response.data.name;
+                }
+
+                // debugger
+                // console.log('111:' + self.replyForm);
+                // return;
+                
+                $.ajax({
+                    type:'POST',
+                    url:url,
+                    data:JSON.stringify(self.replyForm),
+                    dataType:'JSON',
+                    contentType:'application/json',
+                    headers: {
+                        Accept:"application/json; charset=utf-8",
+                        token:token
+                    },
+                    success:function(res){
+                     
+                        if(res.code == 1000002){    
+                            showMsg(obj, '发布成功');
+
+                            quill.container.firstChild.innerHTML = '';
+                            self.loadAnswer();
+
+                        }else if(res.code = -100001){
+                            // alert(res.msg);
+                            showAlert(obj, '提示', res.msg, '确定')
+                        }else{
+                            // alert('登录失败,请重试');
+                            showAlert(obj, '提示', res.msg, '确定')
+                        }
+                        
+                    },
+                    error:function(){
+                        showMsg(obj, '服务异常,请稍后再试');
+                    }
+                })
+            },
+
+
+        },
+
+        filters:{
+            //add by liulei
+            formatDate:function(time) {
+                var date = new Date(time);
+                return formatDate(date, 'yyyy-MM-dd hh:mm');
+            }
+        },
+        created:function(){
+
+        },
+        mounted: function () {
+            var self = this;
+
+            
+            token = sessionStorage.getItem("token"); 
+            var userType = sessionStorage.getItem("userType"); 
+            if(token == undefined || token == ''){
+            }else{
+                this.isLogin = true;
+                this.userType = userType;
+            }
+       
+
+            self.loadQuestion();
+            self.loadAnswer();
+        }
+
+    });
+
+    var quill = new Quill('#editor-container', {
+        modules: {
+        syntax: true,
+        toolbar: '#toolbar-container'
+        },
+        placeholder: '回答问题...',
+        theme: 'snow'
+    });
+    // var customButton = document.querySelector('#custom-button');
+    // customButton.addEventListener('click', function() {
+    // // console.log('Clicked!');
+    // alert('123');
+    // });
+</script>
+
+</html>

@@ -1,0 +1,569 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="./css/index.css">
+    <link rel="stylesheet" href="./css/css.css">
+    <link rel="stylesheet" href="./css/public.css">
+    <script src="./js/jquery-1.8.3.js" type="text/javascript"></script>
+    <script src="./js/public.js"></script>
+    <script src="./js/vue.min.js"></script>
+    <script src="./js/index.js"></script>
+    <script src="./js/echarts.min .js"></script>
+    <script src="./js/axios.min.js"></script>
+
+    <script src="./js/jquery.cookie.js" type="text/javascript"></script>
+    <script src="./js/echartHelper/echartHelper.cube.js" type="text/javascript" charset="utf-8"></script>
+    <script src="./js/echartHelper/dataHelper.cube.js" type="text/javascript" charset="utf-8"></script>
+    <script src="./js/expresstool.jquery.js" type="text/javascript"></script>
+    <script src="./js/expresstool.js" type="text/javascript"></script>
+    <script src="./js/echartHelper/echartHelper.callback.default.js" type="text/javascript" charset="utf-8"></script>
+    <script src="./js/echartHelper/echartHelper.callback.custom.js" type="text/javascript" charset="utf-8"></script>
+    <script src="./js/echartHelper/dataTableHelper.js" type="text/javascript" charset="utf-8"></script>
+    <script src="./js/axios.min.js"></script>
+
+    <title>供应信息</title>
+</head>
+
+<body>
+    <div id="root" class="authcenter">
+        <div class="head">
+            <div class="area">
+                <div class="login-info">
+                    <div class="say-hi">Hi，欢迎来到农情分析</div>
+                    <!-- <div class="login-link-wrap">
+                        请<a rel="nofollow" href="./login.html">登录</a>
+                    </div> -->
+                    <div class="codebox">
+
+                    </div>
+                </div>
+                <ul class="ely-sn-menuwrap">
+                    <li class="item menu user-center">
+                        <a v-if="isLogin" href="./user_center.html" target="_blank">会员中心</a>
+                        <a v-else href="./login.html" target="_blank">登录</a>
+                    </li>
+                </ul>
+                <div class="index-link"><a class="clr-red" href="./index.html" title="农情首页">农情首页</a></div>
+            </div>
+
+        </div>
+        <div style="height: 126px; z-index: 114; position: relative;">
+            <div id="ely-hd" class="ely-hd">
+                <div class="area clearfix">
+                    <div class="logo">
+                        <a title="析数科技" class="logo-link" href="#">
+                            <img alt="析数科技" src="./image/logo-2.png"></a>
+                    </div>
+                    <div class="app-link-wrap"><img src="./image/1557654428.png" alt=""><p>扫一扫,下载农情APP</p></div>
+                    <div class="search">
+                        <el-tabs v-model="SearchName" type="card" @tab-click="searchClick">
+                            <el-tab-pane label="供应" name="供应"></el-tab-pane>
+                            <el-tab-pane label="求购" name="求购"></el-tab-pane>
+                            <el-tab-pane label="农机服务" name="农机服务"></el-tab-pane>
+                        </el-tabs>
+                        <div class="search-froup">
+                            <el-input :placeholder="'请输入关键词搜索'+SearchName" v-model="keyWords" class="search-input">
+                            </el-input>
+                            <el-button icon="el-icon-search" type="success" class="search-btn" @click="onSearch">立即搜索</el-button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="main-nav-wrap" id="nav">
+            <div class="main-nav area clearfix">
+                <div class="menu-box-wrap" id="J_good_map">
+                    <div class="menu-title"><span class="smap-link">行业分类</span></div>
+                    <!--  -->
+                </div>
+                <ul>
+                    <li><a class="link" href="./index.html">首页</a></li>
+                    <li><a class="link" href="./product_list.html?catid=0" target="_blank">供应</a></li>
+                    <li><a class="link" href="./seek_list.html" target="_blank">求购</a></li>
+                    <li>
+                        <el-dropdown>
+                            <span class="el-dropdown-link">
+                                农业服务<i class="el-icon-arrow-down el-icon--right"></i>
+                            </span>
+                            <el-dropdown-menu slot="dropdown">
+
+                                <el-dropdown-item><a class="link" href="./sever_list.html" target="_blank">农机服务</a></el-dropdown-item>
+                                <el-dropdown-item><a class="link" href="./control_list.html" target="_blank">统防统治</a></el-dropdown-item>
+                            </el-dropdown-menu>
+                        </el-dropdown>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="body-warp" style="padding:20px 0;">
+            <div class="area">
+                <el-card class="classFiled">
+                    <div class="classList">
+                        <el-button class="menuBar" icon="el-icon-menu" type="primary">分类</el-button>
+                        <ul class="firstMenu">
+                            <li :class="item.id == firstActive ? 'active':''" v-for="item in firstMenu" @click="menuClick(1,item.id)">
+                                <a href="javascript:;">{{item.name}}</a>
+                            </li>
+                            <ul class="secendList">
+                                <li :class="secend.id == secendActive ? 'active':''" v-for="secend in secendMenu" @click="menuClick(2,secend.id)">
+                                    <a href="#">{{secend.name}}</a>
+                                </li>
+                                <ul class="threeList">
+                                    <li v-for="three in threeMenu" :class="three.id == threeActive ? 'active':''" @click="menuClick(3,three.id)">
+                                        <a href="#">{{three.name}}</a>
+                                    </li>
+
+                                </ul>
+                            </ul>
+                        </ul>
+                    </div>
+                    <div class="classList" style="margin-top:20px;">
+                        <el-button class="menuBar" icon="el-icon-location" type="primary">区域</el-button>
+                        <el-cascader style="margin-left:32px;" :options="options" v-model="selectedOptions3" @change="handleRegionChange">
+                        </el-cascader>
+                    </div>
+                </el-card>
+            </div>
+            <div class="area">
+                <div class="under-contair">
+                    <div style="margin-bottom:20px;">
+                        <el-breadcrumb separator-class="el-icon-arrow-right">
+                            <el-breadcrumb-item>您现在的位置：</el-breadcrumb-item>
+                            <el-breadcrumb-item>供应信息</el-breadcrumb-item>
+                        </el-breadcrumb>
+                    </div>
+                    <div class="conLeft">
+
+                        <ul class="itemLi productList">
+                            <li v-for="item in list">
+                                <div v-if="!item.imageList || !item.imageList.length" class="itme_img">
+                                    <img src="./image/placeholder.jpg" />
+                                </div>
+                                <div v-else class="itme_img">
+                                    <img :src="baseUrl + item.imageList[0].imageUrl" />
+                                </div>
+                                <div class="gqGongSi">
+
+                                    <span v-if="item.isStick">[置顶]</span>
+                                    <span v-if="item.isRecommend">[推荐]</span>
+                                    <a :href="'./product_detail.html?id='+item.id" target="_blank">
+                                        {{item.title}}
+                                    </a>
+                                </div>
+                                <p>价格：<b class="prices">{{item.price}}</b>元/{{item.unit.name}}&nbsp;&nbsp;&nbsp;区域：{{item.region.name}}</p>
+                                <p>品牌：<a href="#" target="_blank" class="yanSe_03">{{item.brand}}</a></p>
+                                <p>浏览：{{item.hits}}&nbsp;&nbsp;&nbsp;过期时间：{{item.expirationDate | formatDate}}</p>
+                                <p></p>
+                                <!-- <div class="kaiTong">
+                                    <a @click="shoucang(window.location,document.title)" href="javascript:void(0)">[加入收藏夹]</a>
+                                </div> -->
+
+                            </li>
+                        </ul>
+                        <div class="text-left" style="padding:20px 0;">
+                            <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page.sync="currentPage" :page-size="pageSize" layout="prev, pager, next, jumper" :total="total">
+                            </el-pagination>
+                        </div>
+                    </div>
+                    <!-- <div class="conRight">
+                        <div class="t45">
+                            <h3>推荐排行</h3>
+                        </div>
+                        <div class="rbox2">
+                            <div class="hotnewsAd">
+                                <div :class="index < 2 ? 'big' :'small'" v-for="(item,index) in recomedList">
+                                    <a :href="item.href">
+                                        <img :src="item.img" border="0">
+                                        <p>{{item.title}}</p><i>{{item.time}}</i><em :class="'b'+(index+1)">{{index+1}}</em>
+                                    </a></div>
+                            </div>
+                        </div>
+                    </div> -->
+                </div>
+            </div>
+        </div>
+        <div class="pub-footer clearfix">
+            <style>
+                .down-img a img {
+                    margin: 0px;
+                }
+            </style>
+            <div class="con-width-1200 clearfix">
+                <!-- <img class="fxl l-img" src="./image/logo2.png"> -->
+            </div>
+            <div class="down clearfix">
+                <!-- Copyright © 2019 黄山现代农业产业园管委会 <span>版权所有</span> -->
+
+
+            </div>
+        </div>
+    </div>
+</body>
+<script>
+    var GETBASE, GETUUID, GETREGIONID, GETAPIROOT;
+    if (typeof(window.getBaseUrl) != 'undefined') {
+        GETBASE = window.getBaseUrl();
+        GETUUID = window.getUuid();
+        GETREGIONID = window.getRegionId();
+        GETAPIROOT = window.getApiRoot();
+    } else {
+        GETBASE = 'http://36.7.159.225:16000/api/as/file/';
+        GETUUID = '24acfc1215da435cbe76c69beb07f32b';
+        GETREGIONID = '101221002';
+        GETAPIROOT = 'http://36.7.159.225:16000/api/as';
+    }
+    // 获取url键值 传入key 返回 value
+    var catId = getParameters('catid');
+    if (catId == null)
+        catId = 0;
+    var regionId = '0';
+
+    var app = new Vue({ //vue对象
+        el: '#root',
+        data: {
+            getApiRoot: GETAPIROOT,
+            baseUrl: GETBASE,
+            uuid: GETUUID,
+            regionID: GETREGIONID,
+            catLevel: 0,
+            isLogin: false,
+            menuList: [],
+            selectedOptions3: ['1', '2', '111111'],
+            options: [{
+                value: 'bj',
+                label: '北京市',
+                children: [{
+                    value: 'cy',
+                    label: '朝阳区',
+                }, {
+                    value: 'sy',
+                    label: '顺义区',
+                }]
+            }, {
+                value: 'ah',
+                label: '安徽省',
+                children: [{
+                    value: 'hf',
+                    label: '合肥市',
+                    children: [{
+                        value: 'fx',
+                        label: '肥西县'
+                    }]
+                }, {
+                    value: 'wh',
+                    label: '芜湖市',
+                }]
+            }],
+            firstActive: '1',
+            secendActive: '10',
+            threeActive: '',
+
+            threeMenu: [{
+                "id": 14,
+                "uuid": "24acfc1215da435cbe76c69beb07f32b",
+                "name": "大白菜",
+                "pid": 10
+            }],
+            secendMenu: [{
+                "id": 14,
+                "uuid": "24acfc1215da435cbe76c69beb07f32b",
+                "name": "大白菜",
+                "pid": 10
+            }],
+            firstMenu: [{
+                "id": 14,
+                "uuid": "24acfc1215da435cbe76c69beb07f32b",
+                "name": "大白菜",
+                "pid": 10
+            }],
+
+            SearchName: '供应',
+            keyWords: '',
+            menuActive: '0',
+            recomedList: [{
+                href: '#',
+                img: './image/1620093681.jpg',
+                title: '智种网发布：中国种业研发实力报告，科研投入过亿企业仅有5家',
+                time: '2017-09-16'
+            }],
+            currentPage: 1,
+            pageSize: 10,
+            total: 0,
+            list: [{
+                "id": 2,
+                "userId": 1,
+                "industryTypeId": 6,
+                "uRegionId": "111111",
+                "title": "111111",
+                "brand": "123",
+                "price": 11,
+                "uUnitId": 1,
+                "expirationDate": null,
+                "hits": 0,
+                "status": 1,
+                "isRecommend": 0,
+                "isStick": 0,
+                "createTime": null,
+                "introduce": "123444444444",
+                "author": {
+                    "id": "1",
+                    "account": "test_user",
+                    "realName": "realName1"
+                },
+                "industrytype": {
+                    "id": 6,
+                    "name": "二级菜单1",
+                    "pid": null
+                },
+                "region": {
+                    "id": "111111",
+                    "name": "北京",
+                    "pid": null
+                },
+                "unit": {
+                    "id": 1,
+                    "name": "元"
+                }
+            }]
+        },
+        filters: {
+            //add by liulei
+            formatDate: function(time) {
+                var date = new Date(time);
+                return formatDate(date, 'yyyy-MM-dd hh:mm');
+            }
+        },
+        methods: {
+            menuClick: function(type, id) {
+                if (type == 1) {
+                    this.firstActive = id;
+                    this.catLevel = 1;
+                    //更新二级分类
+                    this.loadSecondtype();
+
+                } else if (type == 2) {
+                    this.secendActive = id;
+
+                    this.catLevel = 2;
+                    //更新三级分类
+                    this.loadThirdtype();
+
+                } else {
+                    this.threeActive = id;
+
+                    this.catLevel = 3;
+                    //更新数据
+                    catId = id;
+                    this.currentPage = 1;
+                    this.loadData();
+                }
+            },
+            searchClick: function() {
+
+            },
+
+            handleRegionChange: function() {
+                var self = this;
+
+                var rId = self.selectedOptions3[2];
+                if (rId == null || rId == undefined) {
+                    alert('地区无效');
+                    return;
+                }
+                regionId = rId;
+
+
+                // alert(regionId);
+                self.currentPage = 1;
+                self.loadData();
+            },
+
+            //立即搜索
+            onSearch: function() {
+
+                if (this.SearchName == '供应') {
+                    location.href = './search_list.html?type=1&keyword=' + this.keyWords;
+                } else if (this.SearchName == '求购') {
+                    location.href = './search_list.html?type=2&keyword=' + this.keyWords;
+                } else if (this.SearchName == '农机服务') {
+                    location.href = './search_list.html?type=3&keyword=' + this.keyWords;
+                }
+            },
+
+
+            handleSizeChange: function(val) {
+                // console.log(`每页 ${val} 条`);
+            },
+            handleCurrentChange: function(val) {
+                // console.log(`当前页: ${val}`);
+                // add by liulei
+                this.loadData();
+            },
+            shoucang: function(sTitle, sURL) {
+                try {
+                    window.external.addFavorite(sURL, sTitle);
+                } catch (e) {
+                    try {
+                        window.sidebar.addPanel(sTitle, sURL, "");
+                    } catch (e) {
+                        alert("加入收藏失败，请使用Ctrl+D进行添加");
+                    }
+                }
+            },
+            onSubmit: function() {
+
+            },
+
+            // 分类下的供应列表 add by liulei
+            loadData: function() {
+                var self = this;
+                var param = '{}';
+
+                var url = this.getApiRoot + '/supply/getpage/' + self.uuid + '/' + self.catLevel + '/' + catId + '/' + regionId + '/' + self.currentPage + '/5';
+
+                $.ajax({
+                    method: 'GET',
+                    url: url,
+                    dataType: 'JSON',
+                    contentType: 'application/json',
+                    success: function(res) {
+                        console.log('返回结果:' + JSON.stringify(res));
+                        self.list = res.data.list; //JSON.stringify(res.data.list);//res.data.list;
+                        self.total = res.data.total;
+                    },
+                    error: function() {
+
+                    }
+                })
+            },
+
+
+            //加载一级分类
+            loadFirsttype: function() {
+                var self = this;
+                var param = '{}';
+
+                var url = this.getApiRoot + '/industrytype/getsub/' + self.uuid + '/0';
+
+                $.ajax({
+                    method: 'GET',
+                    url: url,
+                    dataType: 'JSON',
+                    contentType: 'application/json',
+                    success: function(res) {
+                        console.log('返回结果1级:' + JSON.stringify(res));
+                        self.firstMenu = res.data;
+                    },
+                    error: function() {
+
+                    }
+                })
+            },
+
+            //加载二级分类
+            loadSecondtype: function() {
+                var self = this;
+                var param = '{}';
+
+                var url = this.getApiRoot + '/industrytype/getsub/' + self.uuid + '/' + this.firstActive;
+
+                $.ajax({
+                    method: 'GET',
+                    url: url,
+                    dataType: 'JSON',
+                    contentType: 'application/json',
+                    success: function(res) {
+                        console.log('返回结果2级:' + JSON.stringify(res));
+                        self.secendMenu = res.data;
+                    },
+                    error: function() {
+
+                    }
+                })
+            },
+
+            //加载三级分类
+            loadThirdtype: function() {
+                var self = this;
+                var param = '{}';
+
+                var url = this.getApiRoot + '/industrytype/getsub/' + self.uuid + '/' + this.secendActive;
+
+                $.ajax({
+                    method: 'GET',
+                    url: url,
+                    dataType: 'JSON',
+                    contentType: 'application/json',
+                    success: function(res) {
+                        console.log('返回结果3级:' + JSON.stringify(res));
+                        self.threeMenu = res.data;
+                    },
+                    error: function() {
+
+                    }
+                })
+            },
+
+            //加载城市分类tree
+            loadCityTree: function() {
+                var self = this;
+                var param = '{}';
+
+                var url = this.getApiRoot + '/region/gettree';
+
+                $.ajax({
+                    method: 'GET',
+                    url: url,
+                    dataType: 'JSON',
+                    contentType: 'application/json',
+                    success: function(res) {
+                        console.log('返回结果城市:' + JSON.stringify(res));
+                        self.options = res.data.list;
+                    },
+                    error: function() {
+
+                    }
+                })
+            },
+            //提示框
+            showAlert: function(title, msg, btnTitle) {
+                this.$alert(msg, title, {
+                    confirmButtonText: btnTitle
+                        // callback: action => {
+                        //     // this.$message({
+                        //     //     type: 'info',
+                        //     //     message: `action: ${ action }`
+                        //     // });
+                        // }
+                });
+            },
+
+            showMsg: function(msg) {
+                this.$message({
+                    type: 'info',
+                    message: msg
+                });
+            }
+
+
+
+        },
+        mounted: function() {
+            // add by liulei
+            var token = sessionStorage.getItem("token");
+            if (token == undefined || token == '') {} else {
+                this.isLogin = true;
+            }
+            this.loadData();
+            // this.loadIndustrytype();
+            this.loadFirsttype();
+            this.loadSecondtype();
+            this.loadThirdtype();
+            this.loadCityTree();
+        }
+    });
+</script>
+
+</html>

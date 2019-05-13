@@ -1,0 +1,936 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>用户中心 - 黄山现代农业示范区专家咨询知识库平台</title>
+
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+  <script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+  <link href="online/css/quill.snow.css" rel="stylesheet">
+  <script src="online/js/highlight.min.js"></script>
+  <script src="online/js/quill.js"></script>
+
+  <link rel="stylesheet" href="./element-ui/index.css">
+  <link rel="stylesheet" href="./public/css/index.css">
+  <link rel="stylesheet" href="./personal/css/index.css">
+  <link rel="stylesheet" href="./online/css/index.css">
+
+
+  <script src="./element-ui/vue.min.js"></script>
+<script src="./element-ui/index.js"></script>
+<script src="./editor/ueditor-wrap.min.js"></script>
+
+  <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+  <!-- add by liulei -->
+  <script src="public/js/public.js"></script>
+  <script src="layer/layer.js"></script>
+
+  
+
+  <style>
+        #standalone-container {
+            /* max-width: 720px; */
+        }
+        #editor-container {
+            height: 120px;
+        }
+        #custom-button{
+            width: 60px;
+            background: #00a1ff;
+            color: #fff;
+            margin-left: 10px;
+        }
+        .pansItemInfo {
+            height: auto;
+            position: inherit;
+        }
+        .pansItemInfo span{
+            margin-top: 0;
+        }
+        .pansItemInfo p{
+            width: 88%;
+            line-height: 20px;
+        }
+  </style>
+</head>
+
+<body>
+
+  <div id="personal">
+    <div class="header">
+        <div class="header-container h-main">
+            <div class="h-map">
+                <!-- <a href="#" class="h-mappic">网站地图</a> -->
+                <!-- <a href="#" class="h-phone">手机APP</a> -->
+            </div>
+            <div class="h-register">
+                <a href="#" class="h-welcom">你好，欢迎访问本网站！</a>
+                <a  @click="logoutClick()">退出登录</a>
+            </div>
+        </div>
+    </div>
+    <div class="header-main">
+        <div class="h-mainContainer h-serrchMain">
+            <div class="h-logo">
+                <img src="public/image/logo-2.png">
+            </div>
+            <div>
+                <!-- <div class="h-search">
+                    <i class="el-icon-search h-searchIco"></i>
+                    <input type="text" class="h-searchText" placeholder="水稻防治">
+                    <button class="h-searchBtn">搜索</button>
+                   
+                </div> -->
+            </div>
+            <div  class="h-qrcode">
+                <img src="public/image/qrcode.png">
+            </div>
+            <!-- <div class="h-msg">
+              <a href="./personal.html" class="h-message">免费发布信息</a>
+              <a href="./personal.html" class="h-cmessage">修改/删除信息</a>  
+            </div> -->
+        </div>
+        <div class="h-menu h-mainContainer">
+            <ul class="h-menuMain">
+                <li><a href="./index.html" >首页</a></li>
+                    <li><a href="./zhuanjia.html">专家库</a></li>
+                    <li><a href="./online.html" >在线问答</a></li>
+                    <li><a href="./knowloge.html" >农业知识库</a></li>
+                    <li><a href="./video.html" >视频培训</a></li>
+                    <!-- <a href="#" class="h-ask">我要提问</a> -->
+            </ul>
+        </div>
+    </div>
+    <el-container>
+
+      <el-main class="personal_main">
+        <el-row :gutter="24" style="margin: 0">
+          <el-col :span="5">
+            <!-- 侧边栏 -->
+            <el-menu default-active="1-1" class="el-menu-vertical-demo" @open="handleOpen" @select="handleSelect"
+              @close="handleClose">
+              <el-submenu index="1">
+                  <template slot="title">
+                    <i class="el-icon-menu"></i>
+                    <span>信息管理</span>
+                  </template>
+                  <el-menu-item-group>
+                    <el-menu-item index="1-1">我的问题</el-menu-item>
+                    <el-menu-item index="1-2">立即提问</el-menu-item>
+                  </el-menu-item-group>
+                </el-submenu>
+
+              <el-submenu index="2">
+                <template slot="title">
+                  <i class="el-icon-menu"></i>
+                  <span>个人资料</span>
+                </template>
+                <el-menu-item-group>
+                  <el-menu-item index="2-1">修改资料</el-menu-item>
+                  <el-menu-item index="2-2">修改密码</el-menu-item>
+                </el-menu-item-group>
+              </el-submenu>
+              
+            </el-menu>
+          </el-col>
+          <el-col :span="19">
+            <div class="personal_content">
+              <div class="content_title">
+                <h2>{{menuTitle}}</h2>
+              </div>
+
+              <!-- 修改资料 -->
+              <el-form class="form" ref="form" label-position="right" v-if="menuTitle == '修改资料'" class="userMsg"
+                :model="form" label-width="120px">
+                
+                <el-form-item label="电话号码：">
+                  <el-input v-model="form.telphone"></el-input>
+                </el-form-item>
+                <el-form-item label="真实姓名：">
+                    <el-input v-model="form.realName"></el-input>
+                  </el-form-item>
+                <el-form-item>
+                  <el-button type="primary" @click="onSubmitProfile">确认提交</el-button>
+                </el-form-item>
+              </el-form>
+
+              <!-- 修改密码 -->
+              <el-form class="form" label-position="right" v-else-if="menuTitle == '修改密码'" :model="changePassword"
+                label-width="120px">
+                <el-form-item label="当前密码：">
+                  <el-input type="password" v-model="changePassword.password"></el-input>
+                </el-form-item>
+                <el-form-item label="新密码：">
+                  <el-input type="password" v-model="changePassword.newPassword"></el-input>
+                </el-form-item>
+                <el-form-item label="确认密码：">
+                  <el-input type="password" v-model="changePassword.passwordAgin"></el-input>
+                </el-form-item>
+                <el-form-item>
+                  <el-button type="primary" @click="onSubmitPassword">确认提交</el-button>
+                </el-form-item>
+              </el-form>
+
+              <!-- 发布信息 -->
+              <template v-else-if="menuTitle == '立即提问'">
+                <el-form class="form large" :model="qForm" label-width="120px">
+                    
+                  
+                  <el-form-item label="标题：">
+                    <el-input v-model="qForm.title"></el-input>
+                  </el-form-item>
+                  
+                  <el-form-item v-if="qForm.expertLibraryId > 0" label="提问专家：">
+                      <el-input v-model="qForm.expertName" readonly="readonly"></el-input>
+                    </el-form-item>
+                 <!-- <el-form-item label="关键词：">
+                    <el-input v-model="editer.keyword"></el-input>
+                  </el-form-item>  -->
+                   <el-form-item label="上传图片：">
+                    <el-upload
+                    class="upload-demo"
+                    action="http://36.7.159.225:16000/api/expert/file/upload"
+                    :on-change="handleChange"
+                    :on-remove="handleRemove"
+                    :on-success = 'handleSuccess'
+                    :limit=1
+                    :file-list="fileList">
+                    <el-button size="small" type="primary">点击上传</el-button>
+                  </el-upload>
+                  </el-form-item> 
+                  <el-form-item label="内容：">    
+                    <!-- <el-input type="textarea" v-model="form.desc"></el-input> -->
+                    <div id="standalone-container">
+                        <div id="toolbar-container">
+                              <span class="ql-formats">
+                                <button class="ql-bold"></button>
+                                <button class="ql-italic"></button>
+                                <button class="ql-underline"></button>
+                                <button class="ql-strike"></button>
+                              </span>
+                              <span class="ql-formats">
+                                <button class="ql-list" value="ordered"></button>
+                                <button class="ql-list" value="bullet"></button>
+                              </span>
+                   
+                              <span class="ql-formats">
+                                <button class="ql-link"></button>
+                                <!-- <button class="ql-image"></button> -->
+                          
+                              </span>
+                        </div>
+                        <div id="editor-container"></div>
+                    </div> 
+                  </el-form-item>
+                  
+                  <el-form-item>
+                    <el-button type="primary" @click="onSubmitQuestion">确认提交</el-button>
+                  </el-form-item>
+                </el-form>
+              </template>
+              <!-- 管理信息 -->
+              <template v-else-if="menuTitle == '我的问题'" class="gqManage">
+                <div>
+                  <!-- <el-card>
+                    <div class="card-top">
+                      您共发布了0条信息　
+                    </div>
+                  </el-card> -->
+                  <div class="ol-ansItem" v-for="(item, index) in questionList">
+                      <h3><a :href="'./answer.html?identifier=' + item.id">{{item.title}}</a></h3>
+                      <div class="ol-ansItemInfo pansItemInfo clear">
+                          <span>{{item.user.realName}}</span>
+                          <p>{{item.content}}</p>
+                      </div>
+                      <div class="eq-img" v-if="item.fileList && item.fileList.length > 0">
+                          <img  v-for="img in item.fileList" :src= "baseUrl + img.url" @click="onShowImage(img.url)" />
+                      </div>
+                      <div class="ol-des"> 
+                        <span> <i class="glyphicon glyphicon-comment"></i> {{item.answerList.length}}</span>
+                        <span class="btn-answer"  @click="onQuickAnswer(index)"> 快速回答</span>
+                        <span>{{item.createTime | formatDate}}</span> </div>
+                    <h4  v-if="item.answerList.length > 0">回答：</h4>
+                    <div class="ol-ansListInfo" v-if="item.answerList.length > 0" v-for="answer in item.answerList">
+                        <div class="ol-ansListItemInfo clear">
+                            <img src="public/image/doctor_hds.jpg" alt="">
+                            <span v-if="answer.user != null">{{answer.user.realName}}</span>
+                            <p>{{answer.content}}</p>
+                        </div>
+                        <!-- <div class="ol-des" style="margin-bottom:10px;"> <span> <i class="glyphicon glyphicon-comment"></i> 3</span> <span>2019-03-02 13:23</span> </div> -->
+                    </div>
+                    <el-form ref="form" :model="replyForm" v-if="formIndex == index" style="width:90%;margin:20px auto; display: flex;">
+                            <el-input
+                                style="width: 560px"
+                                type="textarea"
+                                autosize
+                                placeholder="快速回复..."
+                                v-model="replyForm.content">
+                            </el-input>
+                            <el-button type="primary" @click="onSubmitAnswer(index)" style="height:33px;line-height:33px;padding:0px;width:60px;margin-left:15px;">回复</el-button>
+                    </el-form> 
+                  </div>
+    
+                  <div class="text-center" style="margin-top:15px;margin-bottom: 20px;">
+                    <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange"
+                      :current-page.sync="currentPage" :page-size="pageSize" layout="prev, pager, next, jumper"
+                      :total="total">
+                    </el-pagination>
+                  </div>
+                </div>
+              </template>
+            </div>
+          </el-col>
+        </el-row>
+      </el-main>
+    </el-container>
+  </div>
+</body>
+
+<!-- 配置文件 -->
+<!-- <script type="text/javascript" src="./editor/ueditor.config.js"></script> -->
+<!-- 编辑器源码文件 -->
+<!-- <script type="text/javascript" src="./editor/ueditor.all.min.js"></script> -->
+<!-- <script type="text/javascript" charset="utf-8" src="./editor/lang/zh-cn/zh-cn.js"></script> -->
+<!-- <script type="text/javascript" src="./editor/ueditor.parse.min.js"></script> -->
+
+<!-- <script src=""></script> -->
+<script type="text/javascript">
+
+  // window.filterHelper = new FilterValueHelper();
+  var GETBASE,GETUUID,GETREGIONID,GETAPIROOT;
+    if(typeof(window.getBaseUrl) !='undefined'){
+        GETBASE= window.getBaseUrl();
+        GETUUID= window.getUuid();
+        GETREGIONID= window.getRegionId();
+        GETAPIROOT = window.getApiRoot();
+    }else{
+        // GETBASE= 'http://localhost:16000/api/expert/file/';
+        // GETUUID= '24acfc1215da435cbe76c69beb07f32b';
+        // GETREGIONID= '101221002';
+        // GETAPIROOT = 'http://localhost:16000/api/expert';
+
+        GETBASE= 'http://36.7.159.225:16000/api/expert/file/';
+        GETUUID= '24acfc1215da435cbe76c69beb07f32b';
+        GETREGIONID= '101221002';
+        GETAPIROOT = 'http://36.7.159.225:16000/api/expert';
+    }
+
+  var token = '';
+  var expertId = parseInt(getParameters('epId'));
+  var expertName = decodeURI(getParameters('epName'));
+
+  var ps =  new Vue({
+    el: '#personal',
+    // components: {
+    //   VueUeditorWrap
+    // },
+    data:{
+      
+        quill:null,
+        baseUrl:GETBASE,
+            uuid:GETUUID,
+            regionID:GETREGIONID,
+            getApiRoot:GETAPIROOT,
+
+        menuTitle: '我的问题',
+        menuIndex:'1-1',
+        // 修改资料
+        form: {
+          uUserInfoId:GETUUID,
+            realName:'',
+            telphone:''
+        },
+        // 修改密码
+        changePassword: {
+          uUserInfoId:GETUUID,
+            password:'',
+            newPassword:'',
+            passwordAgin:''
+        },
+        // 发布信息
+        editer: {
+          resource: '是'
+        },
+        editerTypeOptions: [{
+          value: 'zhinan',
+          label: '指南',
+          children: [{
+            value: 'shejiyuanze',
+            label: '设计原则'
+          }]
+        }],
+        selectedOptions: [],
+        passTime: '',
+        editertype: 'gong',
+        fileList2: [
+        //   { 
+        //   name: 'food.jpeg', 
+        //   url: 'https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100' 
+        // }, { 
+        //   name: 'food2.jpeg', 
+        //   url: 'https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100' 
+        // }
+      ],
+        // 管理信息
+        type: 'all',
+        tableData: [],
+        currentPage: 0,
+        pageSize:3,
+        total:0,
+
+        qForm:{
+          expertLibraryId:0,
+          expertName:'',
+          createUserId:'',
+          title:'',
+          content:'',
+          imgUrl:''
+        },
+        questionList:[],
+        formIndex:-1,
+        replyForm:{
+                questionId:'1',
+                uUserInfoId:GETUUID,
+                content:'',
+            },
+            replyIndex:0,
+        myConfig: {
+          // 编辑器不自动被内容撑高
+          autoHeightEnabled: false,
+          // 初始容器高度
+          initialFrameHeight: 240,
+          // 初始容器宽度
+          initialFrameWidth: '100%',
+          // 上传文件接口
+          serverUrl: 'http://35.201.165.105:8000/controller.php',
+          // UEditor 资源文件的存放路径
+          UEDITOR_HOME_URL: '/editor/'
+        },
+        fileList: [
+
+        ]
+     
+    },
+    filters:{
+            //add by liulei
+            formatDate:function(time) {
+                var date = new Date(time);
+                return formatDate(date, 'yyyy-MM-dd hh:mm');
+            },
+
+            html2Text:function(content) { // 
+              var dd= content.replace(/<\/?.+?>/g,"");
+              var dds=dd.replace(/ /g,"");//dds为得到后的内容
+            return dds;
+            },
+        },
+        created:function(){
+
+        },
+    mounted:function(){
+      // 实例化editor编辑器
+      // this.UEditor = UE.getEditor('UEditor');
+      // console.log(this.UEditor)
+
+      token = sessionStorage.getItem("token"); 
+        if(token == undefined || token == ''){
+            location.href = './login.html';
+        }
+     
+        if(expertId > 0){
+          this.qForm.expertLibraryId = expertId;
+          this.qForm.expertName = expertName;
+          this.menuTitle = '立即提问'
+          this.handleSelect('2-1', '');
+          
+        }else if (expertId == 0){
+          this.qForm.expertLibraryId = 0;
+          this.menuTitle = '立即提问'
+
+          this.handleSelect('2-1', '');
+        }
+
+        this.loadUser();
+        this.loadMyQuestion(this);
+    },
+    methods: {
+        handleOpen:function(key, keyPath) {
+          console.log(key, keyPath);
+        },
+        handleSelect:function(key, keyPath) {
+        switch (key) {
+          case '2-1':
+          this.menuTitle = '修改资料'
+          break;
+          case '2-2':
+            this.menuTitle = '修改密码'
+            break;
+          case '1-2':{
+            this.menuTitle = '立即提问'
+
+            // alert('123');
+
+            this.$nextTick(function(){
+              this.quill = new Quill('#editor-container', {
+              modules: {
+              syntax: true,
+              toolbar: '#toolbar-container'
+              },
+              placeholder: '描述问题...',
+              theme: 'snow'
+            });
+            })
+
+            break;
+          }
+          case '1-1':{
+            this.menuTitle = '我的问题'
+            
+            this.currentPage = 0;
+            this.loadMyQuestion(this);
+          
+            break;
+          }
+          default:
+            {
+              this.menuTitle = '我的问题'
+            
+            this.currentPage = 0;
+            this.loadMyQuestion(this);
+            }
+            break;
+        }
+      },
+
+      
+      handleClose:function(key, keyPath) {
+        // console.log(key, keyPath);
+      },
+      onSubmitQuestion:function() {
+        var self = this;
+
+        if($.trim(self.qForm.title)===''){
+                    // alert("账号必填");
+                    showMsg(this,'标题不能为空');
+                    return false;
+        }
+
+        let content =  this.quill.getText();//quill.container.firstChild.innerHTML;
+        self.qForm.content = content;
+        if($.trim(self.qForm.content)===''){
+                    // alert("账号必填");
+                    showMsg(this,'内容不能为空');
+                    return false;
+        }
+
+        self.doAddQuestion(self);
+
+      },
+
+      logoutClick:function(){
+        sessionStorage.removeItem("token"); //删除数据
+                location.href = './index.html';
+            },
+
+      onSubmitProfile:function(){
+
+        if($.trim(this.form.telphone)===''){
+                    // alert("账号必填");
+                    showMsg(this,'电话不能为空');
+                    return false;
+        }
+        if($.trim(this.form.realName)===''){
+                    // alert("密码必填");
+          showMsg(this, '姓名不能为空必填');
+          return false;
+        }
+
+        this.updateUser(this);
+      },
+            
+      onSubmitPassword:function(){
+
+        if($.trim(this.changePassword.password)===''){
+                    // alert("账号必填");
+                    showMsg(this,'原密码不能为空');
+                    return false;
+        }
+        if($.trim(this.changePassword.newPassword)===''){
+                    // alert("密码必填");
+          showMsg(this, '新密码不能为空必填');
+          return false;
+        }
+
+
+          this.updatePassword(this);
+      },
+
+    
+      handleSizeChange:function(val) {
+      
+      },
+      handleCurrentChange:function(val) {
+        
+
+        this.currentPage = val;
+        this.loadMyQuestion(this);
+      },
+      
+      submitUpload:function() {
+
+        // debugger
+
+        this.$refs.upload.submit();
+      },
+
+      handleClick:function() {
+       
+      },
+
+      handleChange:function(file, fileList) {
+     
+      },
+      handleSuccess:function(res, file, fileList){
+        // debugger
+       this.fileList[0] = res.data;
+        // alert(this.fileList[0].url);
+      },
+      handleRemove:function(file, fileList) {
+        console.log(file, fileList);
+      },
+      handlePreview:function(file) {
+        console.log(file);
+      },
+      onShowImage:function(name){
+
+var url = this.baseUrl + name;
+// alert(url);
+this.showImg(url);
+},
+
+      onQuickAnswer:function(index){
+                // alert('快速回答' + index);
+
+                if(this.formIndex == index)
+                    this.formIndex = -1;
+                else
+                    this.formIndex = index;
+            },
+
+      onSubmitAnswer:function(index) {
+                var self = this;
+                // console.log('submit!' + index);
+                // alert('submit!' + index);
+                if($.trim(self.replyForm.content)===''){
+                    // alert("账号必填");
+                    showMsg(this,'请输入内容');
+                    return false;
+                }
+
+                self.replyIndex = index;
+                self.currentQuestion = self.questionList[index];
+                self.replyForm.questionId = self.currentQuestion.id;
+
+                this.doAddAction(this);
+            },
+
+            showImg:function(url){
+
+// $('.show').on('click',function(){
+    var img = '<img src="'+url+'">'
+    layer.open({
+        type: 1,//Page层类型
+        area: [img.width + 'px', img.height + 'px'],
+        title: false,
+        shade: 0.6 ,//遮罩透明度
+        maxmin: false ,//允许全屏最小化
+        anim: 1 ,//0-6的动画形式，-1不开启
+        content: img
+    }); 
+// });
+
+},
+      // 加载我的问题列表 add by liulei
+      loadMyQuestion:function(obj) {
+                var self = this;
+
+                var param = '{}';
+
+                var url = this.getApiRoot + '/question/getmy/'+self.currentPage+'/' + self.pageSize;
+               
+                $.ajax({
+                    method: 'GET',
+                    url: url,
+                    dataType: 'JSON',
+                    contentType: 'application/json',
+                    headers: {
+                        Accept:"application/json; charset=utf-8",
+                        token:token
+                    },
+                    success: function (res) {
+                        console.log('返回结果 我的提问:' + JSON.stringify(res));
+                        self.questionList = res.data.list; //JSON.stringify(res.data.list);//res.data.list;
+                        // console.log('new:' + JSON.stringify(self.list));
+                        self.total = res.data.total;
+                    },
+                    error: function () {
+
+                    }
+                })
+            },
+            delQuestion:function(id){
+                var self = this;
+                var param = '{}';
+
+                var url = this.getApiRoot + '/question/del/' + id;
+                $.ajax({
+                    type:'DELETE',
+                    url:url,
+                    data:JSON.stringify(self.form),
+                    dataType:'JSON',
+                    contentType:'application/json',
+                    headers: {
+                        Accept:"application/json; charset=utf-8",
+                        token:token
+                    },
+                    success:function(res){
+                        console.log('返回结果:' + JSON.stringify(res));
+                        if(res.code == 1000002){
+                            alert('删除成功');
+                        }
+                    },
+                    error:function(){
+
+                    }
+                })
+            },
+
+
+      // 加载用户信息 add by liulei
+      loadUser:function(){
+                var self = this;
+                var param = '{}';
+
+                var url = this.getApiRoot + '/user/getbytoken';
+                $.ajax({
+                    method:'GET',
+                    url:url,
+                    dataType:'JSON',
+                    contentType:'application/json',
+                    headers: {
+                        Accept:"application/json; charset=utf-8",
+                        token:token
+                    },
+                    success:function(res){
+                        console.log('返回用户信息:' + JSON.stringify(res));
+                        if(res.code == 1000001){
+                            self.userInfo = res.data;
+                            self.form.realName = res.data.realName;
+                            self.form.telphone = res.data.telphone;
+                           
+                        }
+                        
+                    },
+                    error:function(){
+                      showMsg(this, '服务异常,请稍后再试');
+                    }
+                })
+            },
+
+            updateUser:function(obj){
+                var self = this;
+                var param = '{}';
+
+                var url = obj.getApiRoot + '/user/update';
+                $.ajax({
+                    type:'PUT',
+                    url:url,
+                    data:JSON.stringify(self.form),
+                    dataType:'JSON',
+                    contentType:'application/json',
+                    headers: {
+                        Accept:"application/json; charset=utf-8",
+                        token:token
+                    },
+                    success:function(res){
+                        console.log('返回结果:' + JSON.stringify(res));
+                        if(res.code == 1000002){
+                            showMsg(obj, '更新成功');
+                        }else{
+                          showMsg(obj, res.msg);
+                        }
+                    },
+                    error:function(){
+                      debugger
+                      showMsg(obj, '服务异常,请稍后再试');
+                    }
+                })
+            },
+
+            updatePassword:function(obj){
+                var self = this;
+                var param = '{}';
+
+                var url = obj.getApiRoot + '/user/changepassword';
+                $.ajax({
+                    type:'PUT',
+                    url:url,
+                    data:JSON.stringify(self.changePassword),
+                    dataType:'JSON',
+                    contentType:'application/json',
+                    headers: {
+                        Accept:"application/json; charset=utf-8",
+                        token:token
+                    },
+                    success:function(res){
+                        console.log('修改密码结果:' + JSON.stringify(res));
+                        if(res.code == 1000002){
+                            showMsg(obj, '修改成功');
+                        }else{
+                            showMsg(obj, res.msg);
+                        }
+                    },
+                    error:function(){
+                      showMsg(obj, '服务异常,请稍后再试');
+                    }
+                })
+            },
+
+
+             // 回答 add by liulei
+             doAddAction:function(obj){
+                var self = this;
+                var param = '{}';
+                var url = this.getApiRoot + '/answer/add';
+                
+                $.ajax({
+                    type:'POST',
+                    url:url,
+                    data:JSON.stringify(self.replyForm),
+                    dataType:'JSON',
+                    contentType:'application/json',
+                    headers: {
+                        Accept:"application/json; charset=utf-8",
+                        token:token
+                    },
+                    success:function(res){
+                        console.log('返回结果:' + JSON.stringify(res));
+
+                        if(res.code == 1000002){    
+                           
+
+                            
+                           self.replyForm.content = '';
+                          //  this.menuTitle = '我的问题'
+                          //  self.currentPage = 0;
+                            // self.loadMyQuestion(self);
+
+                            // self.handleSelect('2-2', '');
+
+                            showMsg(obj, '发布成功');
+                            self.loadQuestionAnswer(self.replyForm.questionId);
+
+                        }else if(res.code = -100001){
+                            // alert(res.msg);
+                            showAlert(obj, '提示', res.msg, '确定')
+                        }else{
+                            // alert('登录失败,请重试');
+                            showAlert(obj, '提示', res.msg, '确定')
+                        }
+                        
+                    },
+                    error:function(){
+                        showMsg(obj, '服务异常,请稍后再试');
+                    }
+                })
+            },
+
+            // 提问 add by liulei
+            doAddQuestion:function(obj){
+                var self = this;
+                var param = '{}';
+
+                debugger
+
+                self.qForm.imgUrl = this.fileList[0].name;
+
+                var url = this.getApiRoot + '/question/add';
+                
+                
+              
+                $.ajax({
+                    type:'POST',
+                    url:url,
+                    data:JSON.stringify(self.qForm),
+                    dataType:'JSON',
+                    contentType:'application/json',
+                    headers: {
+                        Accept:"application/json; charset=utf-8",
+                        token:token
+                    },
+                    success:function(res){
+                        console.log('返回结果:' + JSON.stringify(res));
+
+                        if(res.code == 1000002){    
+                            
+
+                          //  self.replyForm.content = '';
+                          // this.menuTitle = '我的问题'
+                          // self.currentPage = 0;
+                            // self.loadMyQuestion(self);
+                            self.handleSelect('2-2', '');
+
+                            showMsg(obj, '发布成功');
+
+                        }else if(res.code = -100001){
+                            // alert(res.msg);
+                            showAlert(obj, '提示', res.msg, '确定')
+                        }else{
+                            // alert('登录失败,请重试');
+                            showAlert(obj, '提示', res.msg, '确定')
+                        }
+                        
+                    },
+                    error:function(){
+                        showMsg(obj, '服务异常,请稍后再试');
+                    }
+                })
+            },
+
+            // 加载 某个问题的 最新回答
+            loadQuestionAnswer:function(quiestionId){
+                var self = this;
+                var param = '{}';
+
+              // debugger
+                var url =  this.getApiRoot + '/answer/getbyquestion/' +quiestionId+'/0/5';
+         
+                $.ajax({
+                    method:'GET',
+                    url:url,
+                    dataType:'JSON', 
+                    contentType:'application/json',
+                    success:function(res){
+                        console.log('返回结果-问题最新回答:' + JSON.stringify(res));
+                        // debugger
+                        self.questionList[self.replyIndex].answerList = res.data.list;
+                        // self.total = res.data.total;
+                    },
+                    error:function(){
+    
+                    }
+                })
+            },
+
+    }
+  });
+
+
+ 
+</script>
+
+</html>

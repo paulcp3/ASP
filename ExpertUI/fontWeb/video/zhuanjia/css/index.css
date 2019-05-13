@@ -1,0 +1,74 @@
+body{
+    background: #f6f6f6;
+}
+a:hover{
+    text-decoration: none;
+}
+.main{
+    width: 1200px;
+    margin: 0 auto;
+}
+.banner{
+    width: 100%;
+    height: 200px;
+}
+.banner img{
+    width: 100%;
+    height: 100%;
+}
+.zj-navbar{
+    background: #fff;
+    margin-top: 20px;
+}
+.zj-desItem{
+    width: 100%;
+    height: auto;
+    background: #fff;
+    padding: 15px;   
+}
+.zj-info {
+    border-bottom: 1px dashed #ddd;
+}
+
+.zj-img{
+    width: 100px;
+    height: 100px;
+}
+.zj-img img{
+    width: 100%;
+    height: 100%;
+}
+.zj-img,.zj-btn,.zj-text{
+    float: left;
+}
+.zj-text{
+    width:65%;
+    padding-left: 20px;
+    box-sizing: border-box;
+}
+.zj-text h3{
+    color: #444;
+}
+.zj-text h3 span{
+    font-size: 16px;
+    color: #555;
+    padding-left: 20px;
+}
+.zj-text p{
+    color: #050f40;
+    font-size: 14px;
+    font-weight: 900;
+}
+.zj-text p span{
+    color: #666;
+    font-weight: 400;
+}
+.zj-btn{
+    width: 300px;
+    text-align: right;
+    margin-top: 30px;
+}
+
+.zj-btn .btn{
+    margin-left: 20px;
+}

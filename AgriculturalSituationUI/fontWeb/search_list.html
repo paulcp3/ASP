@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="./css/index.css">
+    <link rel="stylesheet" href="./css/css.css">
+    <link rel="stylesheet" href="./css/public.css">
+    <script src="./js/jquery-1.8.3.js" type="text/javascript"></script>
+    <script src="./js/vue.min.js"></script>
+    <script src="./js/index.js"></script>
+    <script src="./js/echarts.min .js"></script>
+    <script src="./js/axios.min.js"></script>
+
+    <script src="./js/public.js"></script>
+    <title>查询结果列表</title>
+</head>
+
+<body>
+    <div id="root" class="authcenter">
+        <div class="head">
+            <div class="area">
+                <div class="login-info">
+                    <div class="say-hi">Hi，欢迎来到农情分析</div>
+
+                    <div class="codebox">
+
+                    </div>
+                </div>
+                <ul class="ely-sn-menuwrap">
+                    <li class="item menu user-center">
+                        <a v-if="isLogin" href="./user_center.html" target="_blank">会员中心</a>
+                        <a v-else href="./login.html" target="_blank">登录</a>
+                    </li>
+                </ul>
+                <div class="index-link"><a class="clr-red" href="./index.html" title="农情首页">农情首页</a></div>
+            </div>
+
+        </div>
+        <div style="height: 126px; z-index: 114; position: relative;">
+            <div id="ely-hd" class="ely-hd">
+                <div class="area clearfix">
+                    <div class="logo">
+                        <a title="析数科技" class="logo-link" href="#">
+                            <img alt="析数科技" src="./image/logo-2.png"></a>
+                    </div>
+                    <div class="app-link-wrap"><img src="./image/1557654428.png" alt=""><p>扫一扫,下载农情APP</p></div>
+                    <div class="search">
+                        <el-tabs v-model="SearchName" type="card" @tab-click="searchClick">
+                            <el-tab-pane label="供应" name="供应"></el-tab-pane>
+                            <el-tab-pane label="求购" name="求购"></el-tab-pane>
+                            <el-tab-pane label="农机服务" name="农机服务"></el-tab-pane>
+                        </el-tabs>
+                        <div class="search-froup">
+                            <el-input :placeholder="'请输入关键词搜索'+SearchName" v-model="keyword" class="search-input">
+                            </el-input>
+                            <el-button icon="el-icon-search" type="success" class="search-btn" @click="onSearch">立即搜索</el-button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="main-nav-wrap" id="nav">
+            <div class="main-nav area clearfix">
+                <div class="menu-box-wrap" id="J_good_map">
+                    <div class="menu-title"><span class="smap-link">行业分类</span></div>
+                    <div class="menu-box clearfix">
+                        <div class="source-map" style="overflow: hidden;padding-top: 0px; margin-top: 0px; padding-bottom: 10px; margin-bottom: 0px; display: block;">
+                            <div class="m-floor m-floor-first clearfix">
+                                <div class="m-f-f-f" v-for="item in menuList">
+                                    <h2 class="cls">
+                                        <i class="female-ico"></i>
+                                        <a href="" target="_blank">{{item.label}}</a>
+                                    </h2>
+                                    <div class="f-r-f" v-if="item.children.length>0">
+                                        <div class="d-cate clearfix" v-for="menu in item.children">
+                                            <span class="cls-cate">{{menu.label}}</span>
+                                            <p v-if="menu.children.length>0">
+                                                <!-- @click="jumperLink(item.link)" href="javascript:;" -->
+                                                <a v-for="link in menu.children" :href="'./product_list.html?catid=' + link.id" title="蔬菜" target="_blank">{{link.label}}</a>
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <ul>
+                    <li><a class="link" href="./index.html">首页</a></li>
+                    <li><a class="link" href="./product_list.html?catid=0" target="_blank">供应</a></li>
+                    <li><a class="link" href="./seek_list.html" target="_blank">求购</a></li>
+                    <li>
+                        <el-dropdown>
+                            <span class="el-dropdown-link">
+                                农业服务<i class="el-icon-arrow-down el-icon--right"></i>
+                            </span>
+                            <el-dropdown-menu slot="dropdown">
+                                <!-- <el-dropdown-item><a class="link" href="./price_list.html" target="_blank">批发价格</a></el-dropdown-item> -->
+                                <el-dropdown-item><a class="link" href="./sever_list.html" target="_blank">农机服务</a></el-dropdown-item>
+                                <el-dropdown-item><a class="link" href="./control_list.html" target="_blank">统防统治</a></el-dropdown-item>
+                            </el-dropdown-menu>
+                        </el-dropdown>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="body-warp" style="padding:20px 0;">
+            <div class="area">
+                <div class="under-contair">
+                    <div style="margin-bottom:20px;">
+                        <el-breadcrumb separator-class="el-icon-arrow-right">
+                            <el-breadcrumb-item>您现在的位置：</el-breadcrumb-item>
+                            <el-breadcrumb-item>搜索结果</el-breadcrumb-item>
+                        </el-breadcrumb>
+                    </div>
+                    <div class="conLeft">
+                        <div class="JieGuo">
+                            <span class="JieGuo_01">全部结果</span><span class="JieGuo_02">只筛选前<span class="Huang"><span id="ContentPlaceHolder1_Label1">{{total}}</span></span>条信息</span>
+                        </div>
+                        <div class="wrap-left cList">
+                            <div class="bd">
+                                <ul>
+                                    <li v-if="rType===1" v-for="item in list">
+                                        <a :href="'./product_detail.html?id='+item.id" class="links" title="" target="_blank">
+                                            <!-- <div class="picture fl"><img class="lazy" alt=""
+                                                    src="./image/2016061414464813.jpg" style="display:inline;">
+                                            </div> -->
+                                            <div class="mob-ctt fl">
+                                                <h3>{{item.title}}</h3>
+                                                <p>有效期：{{item.expirationDate}}</p>
+                                            </div>
+                                        </a>
+                                    </li>
+                                    <li v-if="rType===2" v-for="item in list">
+                                        <a :href="'./seek_detail.html?id='+item.id" class="links" title="" target="_blank">
+                                            <!-- <div class="picture fl"><img class="lazy" alt=""
+                                                        src="./image/2016061414464813.jpg" style="display:inline;">
+                                                </div> -->
+                                            <div class="mob-ctt fl">
+                                                <h3>{{item.title}}</h3>
+                                                <p>有效期：{{item.expirationDate}}</p>
+                                            </div>
+                                        </a>
+                                    </li>
+                                    <li v-if="rType===3" v-for="item in list">
+                                        <a :href="'./sever_detail.html?id='+item.id" class="links" title="" target="_blank">
+                                            <!-- <div class="picture fl"><img class="lazy" alt=""
+                                                        src="./image/2016061414464813.jpg" style="display:inline;">
+                                                </div> -->
+                                            <div class="mob-ctt fl">
+                                                <h3>{{item.title}}</h3>
+                                                <p>有效期：{{item.expirationDate}}</p>
+                                            </div>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="text-left" style="padding:20px 0;">
+                            <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page.sync="currentPage" :page-size="pageSize" layout="prev, pager, next, jumper" :total="total">
+                            </el-pagination>
+                        </div>
+                    </div>
+                    <!-- <div class="conRight">
+                        <div class="t45">
+                            <h3>热门供应</h3>
+                        </div>
+                        <div class="rbox2">
+                            <ul class="hours72">
+                                    <li><a href="" target="_blank" title="「珠海羽人」推出喷药、施肥、播种多功能无人机">「珠海羽人」推出喷药、施肥、播种多功能无人机</a><i>2019-03-15</i></li>
+                                    <li><a href="" target="_blank" title="「珠海羽人」推出喷药、施肥、播种多功能无人机">「珠海羽人」推出喷药、施肥、播种多功能无人机</a><i>2019-03-15</i></li>
+                                    <li><a href="" target="_blank" title="「珠海羽人」推出喷药、施肥、播种多功能无人机">「珠海羽人」推出喷药、施肥、播种多功能无人机</a><i>2019-03-15</i></li>
+                                    <li><a href="" target="_blank" title="「珠海羽人」推出喷药、施肥、播种多功能无人机">「珠海羽人」推出喷药、施肥、播种多功能无人机</a><i>2019-03-15</i></li>
+                                    <li><a href="" target="_blank" title="「珠海羽人」推出喷药、施肥、播种多功能无人机">「珠海羽人」推出喷药、施肥、播种多功能无人机</a><i>2019-03-15</i></li>
+                                    <li><a href="" target="_blank" title="「珠海羽人」推出喷药、施肥、播种多功能无人机">「珠海羽人」推出喷药、施肥、播种多功能无人机</a><i>2019-03-15</i></li>
+                                    <li><a href="" target="_blank" title="「珠海羽人」推出喷药、施肥、播种多功能无人机">「珠海羽人」推出喷药、施肥、播种多功能无人机</a><i>2019-03-15</i></li>
+                                    <li><a href="" target="_blank" title="「珠海羽人」推出喷药、施肥、播种多功能无人机">「珠海羽人」推出喷药、施肥、播种多功能无人机</a><i>2019-03-15</i></li>
+                                    <li><a href="" target="_blank" title="「珠海羽人」推出喷药、施肥、播种多功能无人机">「珠海羽人」推出喷药、施肥、播种多功能无人机</a><i>2019-03-15</i></li>
+                                
+                                </ul>
+                        </div>
+                    </div> -->
+                </div>
+            </div>
+
+        </div>
+        <div class="pub-footer clearfix">
+            <style>
+                .down-img a img {
+                    margin: 0px;
+                }
+            </style>
+            <div class="con-width-1200 clearfix">
+                <!-- <img class="fxl l-img" src="./image/logo2.png"> -->
+            </div>
+            <div class="down clearfix">
+                <!-- Copyright © 2019 黄山现代农业产业园管委会 <span>版权所有</span> -->
+
+            </div>
+        </div>
+    </div>
+</body>
+<script>
+    var GETBASE, GETUUID, GETREGIONID, GETAPIROOT;
+    if (typeof(window.getBaseUrl) != 'undefined') {
+        GETBASE = window.getBaseUrl();
+        GETUUID = window.getUuid();
+        GETREGIONID = window.getRegionId();
+        GETAPIROOT = window.getApiRoot();
+    } else {
+        GETBASE = 'http://36.7.159.225:16000/api/as/file/';
+        GETUUID = '24acfc1215da435cbe76c69beb07f32b';
+        GETREGIONID = '101221002';
+        GETAPIROOT = 'http://36.7.159.225:16000/api/as';
+    }
+    // 获取url键值 传入key 返回 value
+    var type = parseInt(getParameters('type'));
+    var keyword = decodeURI(getParameters('keyword'));
+
+    var app = new Vue({ //vue对象
+        el: '#root',
+        data: {
+            isLogin: false,
+            getApiRoot: GETAPIROOT,
+            baseUrl: GETBASE,
+            uuid: GETUUID,
+            regionID: GETREGIONID,
+            menuList: [],
+            SearchName: '供应',
+            keyword: keyword,
+            rType: 0,
+            menuActive: '0',
+            recomedList: [{
+                href: '#',
+                img: './image/1620093681.jpg',
+                title: '智种网发布：中国种业研发实力报告，科研投入过亿企业仅有5家',
+                time: '2017-09-16'
+            }],
+            currentPage: 1,
+            pageSize: 10,
+            total: 0,
+
+            list: [{
+                title: '专业供应融安脆蜜金柑苗',
+                time: '2019-03-15',
+                company: '融安县正果生态农林工作站',
+                zhuyin: '金柑苗,脆蜜金柑,脆蜜金柑苗,金柑',
+                url: ''
+            }]
+        },
+        filters: {
+            //add by liulei
+            formatDate: function(time) {
+                var date = new Date(time);
+                return formatDate(date, 'yyyy-MM-dd hh:mm');
+            }
+        },
+        methods: {
+            searchClick: function() {
+
+            },
+
+            //立即搜索
+            onSearch: function() {
+
+                if (this.SearchName == '供应') {
+                    location.href = './search_list.html?type=1&keyword=' + this.keyword;
+                } else if (this.SearchName == '求购') {
+                    location.href = './search_list.html?type=2&keyword=' + this.keyword;
+                } else if (this.SearchName == '农机服务') {
+                    location.href = './search_list.html?type=3&keyword=' + this.keyword;
+                }
+            },
+
+            handleSizeChange: function(val) {
+                // console.log(`每页 ${val} 条`);
+            },
+            handleCurrentChange: function(val) {
+                // console.log(`当前页: ${val}`);
+                // add by liulei
+                this.loadData();
+            },
+            shoucang: function(sTitle, sURL) {
+                try {
+                    window.external.addFavorite(sURL, sTitle);
+                } catch (e) {
+                    try {
+                        window.sidebar.addPanel(sTitle, sURL, "");
+                    } catch (e) {
+                        alert("加入收藏失败，请使用Ctrl+D进行添加");
+                    }
+                }
+            },
+            onSubmit: function() {
+
+            },
+
+            // 搜索结果列表 add by liulei
+            loadData: function() {
+                var self = this;
+                // var param = '{"type":1, "keyword":2}';
+
+                var url = this.getApiRoot + '/search/getpage/' + self.uuid + '/' + type + '/' + keyword + '/' + self.currentPage + '/5';
+
+                $.ajax({
+                    method: 'GET',
+                    url: url,
+                    dataType: 'JSON',
+                    contentType: 'application/json',
+                    success: function(res) {
+                        console.log('返回结果:' + JSON.stringify(res));
+                        self.list = res.data.list;
+                        self.total = res.data.total;
+
+                        self.rType = type;
+                    },
+                    error: function() {
+
+                    }
+                })
+            },
+            // 加载分类列表 add by liulei
+            loadIndustrytype: function() {
+                var self = this;
+                var param = '{}';
+
+                var url = this.getApiRoot + '/industrytype/gettree/' + self.uuid;
+
+                $.ajax({
+                    method: 'GET',
+                    url: url,
+                    dataType: 'JSON',
+                    contentType: 'application/json',
+                    success: function(res) {
+                        console.log('返回结果1:' + JSON.stringify(res));
+                        self.menuList = res.data.list;
+                    },
+                    error: function() {
+
+                    }
+                })
+            },
+            //提示框
+            showAlert: function(title, msg, btnTitle) {
+                this.$alert(msg, title, {
+                    confirmButtonText: btnTitle
+                        // callback: action => {
+                        //     // this.$message({
+                        //     //     type: 'info',
+                        //     //     message: `action: ${ action }`
+                        //     // });
+                        // }
+                });
+            },
+
+            showMsg: function(msg) {
+                this.$message({
+                    type: 'info',
+                    message: msg
+                });
+            }
+        },
+        mounted: function() {
+            //add by liulei
+            var token = sessionStorage.getItem("token");
+            if (token == undefined || token == '') {} else {
+                this.isLogin = true;
+            }
+            this.loadData();
+            this.loadIndustrytype();
+        }
+    });
+</script>
+
+</html>

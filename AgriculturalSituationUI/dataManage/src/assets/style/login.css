@@ -1,0 +1,152 @@
+ {
+    position: relative;
+    background-image: url(../images/bg.jpg);
+    background-repeat: no-repeat;
+    background-size: cover;
+    width: 100%;
+    height: 100%;
+}
+.login_header {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 75px;
+    background-color: rgb(29, 49, 76);
+    text-align: left;
+    padding-left: 30px;
+    box-shadow: 1px 1px 6px 0px rgba(9, 9, 9, 0.16);
+}
+.before:before, .logo {
+    display: inline-block;
+    vertical-align: middle;
+}
+.before:before {
+    content: "";
+    height: 100%;
+}
+ .login_header img.logo {
+    vertical-align: middle;
+    display: inline-block;
+    height: 60px;
+}
+ .login_header .name_web {
+    vertical-align: middle;
+    display: inline-block;
+    font-size: 30px;
+    color: #fff;
+    padding-left: 20px;
+    font-family: webfont;
+    font-weight: bold;
+}
+.btn-land span {
+    font-size: 16px;
+}
+ .login_header .fr {
+    padding-right: 15px;
+}
+ .login_header .fr .fl {
+    height: 75px;
+    margin-right: 20px;
+}
+ .login_header .fr .fl span {
+    vertical-align: bottom;
+    display: inline-block;
+    line-height: 20px;
+    font-size: 12px;
+}
+ .login_header .fr .fl span i {
+    display: inline-block;
+    width: 12px;
+    height: 14px;
+    background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAASCAIAAADdWck9AAAAGXRFW…C+OZgvKMCO3BOIE7hjN0B0SKQRE0gCgaqp9EuSvFN/BBgAta/NT0UvBbMAAAAASUVORK5CYII=);
+    background-size: 100%;
+    margin-left: 10px;
+}
+ .login_header .fr .fr span {
+    vertical-align: bottom;
+    display: inline-block;
+    text-align: center;
+}
+ .login_header .fr .fr span p {
+    font-size: 12px;
+}
+ -main {
+    max-width: 1200px;
+    overflow: hidden;
+    margin: 0 auto;
+    height: 100%;
+}
+ -main .land-ico {
+    width: 49%;
+    text-align: left;
+}
+ .land-ico {
+    display: inline-block;
+    vertical-align: middle;
+    font-size: 0;
+}
+ -main .land-form {
+    width: 400px;
+    padding: 15px 0;
+    display: inline-block;
+    vertical-align: middle;
+    width: 49%;
+    text-align: right;
+}
+ -main .land-form div.normal_div {
+    background-color: #fff;
+    display: inline-block;
+    width: 400px;
+}
+ -main .land-form div.normal_div .land-form-top {
+    width: 100%;
+    height: 53px;
+    color: #858585;
+    font-size: 18px;
+    line-height: 53px;
+}
+ -main .land-form div.normal_div .land-form-group {
+    width: 325px;
+    margin: 0 auto;
+}
+ -main .land-form div.normal_div .land-form-group .land-box-group {
+    width: 100%;
+    overflow: hidden;
+    margin-bottom: 15px;
+}
+ -main .land-form div.normal_div .land-form-group .land-box-group label {
+    display: block;
+    font-size: 0;
+    width: 48px;
+    height: 48px;
+    float: left;
+}
+ -main .land-form div.normal_div .land-form-group .land-box-group input[type=password],  -main .land-form div.normal_div .land-form-group .land-box-group input[type=text] {
+    border: 1px solid #eee;
+    display: block;
+    height: 48px;
+    line-height: 48px;
+    padding-left: 10px;
+    float: left;
+    width: 270px;
+    font-size: 16px;
+}
+ -main .land-form div.normal_div .land-form-group .check-group {
+    text-align: right;
+}
+.login_footer {
+    overflow: hidden;
+    padding-top: 20px;
+    padding-bottom: 20px;
+}
+.land-form-group .btn-land {
+    background-color: #00b7ee!important;
+    border: none!important;
+    color: #fff!important;
+    width: 100%;
+    border-radius: 0!important;
+    margin-top: 30px!important;
+    height: 48px;
+    font-size: 16px;
+}

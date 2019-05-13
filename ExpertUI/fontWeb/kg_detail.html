@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>农业知识库 - 黄山现代农业示范区专家咨询知识库平台</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" media="screen" href="public/css/index.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link rel="stylesheet" href="online/css/index.css">
+    <link rel="stylesheet" href="element-ui/index.css">
+    <link rel="stylesheet" href="search/search.css">
+    <script src="element-ui/vue.min.js"></script>
+    <script src="element-ui/index.js"></script>
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+    <!-- add by liulei -->
+    <script src="public/js/public.js"></script>
+    
+    <style>
+    .message{
+        width: 960px;
+        margin: 20px auto;
+    }
+    .container{
+        min-height: 500px;
+    }
+    </style>
+</head>
+
+<body>
+    <div id="root">
+        <div class="header">
+            <div class="header-container h-main">
+                <div class="h-map">
+                    <!-- <a href="#" class="h-mappic">网站地图</a> -->
+                    <!-- <a href="#" class="h-phone">手机APP</a> -->
+                </div>
+                <div class="h-register" v-if="isLogin">
+                    <a href="#" class="h-welcom">你好，欢迎访问本网站！</a>
+                    <a href="./personal.html" v-if="userType ==4 ">会员中心</a>
+                    <a href="./personal_expert.html" v-if="userType ==3 ">专家中心</a>
+                </div>
+                <div class="h-register" v-else>
+                        <a href="#" class="h-welcom">你好，欢迎访问本网站！</a>
+                        <a href="./login.html">登录</a> | <a href="./register.html">注册</a>
+                </div>
+            </div>
+        </div>
+        <div class="header-main">
+            <div class="h-mainContainer h-serrchMain">
+                <div class="h-logo">
+                    <img src="public/image/logo-2.png">
+                </div>
+                <div class="search-bar">
+                        <el-tabs  type="card"  v-model="SearchName" @tab-click="searchClick" >
+                                <el-tab-pane label="预警" name="预警"></el-tab-pane>
+                                <el-tab-pane label="防治" name="防治"></el-tab-pane>
+                                <el-tab-pane label="病虫害" name="病虫害"></el-tab-pane>
+                                <el-tab-pane label="知识库" name="知识库"></el-tab-pane>
+                                <el-tab-pane label="专家" name="专家"></el-tab-pane>
+                        </el-tabs>
+                    <div class="h-search">
+                        <i class="el-icon-search h-searchIco"></i>
+                        <input type="text" class="h-searchText" v-model="keyWords" :placeholder="'请输入关键词搜索'+SearchName+'信息'">
+                        <button class="h-searchBtn"  @click="onSearch">搜索</button>
+                        <!-- <div class="h-searchHot">
+                            <a href="#">水稻防治</a> <a href="#">小麦防治</a> <a href="#">玉米防治</a> <a href="#">蔬菜防治</a>
+                        </div> -->
+                    </div>
+                </div>
+                <div  class="h-qrcode">
+                        <img src="public/image/qrcode.png">
+                    </div>
+
+             
+                <!-- <div class="h-msg" >
+                        <a v-if="!isLogin" href="./login.html" class="h-message">立即提问</a>
+                        <a v-else-if="isLogin && userType==4" href="./personal.html?epId=0" class="h-message">立即提问</a>
+                    </div> -->
+            </div>
+            <div class="h-menu h-mainContainer">
+                <ul class="h-menuMain">
+                        <li><a href="./index.html" >首页</a></li>
+                        <li><a href="./zhuanjia.html">专家库</a></li>
+                        <li><a href="./online.html" >在线问答</a></li>
+                        <li><a href="./knowloge.html" >农业知识库</a></li>
+                        <li><a href="./video.html" >视频培训</a></li>
+                        <!-- <a href="#" class="h-ask">我要提问</a> -->
+                </ul>
+            </div>
+        </div>
+        <div class="container main-top">
+            <div class="wrap-left pull-left">
+                <div style="margin: 10px 20px;">
+                    <el-breadcrumb separator-class="el-icon-arrow-right">
+                        <el-breadcrumb-item>您现在的位置：</el-breadcrumb-item>
+                        <el-breadcrumb-item>农业知识库</el-breadcrumb-item>
+                    </el-breadcrumb>
+                </div>
+
+                <div class="detail-contair">
+                    <h2 class="title">{{article.title}}</h2>
+                    <p id="lianxi" class="xinXi_02"> 发布时间：{{article.createTime | formatDate}}&nbsp;&nbsp;&nbsp; 
+                        <!-- <a
+                            href="http://user.zgny.com.cn/emember/378629.shtml" target="_blank">进入农商通</a>
+                        &nbsp;&nbsp;&nbsp; 信息来源 ：融安县正果生态农林工作站  -->
+                    </p>
+                    <div class="wenZi_02">
+                        {{article.content}}
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="message">
+        </div>
+
+        <div class="footer">
+            <!-- <div class="f-concate">
+                    <div class="f-cUs">
+                        <p class="f-cTitle">联系我们</p>
+                        <p class="f-cInfo"> <i class="el-icon-phone"></i> 400-xxx-xxxx</p>
+                    </div>
+                    <div class="f-cAD">
+                        <p class="f-cTitle">广告合作</p>
+                        <p class="f-cInfo"> <i class="el-icon-phone-outline"></i> 0792-xxxxxxxx</p>
+                    </div>
+                    <div class="f-cWEB">
+                        <p class="f-cTitle">投稿热线、网战运营</p>
+                        <p class="f-cInfo"> <i class="el-icon-message"></i> 400-xxx-xxxx</p>
+                    </div>
+                </div> -->
+                <div class="f-info">
+                        <p></p>
+                        <span>Copyright © 2019 黄山现代农业产业园管委会 版权所有</span>
+                        <p></p>
+                    </div>
+        </div>
+    </div>
+</body>
+<script>
+
+    // window.filterHelper = new FilterValueHelper();
+    var GETBASE,GETUUID,GETREGIONID,GETAPIROOT;
+    if(typeof(window.getBaseUrl) !='undefined'){
+        GETBASE= window.getBaseUrl();
+        GETUUID= window.getUuid();
+        GETREGIONID= window.getRegionId();
+        GETAPIROOT = window.getApiRoot();
+    }else{
+        GETBASE= 'http://36.7.159.225:16000/api/expert/file/';
+        GETUUID= '24acfc1215da435cbe76c69beb07f32b';
+        GETREGIONID= '101221002';
+        GETAPIROOT = 'http://36.7.159.225:16000/api/expert';
+    }
+
+    // 获取url键值 传入key 返回 value
+    var identifier = getParameters('identifier');
+
+    var alarm = new Vue({ //vue对象
+        el: '#root',
+        data: {
+            baseUrl:GETBASE,
+            uuid:GETUUID,
+            regionID:GETREGIONID,
+            getApiRoot:GETAPIROOT,
+
+            isLogin:false,
+            userType:4,
+            currentPage3: 5,
+            SearchName: '预警',
+            keyWords:'',
+            article:{
+                "id":1,
+                "title":"合肥万达的一天，王健林真能让迪士尼乐园在中国20年不赚钱",
+                "content":"10月27日上午9点，合肥开始下中雨，在此之前合肥已经连下几天雨。同期下雨的还有南京、上海，阴冷潮湿的氛围为整个长三角即将到来的冬季做了注脚。10月27日上午9点，合肥开始下中雨，在此之前合肥已经连下几天雨。同期下雨的还有南京、上海，阴冷潮湿的氛围为整个长三角即将到来的冬季做了注脚。",
+                "createTime":"2019-03-15",
+            },
+            reply: {},
+            tableData: [
+                {
+                    name: '王小虎',
+                    export:'法律法规领域专家',
+                    
+                    msg: '测试回复消息',
+                    time:'1天前',
+                    date: '2018-10-10 13:23'
+                }
+            ]
+        },
+        methods: {
+            onSubmit:function() {
+            
+            },
+
+            searchClick: function() {
+
+            },
+            onSearch:function(){
+                if (this.SearchName == '预警') {
+                location.href = './searchList.html?type=1&keyword=' + this.keyWords;
+            } else if (this.SearchName == '防治') {
+                location.href = './searchList.html?type=2&keyword=' + this.keyWords;
+            } else if (this.SearchName == '病虫害') {
+                location.href = './searchList.html?type=3&keyword=' + this.keyWords;
+            }else if (this.SearchName == '知识库') {
+                location.href = './searchList.html?type=4&keyword=' + this.keyWords;
+            }else if (this.SearchName == '专家') {
+                location.href = './searchList.html?type=5&keyword=' + this.keyWords;
+            }
+            },
+            
+            //加载文章详情
+            loadAarticle:function(){
+                var self = this;
+                var param = '{}';
+
+                var url =  this.getApiRoot + '/knowledge/get/' + identifier;
+                // debugger
+                $.ajax({
+                    method:'GET',
+                    url:url,
+                    dataType:'JSON',
+                    contentType:'application/json',
+                    success:function(res){
+                    
+                        self.article = res.data;
+                    },
+                    error:function(){
+    
+                    }
+                })
+            },
+
+        },
+
+        filters:{
+            //add by liulei
+            formatDate:function(time) {
+                var date = new Date(time);
+                return formatDate(date, 'yyyy-MM-dd hh:mm');
+            }
+        },
+        created:function(){
+
+        },
+        mounted: function () {
+            var self = this;
+
+            var token = sessionStorage.getItem("token"); 
+            var userType = sessionStorage.getItem("userType"); 
+            if(token == undefined || token == ''){
+            }else{
+                this.isLogin = true;
+                this.userType = userType;
+            }
+       
+
+            self.loadAarticle();
+        }
+
+    });
+</script>
+
+</html>

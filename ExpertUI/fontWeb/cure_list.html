@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>病虫害资料</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" media="screen" href="public/css/index.css">
+    <link rel="stylesheet" href="online/css/index.css">
+    <link rel="stylesheet" href="element-ui/index.css">
+    <link rel="stylesheet" href="search/search.css">
+    <link rel="stylesheet" href="online/css/cl-list.css">
+    <script src="element-ui/vue.min.js"></script>
+    <script src="element-ui/index.js"></script>
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+    <!-- add by liulei -->
+    <script src="public/js/public.js"></script>
+    
+    <style>
+    .message{
+        width: 960px;
+        margin: 20px auto;
+    }
+    
+    </style>
+</head>
+
+<body>
+    <div id="root">
+        <div class="header">
+            <div class="header-container h-main">
+                <div class="h-map">
+
+                </div>
+                <div class="h-register" v-if="isLogin">
+                    <a href="#" class="h-welcom">你好，欢迎访问本网站！</a>
+                    <a href="./personal.html" v-if="userType ==4 ">会员中心</a>
+                    <a href="./personal_expert.html" v-if="userType ==3 ">专家中心</a>
+                </div>
+                <div class="h-register" v-else>
+                        <a href="#" class="h-welcom">你好，欢迎访问本网站！</a>
+                        <a href="./login.html">登录</a> | <a href="./register.html">注册</a>
+                </div>
+            </div>
+        </div>
+        <div class="header-main">
+            <div class="h-mainContainer h-serrchMain">
+                <div class="h-logo">
+                    <img src="public/image/logo-2.png">
+                </div>
+                <div>
+                    <div class="h-search">
+                        <i class="el-icon-search h-searchIco"></i>
+                        <input type="text" class="h-searchText" placeholder="请输入关键词">
+                        <button class="h-searchBtn">搜索</button>
+
+                    </div>
+                </div>
+             
+                <div class="h-msg" >
+                        <a v-if="!isLogin" href="./login.html" class="h-message">立即提问</a>
+                        <a v-else-if="isLogin && userType==4" href="./personal.html" class="h-message">立即提问</a>
+                    </div>
+            </div>
+            <div class="h-menu h-mainContainer">
+                <ul class="h-menuMain">
+                        <li><a href="./index.html" >首页</a></li>
+                        <li><a href="./zhuanjia.html">专家库</a></li>
+                        <li><a href="./online.html" >在线问答</a></li>
+                        <li><a href="./knowloge.html" >农业知识库</a></li>
+                        <li><a href="./video.html" >视频培训</a></li>
+                        <!-- <a href="#" class="h-ask">我要提问</a> -->
+                </ul>
+            </div>
+        </div>
+        <div class="container main-top">
+            <el-container>
+                <el-main class="cl-main">
+                    <div>
+                        <div class="cl-title"> <i class="el-icon-menu"></i> <span>病虫害资料</span></div>
+                        <div class="cl-titlleInfo clear">
+                            <div class="cl-titleimg left">
+                                <img src="public/image/cureList.jpg" alt="">
+                            </div>
+                            <div class="cl-info left">
+                               <p> 名称：竹金黄镰翅野螟</p>
+                               <p>学名：Circobotys aurealis</p>
+                               <p>类属：鳞翅目螟蛾科</p>
+                            </div>
+                        </div>
+                        <div>    
+                            <div class="cl-item">
+                                <div class="cl-head">
+                                    <i class="el-icon-menu"></i> <a href="">  相关图片</a>
+                                </div>
+                                <div class="cl-item-info clear">
+                                    <a href="" class="left">
+                                        <img src="public/image/cl-item.jpg" alt="">
+                                        <br>
+                                        白斑翅野螟
+                                    </a>
+                                    <a href="" class="left">
+                                        <img src="public/image/cl-item.jpg" alt="">
+                                        <br>
+                                        白斑翅野螟
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="cl-item">
+                                <div class="cl-head">
+                                   <i class="el-icon-menu"></i> <a href="">分布与危害</a>
+                                </div>
+                                <div class="cl-item-info">
+                                    <p>竹金黄镰翅野螟(Circobotys aurealis)属鳞翅目螟蛾科，国内分布于安徽、江苏、浙江、台湾、湖南等地，可以为害毛竹、刚竹、淡竹。 </p>
+                                    <p>幼虫吐丝将叶片拉成弧状，在内取食。</p>
+                                </div>
+                            </div>
+                            <div class="cl-item">
+                                <div class="cl-head">
+                                    <i class="el-icon-menu"></i> <a href="">形态特征</a>
+                                </div>
+                                <div class="cl-item-info">
+                                    <p>成虫体长10-13mm，翅展29-34mm。雌虫体翅金黄色，体腹面银白色。前翅稍狭长，无斑纹。雄虫体黄色，翅黑褐色，缘毛及外缘宽边金黄色。前翅柳叶形。 </p>
+                                    <p>卵扁椭圆形，长径1.2-1.4mm，乳黄色，卵块鱼鳞状排列。</p>
+                                    <p>幼虫体长25-30mm，深绿色，背线浅绿色，两边为粉白色。4龄前胸部两侧各有1个黑斑，5龄仅前胸两侧有黑斑。</p>
+                                    <p>蛹长13-15mm，红棕色。</p>
+                                </div>
+                            </div>
+                            <div class="cl-item">
+                                <div class="cl-head">
+                                   <i class="el-icon-menu"></i> <a href="">发生规律</a>
+                                </div>
+                                <div class="cl-item-info">
+                                    <p>1年1代，以老熟幼虫于胶茧中越冬。4月上旬开始化蛹，化蛹期很长，到 5月中旬，尚有 1/3幼虫，已羽化 1/3，还有 1/3蛹。成虫羽化高峰有2次，即5月中旬及6月中旬，成虫有趋光性，需吸食花蜜为补充营养。卵产于竹叶背面，对竹的年份无选择性。卵经4-10天孵化，1-2龄幼虫取食竹叶上表皮，3龄后幼虫吐丝将叶拉成弧状，上结丝幕，在丝幕下食叶。将叶食至大半即转移为害，幼虫历期28-32天老熟，于老竹箨内壁、枯叶下结茧越冬。</p>
+                                </div>
+                            </div>
+                            <div class="cl-item">
+                                <div class="cl-head">
+                                    <i class="el-icon-menu"></i> <a href="">防治方法</a>
+                                </div>
+                                <div class="cl-item-info">
+                                    <p>（1）农业防治。</p>
+                                    <p>结合竹林抚育，清除林间、林缘小灌木，减少蜜源植物；冬季削山松土，可以增加过冬幼虫死亡。</p>
+                                    <p>（2）物理防治。</p>
+                                    <p>根据成虫的趋光性，可在成虫盛发期设置黑光灯进行诱杀。</p>
+                                    <p>（3）保护与利用天敌。</p>
+                                    <p>（4）化学防治。</p>
+                                    <p>尽量选择在低龄幼虫期防治。此时虫口密度小，危害小，且虫的抗药性相对较弱。防治时用45%丙溴辛硫磷（国光依它）1000倍液，或国光乙刻（20%氰戊菊酯）1500倍液+乐克（5.7%甲维盐）2000倍混合液,40%啶虫.毒（必治）1500-2000倍液喷杀幼虫，可连用1-2次，间隔7-10天。可轮换用药，以延缓抗性的产生。防治时，针对卷叶危害特点，需重点喷淋害虫危害部位，才能保证药效。</p>
+                                </div>
+                            </div>
+                            <div class="cl-item">
+                                <div class="cl-head">
+                                    <i class="el-icon-menu"></i> <a href="">防治药械</a>
+                                </div>
+                                <div class="cl-item-info">
+                                    <p>杀虫剂</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </el-main>
+                <el-aside width="250px">
+                    <el-container class="cl-asid">
+                        <el-header class="cl-asidHead"> <i class="el-icon-menu"></i> 目录</el-header>
+                        <el-main class="cl-asidMain">
+                            <ul>
+                                <li><a href="">1. 相关图片</a></li>
+                                <li><a href="">2. 分布与危害</a></li>
+                                <li> <a href="">3. 形态特征</a></li>
+                                <li><a href="">4. 发生规律</a></li>
+                                <li> <a href="">5. 防治方法</a></li>
+                                <li><a href="">6. 防治药械</a></li>
+                            </ul>
+                        </el-main>
+                    </el-container>
+                    <el-container class="cl-asid">
+                        <el-header class="cl-asidHead"> <i class="el-icon-menu"></i> 植保预警</el-header>
+                        <el-main class="cl-asidMain cl-asidList">
+                            <ul>
+                                <li><a href="">北方地区十、十一月份园林绿化月历</a></li>
+                                <li><a href="">北方地区十、十一月份园林绿化月历</a></li>
+                                <li><a href="">北方地区十、十一月份园林绿化月历</a></li>
+                                <li><a href="">北方地区十、十一月份园林绿化月历</a></li>
+                                <li><a href="">北方地区十、十一月份园林绿化月历</a></li>
+                                <li><a href="">北方地区十、十一月份园林绿化月历</a></li>
+                                <li><a href="">北方地区十、十一月份园林绿化月历</a></li>
+                            </ul>
+                        </el-main>
+                    </el-container>
+                    <el-container class="cl-asid">
+                        <el-header  class="cl-asidHead"> <i class="el-icon-menu"></i> 病虫害防治</el-header>
+                        <el-main  class="cl-asidMain cl-asidList">
+                            <ul class="">
+                                <li><a href="">球根秋海棠的这些知识你了解吗？</a></li>
+                                <li><a href="">球根秋海棠的这些知识你了解吗？</a></li>
+                                <li><a href="">球根秋海棠的这些知识你了解吗？</a></li>
+                                <li><a href="">球根秋海棠的这些知识你了解吗？</a></li>
+                                <li><a href="">球根秋海棠的这些知识你了解吗？</a></li>
+                                <li><a href="">球根秋海棠的这些知识你了解吗？</a></li>
+                            </ul>
+                            <ul>
+                                    <li><a href="">富贵竹常见病害及防治办法</a></li>
+                                    <li><a href="">富贵竹常见病害及防治办法</a></li>
+                                    <li><a href="">富贵竹常见病害及防治办法</a></li>
+                                    <li><a href="">富贵竹常见病害及防治办法</a></li>
+                                    <li><a href="">富贵竹常见病害及防治办法</a></li>
+                                    <li><a href="">富贵竹常见病害及防治办法</a></li>
+                                </ul>
+                        </el-main>
+                    </el-container>
+                </el-aside>
+            </el-container>
+        </div>
+        <div class="message">
+        </div>
+
+        <div class="footer">
+            <!-- <div class="f-concate">
+                    <div class="f-cUs">
+                        <p class="f-cTitle">联系我们</p>
+                        <p class="f-cInfo"> <i class="el-icon-phone"></i> 400-xxx-xxxx</p>
+                    </div>
+                    <div class="f-cAD">
+                        <p class="f-cTitle">广告合作</p>
+                        <p class="f-cInfo"> <i class="el-icon-phone-outline"></i> 0792-xxxxxxxx</p>
+                    </div>
+                    <div class="f-cWEB">
+                        <p class="f-cTitle">投稿热线、网战运营</p>
+                        <p class="f-cInfo"> <i class="el-icon-message"></i> 400-xxx-xxxx</p>
+                    </div>
+                </div> -->
+                <div class="f-info">
+                        <p></p>
+                        <span>Copyright © 2019 黄山现代农业产业园管委会 版权所有</span>
+                        <p></p>
+                    </div>
+        </div>
+    </div>
+</body>
+<script>
+
+    // window.filterHelper = new FilterValueHelper();
+    var GETBASE,GETUUID,GETREGIONID,GETAPIROOT;
+    if(typeof(window.getBaseUrl) !='undefined'){
+        GETBASE= window.getBaseUrl();
+        GETUUID= window.getUuid();
+        GETREGIONID= window.getRegionId();
+        GETAPIROOT = window.getApiRoot();
+    }else{
+
+
+        GETBASE= 'http://36.7.159.225:16000/api/expert/file/';
+        GETUUID= '24acfc1215da435cbe76c69beb07f32b';
+        GETREGIONID= '101221002';
+        GETAPIROOT = 'http://36.7.159.225:16000/api/expert';
+    }
+
+    // 获取url键值 传入key 返回 value
+    var identifier = getParameters('identifier');
+
+    var alarm = new Vue({ //vue对象
+        el: '#root',
+        data: {
+            baseUrl:GETBASE,
+            uuid:GETUUID,
+            regionID:GETREGIONID,
+            getApiRoot:GETAPIROOT,
+
+            isLogin:false,
+            userType:4,
+            currentPage3: 5,
+
+            article:{
+                // "id":1,
+                // "title":"合肥万达的一天，王健林真能让迪士尼乐园在中国20年不赚钱",
+                // "content":"10月27日上午9点，合肥开始下中雨，在此之前合肥已经连下几天雨。同期下雨的还有南京、上海，阴冷潮湿的氛围为整个长三角即将到来的冬季做了注脚。10月27日上午9点，合肥开始下中雨，在此之前合肥已经连下几天雨。同期下雨的还有南京、上海，阴冷潮湿的氛围为整个长三角即将到来的冬季做了注脚。",
+                // "createTime":"2019-03-15",
+            },
+            reply: {},
+            tableData: [
+                {
+                    name: '王小虎',
+                    export:'法律法规领域专家',
+                    msg: '测试回复消息',
+                    time:'1天前',
+                    date: '2018-10-10 13:23'
+                }
+            ]
+        },
+        methods: {
+            onSubmit:function() {
+             
+            },
+
+            //加载文章详情
+            loadAarticle:function(){
+                var self = this;
+                var param = '{}';
+
+                var url =  this.getApiRoot + '/cure/get/' + identifier;
+                // debugger
+                $.ajax({
+                    method:'GET',
+                    url:url,
+                    dataType:'JSON',
+                    contentType:'application/json',
+                    success:function(res){
+                     
+                        self.article = res.data;
+                    },
+                    error:function(){
+    
+                    }
+                })
+            },
+
+        },
+
+        filters:{
+            //add by liulei
+            formatDate:function(time) {
+                var date = new Date(time);
+                return formatDate(date, 'yyyy-MM-dd hh:mm');
+            }
+        },
+        created:function(){
+
+        },
+        mounted: function () {
+            var self = this;
+
+            var token = sessionStorage.getItem("token"); 
+            var userType = sessionStorage.getItem("userType"); 
+            if(token == undefined || token == ''){
+            }else{
+                this.isLogin = true;
+                this.userType = userType;
+            }
+       
+
+            self.loadAarticle();
+        }
+
+    });
+</script>
+
+</html>

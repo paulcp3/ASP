@@ -1,0 +1,110 @@
+table.dataTableHelper {
+	border-collapse: collapse;
+    margin: 5px;
+    text-align: center;
+}
+table.dataTableHelper tr.head th {
+	padding: 5px 8px;
+/*	background-color: #f1f1f1;*/
+	border-bottom: 1px dashed #ddd;
+}
+
+table.dataTableHelper tr.shadow td{
+/*	background-color: #e3e3e3;*/
+}
+
+
+table.dataTableHelper td {
+	padding: 5px 8px;
+/*	background-color: #f1f1f1;*/
+	font-size: 12px;
+	border-bottom: 1px dashed #ddd;
+	overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.dataAreaHelper {
+    margin: 5px;
+	background-color: #eee;
+	border-radius:15px;
+	-moz-border-radius:15px;
+	border: 1px solid #ddd;
+	display: inline-block;
+	padding-bottom: 10px;
+}
+.dataAreaHelper .main {
+	padding: 5%;
+	text-align: center;
+}
+.dataAreaHelper .main .label {
+	color: #545151;
+
+	text-overflow: ellipsis; 
+	overflow: hidden; 
+	white-space: nowrap;
+}
+.dataAreaHelper .main .value {
+	font-size: 16px;
+	text-overflow: ellipsis; 
+	overflow: hidden; 
+	white-space: nowrap;
+}
+.dataAreaHelper .sub {
+	padding: 2%;
+	
+}
+.dataAreaHelper .sub .label {
+	color: #545151;
+	display: inline-block;
+	padding:  2%;
+	width: 35%;
+	text-align: center;
+	text-overflow: ellipsis; 
+	overflow: hidden; 
+	white-space: nowrap;
+}
+.dataAreaHelper .sub .value {
+	color: white;
+	display: inline-block;
+	padding: 3%;
+	width: 50%;
+	border-radius:25px;
+	-moz-border-radius:25px;
+	background-repeat: no-repeat;
+	background-position: 15px;
+	text-align: center;
+	text-overflow: ellipsis; 
+	overflow: hidden; 
+	white-space: nowrap;
+}
+/*custom*/
+/*icon*/
+.dataAreaHelper .sub .value.up {
+	background-image: url(images/up.png);
+	background-size: 25%;
+	background-position: 10%
+}
+.dataAreaHelper .sub .value.down {
+	background-image: url(images/down.png);
+	background-size: 25%;
+	background-position: 10%
+}
+/*color*/
+.dataAreaHelper .sub .value.green {
+	background-color: #5DB148;
+	text-align: right;
+	font-size: inherit
+}
+.dataAreaHelper .sub .value.red {
+	background-color: #CA2020;
+	text-align: right;
+	font-size: inherit
+}
+/*table style*/
+table.dataTableHelper td.green {
+	color: green;
+}
+table.dataTableHelper td.red {
+	color: red;
+}

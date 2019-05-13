@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="./css/index.css">
+    <link rel="stylesheet" href="./css/css.css">
+    <link rel="stylesheet" href="./css/public.css">
+    <script src="./js/jquery-1.8.3.js" type="text/javascript"></script>
+    <!-- <script src="./js/vue.min.js"></script> -->
+
+    <!-- add by liulei -->
+    <script src="./js/vue.js"></script>
+
+    <script src="./js/index.js"></script>
+    <script src="./js/echarts.min .js"></script>
+    <script src="./js/axios.min.js"></script>
+
+    <script src="./js/jquery.cookie.js" type="text/javascript"></script>
+    <script src="./js/echartHelper/echartHelper.cube.js" type="text/javascript" charset="utf-8"></script>
+    <script src="./js/echartHelper/dataHelper.cube.js" type="text/javascript" charset="utf-8"></script>
+    <script src="./js/expresstool.jquery.js" type="text/javascript"></script>
+    <script src="./js/expresstool.js" type="text/javascript"></script>
+    <script src="./js/echartHelper/echartHelper.callback.default.js" type="text/javascript" charset="utf-8"></script>
+    <script src="./js/echartHelper/echartHelper.callback.custom.js" type="text/javascript" charset="utf-8"></script>
+    <script src="./js/echartHelper/dataTableHelper.js" type="text/javascript" charset="utf-8"></script>
+    <script src="./js/axios.min.js"></script>
+    <script src="./js/public.js"></script>
+    <title>供求列表</title>
+</head>
+
+<body>
+    <div id="root" class="authcenter">
+        <div class="head">
+            <div class="area">
+                <div class="login-info">
+                    <div class="say-hi">Hi，欢迎来到农情分析</div>
+                    <div class="login-link-wrap">
+                        请<a rel="nofollow" href="#">登录</a>
+                    </div>
+                    <div class="codebox">
+                        <div class="box">
+                            <a target="_blank" href="http://hefei.tianqi.com/?tq" title="查看天气详情"><span class="t1 f1">合肥</span><span
+                                    class="t2">
+                                    <img class="pngtqico" align="absmiddle" src="./image/sun.png" style="border:0;width:25px;height:25px"></span><span
+                                    class="t3 f1">
+                                    <em class="green f1">17℃</em>～<em class="red f1">6℃</em></span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <ul class="ely-sn-menuwrap">
+                    <li class="item menu user-center">
+                        <a href="#" target="_blank">
+                            会员中心
+                        </a>
+                    </li>
+                </ul>
+                <div class="index-link"><a class="clr-red" href="#" title="农情首页">农情首页</a></div>
+            </div>
+
+        </div>
+        <div style="height: 126px; z-index: 114; position: relative;">
+            <div id="ely-hd" class="ely-hd">
+                <div class="area clearfix">
+                    <div class="logo">
+                        <a title="衣联网" class="logo-link" href="#">
+                            <img alt="衣联网" src="./image/logo-2.png"></a>
+                    </div>
+
+                    <div class="search">
+                        <el-tabs v-model="SearchName" type="card" @tab-click="searchClick">
+                            <el-tab-pane label="采购" name="采购"></el-tab-pane>
+                            <el-tab-pane label="供应" name="供应"></el-tab-pane>
+                            <el-tab-pane label="农机服务" name="农机服务"></el-tab-pane>
+                        </el-tabs>
+                        <div class="search-froup">
+                            <el-input :placeholder="'请输入关键词搜索'+SearchName" class="search-input">
+                            </el-input>
+                            <el-button icon="el-icon-search" type="success" class="search-btn">立即搜索</el-button>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <div class="main-nav-wrap" id="nav">
+            <div class="main-nav area clearfix">
+                <div class="menu-box-wrap" id="J_good_map">
+                    <div class="menu-title"><span class="smap-link">行业分类</span></div>
+                    <div class="menu-box clearfix">
+                        <div class="source-map" style="overflow: hidden;padding-top: 0px; margin-top: 0px; padding-bottom: 10px; margin-bottom: 0px; display: block;">
+                            <div class="m-floor m-floor-first clearfix">
+                                <div class="m-f-f-f">
+                                    <h2 class="cls">
+                                        <i class="female-ico"></i>
+                                        <a href="" target="_blank">种植业</a>
+                                    </h2>
+                                    <div class="f-r-f">
+                                        <div class="d-cate clearfix">
+                                            <span class="cls-cate">蔬菜</span>
+                                            <p>
+                                                <a href="" title="蔬菜" target="_blank">蔬菜3</a>
+                                                <a href="" title="" target="_blank">蔬菜2</a>
+                                                <a href="" title="" target="_blank">蔬菜1</a>
+                                            </p>
+                                        </div>
+                                        <div class="d-cate clearfix">
+                                            <span class="cls-cate">水果</span>
+                                            <p>
+                                                <a href="" title="蔬菜" target="_blank">蔬菜3</a>
+                                                <a href="" title="" target="_blank">蔬菜2</a>
+                                                <a href="" title="" target="_blank">蔬菜1</a>
+                                                <a href="" title="蔬菜" target="_blank">蔬菜3</a>
+                                                <a href="" title="" target="_blank">蔬菜2</a>
+                                                <a href="" title="" target="_blank">蔬菜1</a>
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="m-f-f-f">
+                                    <h2 class="cls">
+                                        <i class="female-ico"></i>
+                                        <a href="" target="_blank">畜牧业</a>
+                                    </h2>
+                                    <div class="f-r-f">
+                                        <div class="d-cate clearfix">
+                                            <span class="cls-cate">蔬菜</span>
+                                            <p>
+                                                <a href="" title="蔬菜" target="_blank">蔬菜3</a>
+                                                <a href="" title="" target="_blank">蔬菜2</a>
+                                                <a href="" title="" target="_blank">蔬菜1</a>
+                                            </p>
+                                        </div>
+                                        <div class="d-cate clearfix">
+                                            <span class="cls-cate">水果</span>
+                                            <p>
+                                                <a href="" title="蔬菜" target="_blank">蔬菜3</a>
+                                                <a href="" title="" target="_blank">蔬菜2</a>
+                                                <a href="" title="" target="_blank">蔬菜1</a>
+                                                <a href="" title="蔬菜" target="_blank">蔬菜3</a>
+                                                <a href="" title="" target="_blank">蔬菜2</a>
+                                                <a href="" title="" target="_blank">蔬菜1</a>
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="m-f-f-f">
+                                    <h2 class="cls">
+                                        <i class="female-ico"></i>
+                                        <a href="" target="_blank">农资类</a>
+                                    </h2>
+                                    <div class="f-r-f">
+                                        <div class="d-cate clearfix">
+                                            <span class="cls-cate">蔬菜</span>
+                                            <p>
+                                                <a href="" title="蔬菜" target="_blank">蔬菜3</a>
+                                                <a href="" title="" target="_blank">蔬菜2</a>
+                                                <a href="" title="" target="_blank">蔬菜1</a>
+                                            </p>
+                                        </div>
+                                        <div class="d-cate clearfix">
+                                            <span class="cls-cate">水果</span>
+                                            <p>
+                                                <a href="" title="蔬菜" target="_blank">蔬菜3</a>
+                                                <a href="" title="" target="_blank">蔬菜2</a>
+                                                <a href="" title="" target="_blank">蔬菜1</a>
+                                                <a href="" title="蔬菜" target="_blank">蔬菜3</a>
+                                                <a href="" title="" target="_blank">蔬菜2</a>
+                                                <a href="" title="" target="_blank">蔬菜1</a>
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="m-f-f-f">
+                                    <h2 class="cls">
+                                        <i class="female-ico"></i>
+                                        <a href="" target="_blank">农副加工</a>
+                                    </h2>
+                                    <div class="f-r-f">
+                                        <div class="d-cate clearfix">
+                                            <span class="cls-cate">蔬菜</span>
+                                            <p>
+                                                <a href="" title="蔬菜" target="_blank">蔬菜3</a>
+                                                <a href="" title="" target="_blank">蔬菜2</a>
+                                                <a href="" title="" target="_blank">蔬菜1</a>
+                                            </p>
+                                        </div>
+                                        <div class="d-cate clearfix">
+                                            <span class="cls-cate">水果</span>
+                                            <p>
+                                                <a href="" title="蔬菜" target="_blank">蔬菜3</a>
+                                                <a href="" title="" target="_blank">蔬菜2</a>
+                                                <a href="" title="" target="_blank">蔬菜1</a>
+                                                <a href="" title="蔬菜" target="_blank">蔬菜3</a>
+                                                <a href="" title="" target="_blank">蔬菜2</a>
+                                                <a href="" title="" target="_blank">蔬菜1</a>
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="m-f-f-f">
+                                    <h2 class="cls">
+                                        <i class="female-ico"></i>
+                                        <a href="" target="_blank">渔业</a>
+                                    </h2>
+                                    <div class="f-r-f">
+                                        <div class="d-cate clearfix">
+                                            <span class="cls-cate">蔬菜</span>
+                                            <p>
+                                                <a href="" title="蔬菜" target="_blank">蔬菜3</a>
+                                                <a href="" title="" target="_blank">蔬菜2</a>
+                                                <a href="" title="" target="_blank">蔬菜1</a>
+                                            </p>
+                                        </div>
+                                        <div class="d-cate clearfix">
+                                            <span class="cls-cate">水果</span>
+                                            <p>
+                                                <a href="" title="蔬菜" target="_blank">蔬菜3</a>
+                                                <a href="" title="" target="_blank">蔬菜2</a>
+                                                <a href="" title="" target="_blank">蔬菜1</a>
+                                                <a href="" title="蔬菜" target="_blank">蔬菜3</a>
+                                                <a href="" title="" target="_blank">蔬菜2</a>
+                                                <a href="" title="" target="_blank">蔬菜1</a>
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <ul>
+                    <li><a class="link" href="#" target="_blank">首页</a></li>
+                    <li><a class="link" href="#" target="_blank">供应</a></li>
+                    <li><a class="link" href="#" target="_blank">求购</a></li>
+                    <li><a class="link" href="#" target="_blank">农产品价格</a></li>
+                    <li><a class="link" href="#" target="_blank">农业服务</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="body-warp" style="padding:20px 0;">
+            <div class="area">
+                <div class="under-contair">
+                    <div style="margin-bottom:20px;">
+                        <el-breadcrumb separator-class="el-icon-arrow-right">
+                            <el-breadcrumb-item>您现在的位置：</el-breadcrumb-item>
+                            <el-breadcrumb-item>供求列表</el-breadcrumb-item>
+                        </el-breadcrumb>
+                    </div>
+                    <div class="conLeft">
+                        <div class="detail-contair">
+                            <h2 class="title">【供】 专业供应融安脆蜜金柑苗 </h2>
+                            <p id="lianxi" class="xinXi_02"> 发布时间：2019-03-15&nbsp;&nbsp;&nbsp; <a href="http://user.zgny.com.cn/emember/378629.shtml" target="_blank">进入农商通</a> &nbsp;&nbsp;&nbsp; 信息来源 ：融安县正果生态农林工作站 </p>
+                            <div class="wenZi_02">
+                                <span class="wenZi_04">主营产品：</span>
+                                <p>金柑苗,脆蜜金柑,脆蜜金柑苗,金柑 </p>
+                                <span class="wenZi_04">联系方式：</span>
+                                <p>手机：13597272977 电话：07728110627 </p>
+                                <span class="wenZi_04">详细信息：</span>
+                                <p>金柑苗,脆蜜金柑,脆蜜金柑苗,金柑 </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="conRight">
+                        <div class="t45">
+                            <h3>推荐排行</h3>
+                        </div>
+                        <div class="rbox2">
+                            <div class="hotnewsAd">
+                                <div :class="index < 2 ? 'big' :'small'" v-for="(item,index) in recomedList">
+                                    <a :href="item.href">
+                                        <img :src="item.img" border="0">
+                                        <p>{{item.title}}</p><i>{{item.time}}</i><em :class="'b'+(index+1)">{{index+1}}</em>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <div class="pub-footer clearfix">
+            <style>
+                .down-img a img {
+                    margin: 0px;
+                }
+            </style>
+            <div class="con-width-1200 clearfix">
+                <img class="fxl l-img" src="http://www.zgncpw.com/skin/skin2018/image/common/logo_down.png">
+
+                <div class="fxl text-align-c clearfix">
+                    <div id="webpage">
+                        <a href="http://www.zgncpw.com/" class="font-white">网站首页</a> | <a href="http://www.zgncpw.com/extend/about.html">关于我们</a> | <a href="http://www.zgncpw.com/extend/contact.html">联系方式</a> | <a href="http://www.zgncpw.com/extend/problem.html">常见问题</a>                        | <a href="http://www.zgncpw.com/extend/agreement.html">使用协议</a> | <a href="http://www.zgncpw.com/extend/copyright.html">版权隐私</a> | <a href="http://www.zgncpw.com/sitemap/">网站地图</a> | <a href="http://www.zgncpw.com/guestbook/">网站留言</a>                        | <a href="http://www.zgncpw.com/ad/">广告服务</a> | <a href="http://www.zgncpw.com/gift/">积分换礼</a> | <a href="http://www.zgncpw.com/mobile ">手机版</a> | <a href="http://www.zgncpw.com/feed/">RSS订阅</a></div>
+                    <!--<div id="copyright">(c)2008-2016 zgncpw.com B2B SYSTEM All Rights Reserved<br><script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_4507658'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s19.cnzz.com/stat.php%3Fid%3D4507658' type='text/javascript'%3E%3C/script%3E"));</script></div>-->
+                    <div class="clearline"></div>
+                    <div class="con-width m down-img clearfix" style="width:850px;text-align:center;">
+                        <a key="593622e9efbfb02559f2e916" logo_size="83x30" logo_type="realname" href="https://v.pinpaibao.com.cn/authenticate/cert/?site=www.zgncpw.com&amp;at=realname" target="_blank">
+
+                        </a>
+
+                        <a href="http://www.bjjubao.org/" target="_blank"><img src="http://image.zgncpw.com:8000/public/down/bjhlw.gif"><span>北京互联网举报中心</span></a>
+                        <a href="http://www.bjwhzf.gov.cn/accuse.do" target="_blank"><img src="http://image.zgncpw.com:8000/public/down/bjwhsc.jpg"><span>北京文化市场举报热线</span></a>
+                        <a href="http://www.bjrt.gov.cn/" target="_blank"><img src="http://image.zgncpw.com:8000/public/down/blstjm.jpg"><span>不良视听节目举报</span></a>
+                        <a href="http://www.12377.cn/" target="_blank"><img src="http://image.zgncpw.com:8000/public/down/wfblxx.jpg"><span>违法和不良信息举报中心</span></a>
+                        <a href="http://www.bj.cyberpolice.cn/index.htm" target="_blank"><img src="http://image.zgncpw.com:8000/public/down/wl110.jpg"><span>网络
+                                110报警服务</span></a>
+                        <!--<a href="http://webscan.360.cn/index/checkwebsite/url/www.zgncpw.com"><img border="0" src="http://img.webscan.360.cn/status/pai/hash/19273bf19a23fde5eec9c088e8f9b4d3" width="100px" height="30px"/></a>-->
+                    </div>
+                </div>
+            </div>
+            <div class="down clearfix">
+                Copyright © 2017 维贸网络 <span>版权所有</span> &nbsp;&nbsp;&nbsp;&nbsp;
+                <span class="font-gray"></span>&nbsp;&nbsp;&nbsp;&nbsp;
+                <a href="http://www.miibeian.gov.cn" target="_blank">皖ICP备15003989号-2</a>&nbsp;&nbsp;&nbsp;&nbsp;<span class="font-gray"></span>&nbsp;&nbsp;&nbsp;&nbsp; 增值电信业务经营许可证：皖B2-20160010 &nbsp;&nbsp;&nbsp;&nbsp;
+                <img src="http://image.zgncpw.com:8000/public/down/beian.png">皖公网安备 13102202000368号
+                <span class="font-gray"></span>&nbsp;&nbsp;&nbsp;&nbsp;
+
+            </div>
+        </div>
+    </div>
+</body>
+<script>
+    var app = new Vue({ //vue对象
+        el: '#root',
+        data: {
+            SearchName: '采购',
+            menuActive: '0',
+            recomedList: [{
+                href: '#',
+                img: './image/1620093681.jpg',
+                title: '智种网发布：中国种业研发实力报告，科研投入过亿企业仅有5家',
+                time: '2017-09-16'
+            }, {
+                href: '#',
+                img: './image/1620093681.jpg',
+                title: '智种网发布：中国种业研发实力报告，科研投入过亿企业仅有5家',
+                time: '2017-09-16'
+            }, {
+                href: '#',
+                img: './image/1620093681.jpg',
+                title: '智种网发布：中国种业研发实力报告，科研投入过亿企业仅有5家',
+                time: '2017-09-16'
+            }, {
+                href: '#',
+                img: './image/1620093681.jpg',
+                title: '智种网发布：中国种业研发实力报告，科研投入过亿企业仅有5家',
+                time: '2017-09-16'
+            }, {
+                href: '#',
+                img: './image/1620093681.jpg',
+                title: '智种网发布：中国种业研发实力报告，科研投入过亿企业仅有5家',
+                time: '2017-09-16'
+            }, {
+                href: '#',
+                img: './image/1620093681.jpg',
+                title: '智种网发布：中国种业研发实力报告，科研投入过亿企业仅有5家',
+                time: '2017-09-16'
+            }, {
+                href: '#',
+                img: './image/1620093681.jpg',
+                title: '智种网发布：中国种业研发实力报告，科研投入过亿企业仅有5家',
+                time: '2017-09-16'
+            }, ],
+            currentPage: 3,
+            list: [{
+                title: '专业供应融安脆蜜金柑苗',
+                time: '2019-03-15',
+                company: '融安县正果生态农林工作站',
+                zhuyin: '金柑苗,脆蜜金柑,脆蜜金柑苗,金柑',
+                url: ''
+            }, {
+                title: '专业供应融安脆蜜金柑苗',
+                time: '2019-03-15',
+                company: '融安县正果生态农林工作站',
+                zhuyin: '金柑苗,脆蜜金柑,脆蜜金柑苗,金柑',
+                url: ''
+            }, {
+                title: '专业供应融安脆蜜金柑苗',
+                time: '2019-03-15',
+                company: '融安县正果生态农林工作站',
+                zhuyin: '金柑苗,脆蜜金柑,脆蜜金柑苗,金柑',
+                url: ''
+            }]
+        },
+        methods: {
+            searchClick: function() {
+
+            },
+            handleSizeChange(val) {
+                // console.log(`每页 ${val} 条`);
+            },
+            handleCurrentChange(val) {
+                // console.log(`当前页: ${val}`);
+            },
+            shoucang: function(sTitle, sURL) {
+                try {
+                    window.external.addFavorite(sURL, sTitle);
+                } catch (e) {
+                    try {
+                        window.sidebar.addPanel(sTitle, sURL, "");
+                    } catch (e) {
+                        alert("加入收藏失败，请使用Ctrl+D进行添加");
+                    }
+                }
+            },
+            onSubmit: function() {
+
+            }
+        },
+        mounted: function() {
+
+        }
+    });
+</script>
+
+</html>

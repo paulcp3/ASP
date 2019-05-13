@@ -1,0 +1,118 @@
+h3,h4{
+    margin: 0;
+}
+.main{
+    width: 1200px;
+    margin: 0 auto;
+}
+.banner{
+    width: 100%;
+    margin: 0 auto;
+}
+.banner img{
+    width: 100%;
+}
+.ol-main{
+    background: #fff;
+}
+.ol-content{
+    width: 1000px;
+    margin: 10px auto 0;
+    display: flex;
+    justify-content: space-between;
+}
+.ol-ans{
+    width: 700px;
+}
+.ol-tuijian{
+    width: 288px;
+}
+.ol-ansItem{
+    background: #fff;
+    box-sizing: border-box;
+    padding: 15px;
+    margin-bottom: 10px;
+}
+.ol-ansItem h3{
+    color: #333;
+    font: bold 18px/28px "Microsoft YaHei";
+    overflow: hidden;
+    text-overflow: ellipsis;
+    -webkit-line-clamp: 2;
+    display: -webkit-box;
+    word-break: break-all;
+    -webkit-box-orient: vertical;
+}
+.ol-ansItemInfo{
+    height: 40px;
+    margin-top: 10px;
+    margin-bottom: 14px;
+    position: relative;
+}
+.ol-ansItemInfo img{
+    display: block;
+    float: left;
+    width: 38px;
+    height: 38px;
+    overflow: hidden;
+    margin-right: 14px;
+}
+.ol-ansItemInfo span{
+    display: block;
+    float: left;
+    margin-top: 9px;
+    color: #666;
+    font-weight: bold;
+}
+.ol-ansItemInfo p{
+    width: 50%;
+    float: left;
+    color: #333;
+    font-size: 14px;
+    height: 100%;
+    line-height: 40px;
+    margin-left: 20px;
+    margin-bottom: 0;
+    overflow: initial;
+}
+.ol-des{
+    text-align: right;
+}
+.ol-des span{
+    color: #999;
+    padding: 0 10px; 
+}
+.ol-tjItem{
+    background: #fff;
+    border: 1px solid #e1e1e1;
+    border-radius: 3px;
+    -webkit-border-radius: 3px;
+    box-shadow: 0 0 5px 0 #e1e1e1;
+    -webkit-box-shadow: 0 0 5px 0 #e1e1e1;
+    background: #fff;
+    margin-bottom: 10px;
+}
+.ol-tjItem h3{
+    height: 50px;
+    border-bottom: 1px solid #f0f2f7;
+    color: #333;
+    font: bold 16px/50px "Microsoft YaHei";
+    position: relative;
+    padding-left: 18px;
+}
+.ol-list{
+    padding: 0 20px 30px;
+    box-sizing: border-box;
+}
+.ol-list li{
+    padding-top: 20px;
+    min-height: 12px;
+    position: relative;
+    padding-left: 10px;
+    color: #999;
+}
+.ol-list li a{
+    color: #175199;
+    font-size: 14px;
+    line-height: 12px;
+}

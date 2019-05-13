@@ -1,0 +1,889 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+
+
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="./css/index.css">
+    <link rel="stylesheet" href="./css/css.css">
+    <link rel="stylesheet" href="./css/public.css">
+    <script src="./js/jquery-1.8.3.js" type="text/javascript"></script>
+    <script src="./js/vue.min.js"></script>
+    <script src="./js/index.js"></script>
+    <script src="./js/echarts.min .js"></script>
+    <script src="./js/axios.min.js"></script>
+    <script src="./js/public.js"></script>
+    <script src="./js/jquery.cookie.js" type="text/javascript"></script>
+    <script src="./js/echartHelper/echartHelper.cube.js" type="text/javascript" charset="utf-8"></script>
+    <script src="./js/echartHelper/dataHelper.cube.js" type="text/javascript" charset="utf-8"></script>
+    <script src="./js/expresstool.jquery.js" type="text/javascript"></script>
+    <script src="./js/expresstool.js" type="text/javascript"></script>
+    <script src="./js/echartHelper/echartHelper.callback.default.js" type="text/javascript" charset="utf-8"></script>
+    <script src="./js/echartHelper/echartHelper.callback.custom.js" type="text/javascript" charset="utf-8"></script>
+    <script src="./js/echartHelper/dataTableHelper.js" type="text/javascript" charset="utf-8"></script>
+
+    <title>用户中心</title>
+</head>
+
+<body>
+    <div id="root" class="authcenter">
+        <div class="head">
+            <div class="area">
+                <div class="login-info">
+                    <div class="say-hi">Hi，欢迎来到农情分析</div>
+                    <!-- <div class="login-link-wrap">
+                        请<a rel="nofollow" href="#">登录</a>
+                    </div> -->
+                    <div class="codebox">
+
+                    </div>
+                </div>
+                <ul class="ely-sn-menuwrap">
+                    <li class="item menu user-center" @click="logoutClick()">
+                        <a>退出</a>
+                    </li>
+                </ul>
+                <div class="index-link"><a class="clr-red" href="./index.html" title="农情首页">农情首页</a></div>
+            </div>
+
+        </div>
+        <div style="height: 126px; z-index: 114; position: relative;">
+            <div id="ely-hd" class="ely-hd">
+                <div class="area clearfix">
+                    <div class="logo">
+                        <a title="析数科技" class="logo-link" href="#">
+                            <img alt="析数科技" src="./image/logo-2.png"></a>
+                    </div>
+
+                    <div class="app-link-wrap"><img src="./image/1557654428.png" alt=""><p>扫一扫,下载农情APP</p></div>
+                </div>
+            </div>
+        </div>
+        <div class="main-nav-wrap" id="nav">
+            <div class="main-nav area clearfix">
+                <div class="menu-box-wrap" id="J_good_map">
+                    <div class="menu-title"><span class="smap-link">行业分类</span></div>
+                </div>
+                <ul>
+                    <li><a class="link" href="./index.html">首页</a></li>
+                    <li><a class="link" href="./product_list.html?catid=0" target="_blank">供应</a></li>
+                    <li><a class="link" href="./seek_list.html" target="_blank">求购</a></li>
+                    <li>
+                        <el-dropdown>
+                            <span class="el-dropdown-link">
+                                农业服务<i class="el-icon-arrow-down el-icon--right"></i>
+                            </span>
+                            <el-dropdown-menu slot="dropdown">
+                                <!-- <el-dropdown-item><a class="link" href="./price_list.html" target="_blank">批发价格</a></el-dropdown-item> -->
+                                <el-dropdown-item><a class="link" href="./sever_list.html" target="_blank">农机服务</a></el-dropdown-item>
+                                <el-dropdown-item><a class="link" href="./control_list.html" target="_blank">统防统治</a></el-dropdown-item>
+                            </el-dropdown-menu>
+                        </el-dropdown>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="body-warp" style="padding:20px 0;">
+            <div class="area">
+                <div class="userCenter">
+                    <el-container style=" border: 1px solid #eee;min-height: 500px;">
+                        <el-aside width="200px" style="background-color: fff">
+                            <el-menu :default-openeds="['1','2']" @select="selectMenu" default-active="修改资料">
+                                <el-submenu index="1">
+                                    <template slot="title"><i class="el-icon-menu"></i>会员资料</template>
+                                    <el-menu-item index="修改资料">修改资料</el-menu-item>
+                                    <el-menu-item index="修改密码">修改密码</el-menu-item>
+                                </el-submenu>
+                                <el-submenu index="2">
+                                    <template slot="title"><i class="el-icon-menu"></i>供求管理</template>
+                                    <el-menu-item index="发布供应">发布供求</el-menu-item>
+                                    <el-menu-item index="管理供应">管理供应</el-menu-item>
+                                    <el-menu-item index="管理求购">管理求购</el-menu-item>
+                                </el-submenu>
+                            </el-menu>
+                        </el-aside>
+                        <el-main>
+                            <div class="main-header">
+                                <h2 class="conTitle">
+                                    {{menuTitle}}
+                                </h2>
+                            </div>
+                            <!-- 修改资料 -->
+                            <el-form ref="form" v-if="menuTitle == '修改资料'" class="userMsg" :model="form" label-width="120px">
+                                <el-form-item label="真实姓名：">
+                                    <el-input v-model="form.realName"></el-input>
+                                </el-form-item>
+                                <el-form-item label="联系电话：">
+                                    <el-input v-model="form.telphone"></el-input>
+                                </el-form-item>
+                                <el-form-item>
+                                    <el-button type="primary" @click="onSubmitProfile">确认修改</el-button>
+                                </el-form-item>
+                            </el-form>
+                            <!-- 修改密码 -->
+                            <el-form class="userMsg" v-else-if="menuTitle == '修改密码'" :model="changePassword" label-width="120px">
+                                <el-form-item label="当前密码：">
+                                    <el-input v-model="changePassword.password"></el-input>
+                                </el-form-item>
+                                <el-form-item label="新密码：">
+                                    <el-input v-model="changePassword.newPassword"></el-input>
+                                </el-form-item>
+                                <el-form-item label="确认密码：">
+                                    <el-input v-model="changePassword.passwordAgin"></el-input>
+                                </el-form-item>
+                                <el-form-item>
+                                    <el-button type="primary" @click="onSubmitPassword">确认修改</el-button>
+                                </el-form-item>
+                            </el-form>
+                            <div v-else-if="menuTitle == '发布供应'">
+                                <el-form class="userMsg" :model="editer" label-width="120px">
+                                    <el-form-item label="信息类型：">
+                                        <el-select v-model="editertype" style="width:160px;">
+                                            <el-option label="供应" value="gong"></el-option>
+                                            <el-option label="求购" value="qiu"></el-option>
+                                        </el-select>
+                                    </el-form-item>
+                                    <el-form-item label="选择地区：">
+                                        <el-cascader :options="areaOptions" v-model="selectedOptions" @change="handleChange">
+                                        </el-cascader>
+                                    </el-form-item>
+                                    <el-form-item label="行业分类：">
+                                        <el-cascader :options="catOptions" v-model="selectedCatOptions" @change="handleCatChange">
+                                        </el-cascader>
+                                    </el-form-item>
+                                    <el-form-item label="过期时间：">
+                                        <el-date-picker v-model="passTime" type="datetime" placeholder="选择日期时间">
+                                        </el-date-picker>
+                                    </el-form-item>
+                                    <el-form-item label="标题：">
+                                        <el-input v-model="editer.title"></el-input>
+                                    </el-form-item>
+                                    <el-form-item label="品牌：" v-if="editertype == 'gong'">
+                                        <el-input v-model="editer.brand" placeholder="请输入产品品牌"></el-input>
+                                    </el-form-item>
+                                    <el-form-item label="单价：" v-if="editertype == 'gong'">
+                                        <el-input v-model="editer.price" placeholder="请输入产品单价"></el-input>
+                                    </el-form-item>
+                                    <el-form-item label="单位：" v-if="editertype == 'gong'">
+                                        <el-select v-model="unitId" placeholder="请选择" style="width:160px;">
+                                            <el-option v-for="item in unitOptions" :key="item.id" :label="item.name" :value="item.id">
+                                            </el-option>
+                                        </el-select>
+                                    </el-form-item>
+                                    <!-- <el-form-item label="是否推荐" v-if="editertype == 'gong'">
+                                        <el-radio-group v-model="editer.resource">
+                                            <el-radio label="是"></el-radio>
+                                            <el-radio label="否"></el-radio>
+                                        </el-radio-group>
+                                    </el-form-item> -->
+                                    <el-form-item label="上传配图：" v-if="editertype == 'gong'">
+                                        <el-upload class="upload-demo" :file-list="fileList2" list-type="picture" drag action="https://jsonplaceholder.typicode.com/posts/" multiple>
+                                            <i class="el-icon-upload"></i>
+                                            <div class="el-upload__text">将文件拖到此处，或<em>点击上传</em></div>
+                                            <div class="el-upload__tip" slot="tip">只能上传jpg/png文件，且不超过500kb</div>
+                                        </el-upload>
+                                    </el-form-item>
+                                    <el-form-item label="详情：">
+                                        <el-input type="textarea" :rows="7" v-model="editer.content" placeholder="请输入详情"></el-input>
+                                    </el-form-item>
+                                    <el-form-item>
+                                        <el-button type="primary" @click="onSubmit">确认提交</el-button>
+                                    </el-form-item>
+                                </el-form>
+                            </div>
+                            <!-- 供应管理 -->
+                            <div v-else-if="menuTitle == '管理供应'" class="gyManage">
+                                <div>
+                                    <el-card>
+                                        <div class="card-top">
+                                            您共发布了{{total}}条供应信息
+                                            <!-- <el-button type="primary" style="float:right;">
+                                                立即发布
+                                            </el-button> -->
+                                        </div>
+                                        <div class="under-search">
+                                            <!-- <lable>类别：</lable>
+                                            <el-select v-model="type" style="width:160px;">
+                                                <el-option label="全部" value="all"></el-option>
+                                                <el-option label="供应" value="gong"></el-option>
+                                                <el-option label="求购" value="qiu"></el-option>
+                                            </el-select> -->
+                                            <lable style="margin-left:15px;">状态：</lable>
+                                            <el-select v-model="type" style="width:160px;">
+                                                <el-option label="全部" value="all"></el-option>
+                                                <el-option label="已审核" value="under"></el-option>
+                                                <el-option label="未审核" value="qiu"></el-option>
+                                                <el-option label="未通过" value="qiu"></el-option>
+                                            </el-select>
+                                            <el-input type="text" style="width:180px;margin-left:15px;" placeholder="请输入关键字进行查询"></el-input>
+                                            <el-button type="primary" icon="el-icon-search" style="vertical-align: top;margin-left:10px;">
+                                                查询
+                                            </el-button>
+                                        </div>
+                                    </el-card>
+                                    <el-table :data="list" height="450" border style="width: 100%;margin-top: 15px;">
+                                        <el-table-column prop="title" label="标题">
+                                        </el-table-column>
+                                        <el-table-column prop="createTime" label="时间" width="180">
+                                            <template slot-scope="scope">
+                                                    {{scope.row.createTime | formatDate}}
+                                            </template>
+                                        </el-table-column>
+                                        <el-table-column prop="status" label="审核状态" width="120">
+                                            <template slot-scope="scope">
+                                                <el-tag v-if="scope.row.status == 0" type="warning">未审核</el-tag>
+                                                <el-tag v-if="scope.row.status == 1" type="success">已审核</el-tag>
+                                                <el-tag v-if="scope.row.status == 2" type="danger" @click="auditingClick(2, scope.row.id)" v-else>未通过</el-tag>
+                                            </template>
+                                        </el-table-column>
+                                        <el-table-column prop="isStick" label="置顶" width="100">
+                                            <template slot-scope="scope">
+                                                    <span v-if="scope.row.isStick == 1">是</span>
+                                                    <span v-else>否</span>
+                                                </template>
+                                        </el-table-column>
+                                        <el-table-column prop="isRecommend" label="推荐" width="100">
+                                            <template slot-scope="scope">
+                                                <span v-if="scope.row.isRecommend == 1">是</span>
+                                                <span v-else>否</span>
+                                            </template>
+                                        </el-table-column>
+                                        <el-table-column fixed="right" label="操作" width="120">
+                                            <template slot-scope="scope">
+                                                <el-button @click="handleClick(scope.row)" type="text" size="small">删除</el-button>
+                                                <!-- <el-button type="text" size="small">编辑</el-button> -->
+                                            </template>
+                                        </el-table-column>
+                                    </el-table>
+                                    <div class="text-center" style="margin-top:15px;margin-bottom: 20px;">
+                                        <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page.sync="currentPage" :page-size="pageSize" layout="prev, pager, next, jumper" :total="total">
+                                        </el-pagination>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <!-- 求购管理 -->
+                            <div v-else-if="menuTitle == '管理求购'" class="qgManage">
+                                <div>
+                                    <el-card>
+                                        <div class="card-top">
+                                            您共发布了{{total}}条求购信息
+                                            <!-- <el-button type="primary" style="float:right;">
+                                                    立即发布
+                                                </el-button> -->
+                                        </div>
+                                        <div class="under-search">
+                                            <!-- <lable>类别：</lable>
+                                                <el-select v-model="type" style="width:160px;">
+                                                    <el-option label="全部" value="all"></el-option>
+                                                    <el-option label="供应" value="gong"></el-option>
+                                                    <el-option label="求购" value="qiu"></el-option>
+                                                </el-select> -->
+                                            <lable style="margin-left:15px;">状态：</lable>
+                                            <el-select v-model="type" style="width:160px;">
+                                                <el-option label="全部" value="all"></el-option>
+                                                <el-option label="已审核" value="under"></el-option>
+                                                <el-option label="未审核" value="qiu"></el-option>
+                                                <el-option label="未通过" value="qiu"></el-option>
+                                            </el-select>
+                                            <el-input type="text" style="width:180px;margin-left:15px;" placeholder="请输入关键字进行查询"></el-input>
+                                            <el-button type="primary" icon="el-icon-search" style="vertical-align: top;margin-left:10px;">
+                                                查询
+                                            </el-button>
+                                        </div>
+                                    </el-card>
+                                    <el-table :data="list" height="450" border style="width: 100%;margin-top: 15px;">
+                                        <el-table-column prop="title" label="标题">
+                                        </el-table-column>
+                                        <el-table-column label="时间" width="180">
+                                            <template slot-scope="scope">
+                                                    {{scope.row.createTime | formatDate}}
+                                                </template>
+                                        </el-table-column>
+                                        <el-table-column prop="status" label="审核状态" width="120">
+                                            <template slot-scope="scope">
+                                                    <el-tag v-if="scope.row.status == 0" type="warning">未审核</el-tag>
+                                                    <el-tag v-if="scope.row.status == 1" type="success">已审核</el-tag>
+                                                    <el-tag v-if="scope.row.status == 2" type="danger" v-else @click="auditingClick(1, scope.row.id)">未通过</el-tag>
+                                                </template>
+                                        </el-table-column>
+                                        <el-table-column fixed="right" label="操作" width="120">
+                                            <template slot-scope="scope">
+                                                    <el-button @click="handleClick(scope.row)" type="text" size="small">删除</el-button>
+                                                    <!-- <el-button type="text" size="small">编辑</el-button> -->
+                                                </template>
+                                        </el-table-column>
+                                    </el-table>
+                                    <div class="text-center" style="margin-top:15px;margin-bottom: 20px;">
+                                        <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page.sync="currentPage" :page-size="pageSize" layout="prev, pager, next, jumper" :total="total">
+                                        </el-pagination>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </el-main>
+                    </el-container>
+                </div>
+            </div>
+
+        </div>
+        <div class="pub-footer clearfix">
+            <style>
+                .down-img a img {
+                    margin: 0px;
+                }
+            </style>
+            <div class="con-width-1200 clearfix">
+                <!-- <img class="fxl l-img" src="./image/logo2.png"> -->
+            </div>
+            <div class="down clearfix">
+                <!-- Copyright © 2019 黄山现代农业产业园管委会 <span>版权所有</span> -->
+
+            </div>
+        </div>
+    </div>
+</body>
+<script>
+    var GETBASE, GETUUID, GETREGIONID, GETAPIROOT;
+    if (typeof(window.getBaseUrl) != 'undefined') {
+        GETBASE = window.getBaseUrl();
+        GETUUID = window.getUuid();
+        GETREGIONID = window.getRegionId();
+        GETAPIROOT = window.getApiRoot();
+    } else {
+        GETBASE = 'http://36.7.159.225:16000/api/as/file/';
+        GETUUID = '24acfc1215da435cbe76c69beb07f32b';
+        GETREGIONID = '101221002';
+        GETAPIROOT = 'http://36.7.159.225:16000/api/as';
+    }
+    var token = '';
+    var app = new Vue({ //vue对象
+        el: '#root',
+        data: {
+            getApiRoot: GETAPIROOT,
+            baseUrl: GETBASE,
+            uuid: GETUUID,
+            regionID: GETREGIONID,
+            auditingType: 1,
+            userInfo: {},
+            passTime: '',
+            selectedOptions: [],
+            areaOptions: [],
+            selectedCatOptions: [],
+            catOptions: [],
+            unitOptions: [],
+            fileList2: [],
+            regionId: '0',
+            catId: 0,
+            unitId: 0,
+            editertype: 'gong',
+            currentPage: 5,
+            editer: {
+                resource: '是'
+            },
+            formSupply: {},
+            formSeek: {},
+            list: [],
+            currentPage: 1,
+            pageSize: 10,
+            total: 1,
+            type: 'all',
+            changePassword: {
+                uuid: this.uuid,
+                password: '',
+                newPassword: '',
+                passwordAgin: ''
+            },
+            form: {
+                uuid: this.uuid,
+                realName: '123',
+                telphone: '456'
+            },
+            menuTitle: '发布供应'
+        },
+        filters: {
+            //add by liulei
+            formatDate: function(time) {
+                var date = new Date(time);
+                return formatDate(date, 'yyyy-MM-dd hh:mm');
+            }
+        },
+        methods: {
+
+            handleSizeChange: function(val) {
+                // console.log(`每页 ${val} 条`);
+            },
+            handleCurrentChange: function(val) {
+                // console.log(`当前页: ${val}`);
+
+                if (this.menuTitle == '管理供应') {
+                    this.loadSupply();
+                } else if (this.menuTitle == '管理求购') {
+                    this.loadSeek();
+                }
+
+            },
+            handleClick: function(obj) {
+                // alert(obj.id);
+
+                if (this.menuTitle == '管理供应') {
+                    this.delSupply(obj.id);
+                } else if (this.menuTitle == '管理求购') {
+                    this.delSeek(obj.id);
+                }
+
+            },
+            selectMenu: function(index) {
+                this.menuTitle = index;
+
+                //恢复
+                this.currentPage = 1;
+                this.total = 0;
+
+                if (index == '管理供应') {
+                    this.loadSupply();
+                } else if (index == '管理求购') {
+                    this.loadSeek();
+                }
+            },
+
+            handleChange: function() {
+                this.regionId = this.selectedOptions[2];
+                // console.log('1111:' + JSON.stringify(this.selectedOptions));
+                // alert(regionId);
+            },
+            handleCatChange: function() {
+                this.catId = this.selectedCatOptions[2];
+                // console.log('2222:' + JSON.stringify(this.selectedCatOptions));
+                // alert(catId);
+            },
+
+            auditingClick: function(type, id) {
+                // alert(type +':' + title);
+
+                this.loadauditingInfo(type, id);
+            },
+
+            logoutClick: function() {
+                this.logout();
+            },
+            onSubmit: function() {
+                if (this.editertype == 'gong') {
+
+                    this.formSupply.uRegionId = this.regionId;
+                    this.formSupply.industryTypeId = this.catId;
+                    this.formSupply.title = this.editer.title;
+                    this.formSupply.introduce = this.editer.content;
+                    this.formSupply.brand = this.editer.brand;
+                    this.formSupply.price = this.editer.price;
+                    this.formSupply.uUnitId = this.unitId;
+
+                    this.formSupply.expirationDate = this.passTime;
+
+                    this.uploadSupply();
+                } else {
+                    this.formSeek.uRegionId = this.regionId;
+                    this.formSeek.expirationDate = this.passTime;
+                    this.formSeek.title = this.editer.title;
+                    this.formSeek.need = this.editer.content;
+
+                    this.uploadSeek();
+                }
+            },
+
+            onSubmitProfile: function() {
+                this.updateUser();
+            },
+            onSubmitPassword: function() {
+                this.updatePassword();
+            },
+
+            logout: function() {
+                sessionStorage.removeItem("token");  //删除数据
+                location.href = './index.html';
+            },
+
+            //加载城市分类tree
+            loadCityTree: function() {
+                var self = this;
+                var param = '{}';
+
+                var url = this.getApiRoot + '/region/gettree';
+
+                $.ajax({
+                    method: 'GET',
+                    url: url,
+                    dataType: 'JSON',
+                    contentType: 'application/json',
+                    success: function(res) {
+                        console.log('区域:' + JSON.stringify(res));
+                        self.areaOptions = res.data.list;
+                    },
+                    error: function() {
+
+                    }
+                })
+            },
+
+            // 加载分类列表 add by liulei
+            loadIndustrytype: function() {
+                var self = this;
+                var param = '{}';
+
+                var url = this.getApiRoot + '/industrytype/gettree/' + self.uuid;
+
+                $.ajax({
+                    method: 'GET',
+                    url: url,
+                    dataType: 'JSON',
+                    contentType: 'application/json',
+                    success: function(res) {
+                        console.log('分类1:' + JSON.stringify(res));
+                        self.catOptions = res.data.list;
+
+                    },
+                    error: function() {
+
+                    }
+                })
+            },
+
+            //加载单位列表
+            loadUnitAll: function() {
+                var self = this;
+                var param = '{}';
+
+                var url = this.getApiRoot + '/unit/getall';
+
+                $.ajax({
+                    method: 'GET',
+                    url: url,
+                    dataType: 'JSON',
+                    contentType: 'application/json',
+                    success: function(res) {
+                        console.log('单位:' + JSON.stringify(res));
+                        self.unitOptions = res.data;
+                    },
+                    error: function() {
+
+                    }
+                })
+            },
+
+
+            // 加载用户信息 add by liulei
+            loadUser: function() {
+                var self = this;
+                var param = '{}';
+
+                var url = this.getApiRoot + '/user/getbytoken';
+                $.ajax({
+                    method: 'GET',
+                    url: url,
+                    dataType: 'JSON',
+                    contentType: 'application/json',
+                    headers: {
+                        Accept: "application/json; charset=utf-8",
+                        token: token
+                    },
+                    success: function(res) {
+                        console.log('返回用户信息:' + JSON.stringify(res));
+                        if (res.code == 1000001) {
+                            self.userInfo = res.data;
+                            self.form.realName = res.data.realName;
+                            self.form.telphone = res.data.telphone;
+
+                        }
+
+                    },
+                    error: function() {
+
+                    }
+                })
+            },
+
+            updateUser: function() {
+                var self = this;
+                var param = '{}';
+
+                var url = this.getApiRoot + '/user/update';
+                $.ajax({
+                    type: 'PUT',
+                    url: url,
+                    data: JSON.stringify(self.form),
+                    dataType: 'JSON',
+                    contentType: 'application/json',
+                    headers: {
+                        Accept: "application/json; charset=utf-8",
+                        token: token
+                    },
+                    success: function(res) {
+                        console.log('返回结果:' + JSON.stringify(res));
+                        if (res.code == 1000002) {
+                            alert('更新成功');
+                        }
+                    },
+                    error: function() {
+
+                    }
+                })
+            },
+
+            updatePassword: function() {
+                var self = this;
+                var param = '{}';
+
+                var url = this.getApiRoot + '/user/changepassword';
+                $.ajax({
+                    type: 'PUT',
+                    url: url,
+                    data: JSON.stringify(self.changePassword),
+                    dataType: 'JSON',
+                    contentType: 'application/json',
+                    headers: {
+                        Accept: "application/json; charset=utf-8",
+                        token: token
+                    },
+                    success: function(res) {
+                        console.log('修改密码结果:' + JSON.stringify(res));
+                        if (res.code == 1000002) {
+                            alert('修改成功');
+                        } else {
+                            alert(res.msg);
+                        }
+                    },
+                    error: function() {
+
+                    }
+                })
+            },
+
+            //发布求购
+            uploadSeek: function() {
+                var self = this;
+                var param = '{}';
+
+                var url = this.getApiRoot + '/seekpurchase/add';
+                $.ajax({
+                    type: 'POST',
+                    url: url,
+                    data: JSON.stringify(self.formSeek),
+                    dataType: 'JSON',
+                    contentType: 'application/json',
+                    headers: {
+                        Accept: "application/json; charset=utf-8",
+                        token: token
+                    },
+                    success: function(res) {
+                        console.log('返回结果:' + JSON.stringify(res));
+                        if (res.code == 1000002) {
+                            alert('发布成功');
+                        }
+                    },
+                    error: function() {
+
+                    }
+                })
+            },
+
+            //发布求购
+            uploadSupply: function() {
+                var self = this;
+                var param = '{}';
+
+                var url = this.getApiRoot + '/supply/add';
+                $.ajax({
+                    type: 'POST',
+                    url: url,
+                    data: JSON.stringify(self.formSupply),
+                    dataType: 'JSON',
+                    contentType: 'application/json',
+                    headers: {
+                        Accept: "application/json; charset=utf-8",
+                        token: token
+                    },
+                    success: function(res) {
+                        console.log('返回结果:' + JSON.stringify(res));
+                        if (res.code == 1000002) {
+                            alert('发布成功');
+                        }
+                    },
+                    error: function() {
+
+                    }
+                })
+            },
+
+            // 加载求购列表 add by liulei
+            loadSeek: function() {
+                var self = this;
+
+                var param = '{}';
+
+                var url = this.getApiRoot + '/seekpurchase/getmypage/' + self.uuid + '/' + self.currentPage + '/10';
+
+                $.ajax({
+                    method: 'GET',
+                    url: url,
+                    dataType: 'JSON',
+                    contentType: 'application/json',
+                    headers: {
+                        Accept: "application/json; charset=utf-8",
+                        token: token
+                    },
+                    success: function(res) {
+                        console.log('返回结果:' + JSON.stringify(res));
+                        self.list = res.data.list; //JSON.stringify(res.data.list);//res.data.list;
+                        // console.log('new:' + JSON.stringify(self.list));
+                        self.total = res.data.total;
+                    },
+                    error: function() {
+
+                    }
+                })
+            },
+
+            // 加载供应列表 add by liulei
+            loadSupply: function() {
+                var self = this;
+
+                var param = '{}';
+
+                var url = this.getApiRoot + '/supply/getmypage/' + self.uuid + '/' + self.currentPage + '/10';
+
+                $.ajax({
+                    method: 'GET',
+                    url: url,
+                    dataType: 'JSON',
+                    contentType: 'application/json',
+                    headers: {
+                        Accept: "application/json; charset=utf-8",
+                        token: token
+                    },
+                    success: function(res) {
+                        console.log('返回结果:' + JSON.stringify(res));
+                        self.list = res.data.list; //JSON.stringify(res.data.list);//res.data.list;
+                        // console.log('new:' + JSON.stringify(self.list));
+                        self.total = res.data.total;
+                    },
+                    error: function() {
+
+                    }
+                })
+            },
+            delSupply: function(id) {
+                var self = this;
+                var param = '{}';
+
+                var url = this.getApiRoot + '/supply/del/' + id;
+                $.ajax({
+                    type: 'DELETE',
+                    url: url,
+                    data: JSON.stringify(self.form),
+                    dataType: 'JSON',
+                    contentType: 'application/json',
+                    headers: {
+                        Accept: "application/json; charset=utf-8",
+                        token: token
+                    },
+                    success: function(res) {
+                        console.log('返回结果:' + JSON.stringify(res));
+                        if (res.code == 1000002) {
+                            alert('删除成功');
+                        }
+                    },
+                    error: function() {
+
+                    }
+                })
+            },
+
+            delSeek: function(id) {
+                var self = this;
+                var param = '{}';
+
+                var url = this.getApiRoot + '/seekpurchase/del/' + id;
+                $.ajax({
+                    type: 'DELETE',
+                    url: url,
+                    data: JSON.stringify(self.form),
+                    dataType: 'JSON',
+                    contentType: 'application/json',
+                    headers: {
+                        Accept: "application/json; charset=utf-8",
+                        token: token
+                    },
+                    success: function(res) {
+                        console.log('返回结果:' + JSON.stringify(res));
+                        if (res.code == 1000002) {
+                            alert('删除成功');
+                        }
+                    },
+                    error: function() {
+
+                    }
+                })
+            },
+
+            //加载审核信息
+            loadauditingInfo: function(type, id) {
+                var self = this;
+                var param = '{}';
+
+                var url = this.getApiRoot + '/auditing/get/' + type + '/' + id;
+                $.ajax({
+                    type: 'GET',
+                    url: url,
+                    dataType: 'JSON',
+                    contentType: 'application/json',
+                    success: function(res) {
+                        console.log('返回审核结果:' + JSON.stringify(res));
+                        if (res.code == 1000001) {
+                            alert(res.data.result);
+                        }
+                    },
+                    error: function() {
+
+                    }
+                })
+            },
+            //提示框
+            showAlert: function(title, msg, btnTitle) {
+                this.$alert(msg, title, {
+                    confirmButtonText: btnTitle
+                        // callback: action => {
+                        //     // this.$message({
+                        //     //     type: 'info',
+                        //     //     message: `action: ${ action }`
+                        //     // });
+                        // }
+                });
+            },
+
+            showMsg: function(msg) {
+                this.$message({
+                    type: 'info',
+                    message: msg
+                });
+            }
+
+        },
+
+
+
+        mounted: function() {
+            //add by liulei
+
+            token = sessionStorage.getItem("token");
+            if (token == undefined || token == '') {
+                location.href = './login.html';
+            }
+            this.loadCityTree();
+            this.loadIndustrytype();
+            this.loadUnitAll();
+            this.loadUser();
+        }
+    });
+</script>
+
+</html>

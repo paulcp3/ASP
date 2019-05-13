@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>新闻详情</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" media="screen" href="public/css/index.css">
+    <link rel="stylesheet" href="online/css/index.css">
+    <link rel="stylesheet" href="element-ui/index.css">
+    <link rel="stylesheet" href="search/search.css">
+    <script src="element-ui/vue.min.js"></script>
+    <script src="element-ui/index.js"></script>
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+    <!-- add by liulei -->
+    <script src="public/js/public.js"></script>
+    
+    <style>
+    .message{
+        width: 960px;
+        margin: 20px auto;
+    }
+    </style>
+</head>
+
+<body>
+    <div id="root">
+        <div class="header">
+            <div class="header-container h-main">
+                <div class="h-map">
+                    <a href="#" class="h-mappic">网站地图</a>
+                    <a href="#" class="h-phone">手机APP</a>
+                </div>
+                <div class="h-register">
+                    <a href="#" class="h-welcom">你好，欢迎访问本网站！</a>
+                    <a href="#">登陆</a> | <a href="#">注册</a>
+                </div>
+            </div>
+        </div>
+        <div class="header-main">
+            <div class="h-mainContainer h-serrchMain">
+                <div class="h-logo">
+                    <img src="public/image/logo-2.png">
+                </div>
+                <div>
+                    <div class="h-search">
+                        <i class="el-icon-search h-searchIco"></i>
+                        <input type="text" class="h-searchText" placeholder="水稻防治">
+                        <button class="h-searchBtn"  @click="onSearch">搜索</button>
+                        <div class="h-searchHot">
+                            <a href="#">水稻防治</a> <a href="#">小麦防治</a> <a href="#">玉米防治</a> <a href="#">蔬菜防治</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="h-msg">
+                    <a href="#" class="h-message">免费发布信息</a>
+                    <a href="#" class="h-cmessage">修改/删除信息</a>
+                </div>
+            </div>
+            <div class="h-menu h-mainContainer">
+                <ul class="h-menuMain">
+                    <li><a href="./index.html">首页</a></li>
+                    <li><a href="./zhuanjia.html" target="_blank">专家库</a></li>
+                    <li><a href="./online.html" target="_blank">在线问答</a></li>
+                    <li><a href="./knowloge.html" target="_blank">农业知识库</a></li>
+                    <li><a href="./video.html" target="_blank">视频培训</a></li>
+                    <a href="#" class="h-ask">我要提问</a>
+                </ul>
+            </div>
+        </div>
+        <div class="container main-top">
+            <div class="wrap-left pull-left">
+                <div style="margin: 10px 20px;">
+                    <el-breadcrumb separator-class="el-icon-arrow-right">
+                        <el-breadcrumb-item>您现在的位置：</el-breadcrumb-item>
+                        <el-breadcrumb-item>新闻详情</el-breadcrumb-item>
+                    </el-breadcrumb>
+                </div>
+
+                <div class="detail-contair">
+                    <h2 class="title">合肥万达的一天，王健林真能让迪士尼乐园在中国20年不赚钱</h2>
+                    <p id="lianxi" class="xinXi_02"> 发布时间：2019-03-15&nbsp;&nbsp;&nbsp; <a
+                            href="http://user.zgny.com.cn/emember/378629.shtml" target="_blank">进入农商通</a>
+                        &nbsp;&nbsp;&nbsp; 信息来源 ：融安县正果生态农林工作站 </p>
+                    <div class="wenZi_02">
+                        <p>10月27日上午9点，合肥开始下中雨，在此之前合肥已经连下几天雨。同期下雨的还有南京、上海，阴冷潮湿的氛围为整个长三角即将到来的冬季做了注脚。</p>
+                        <p>10月27日上午9点，合肥开始下中雨，在此之前合肥已经连下几天雨。同期下雨的还有南京、上海，阴冷潮湿的氛围为整个长三角即将到来的冬季做了注脚。</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="message">
+            <div class="m-list">
+                <el-card class="clear" :body-style="{ padding: '0px', width: '98%', borderBottom:'1px solid #DDD',margin: '0 auto'}" v-for="(item, index) in tableData">
+                    <img src="./public/image/c_list1.png" class="avatar">
+                    <div class="m-listInfo">
+                        <p class="m-autorInfo">{{item.name}}<img src="online/image/rz.png"> {{item.export}}</p>
+                        <p style="text-indent: 2em">{{item.msg}}</p>
+                        <div class="m-time">{{ item.time }}</div>
+                        <div class="bottom clearfix">
+                            <el-button type="text" class="button"> <i class="el-icon-edit"></i> 回复</el-button>
+                        </div>
+                    </div>
+                    <div style="clear:both"></div>
+                </el-card>
+            </div>
+            <div class="m-reply">
+                <el-input class="m-reply-value" type="textarea" v-model="reply.desc" placeholder="写下你的评论..."></el-input>
+                <el-button class='m-reply-btn' type="primary" @click="onSubmit">发表</el-button>
+            </div>
+        </div>
+        <div class="footer">
+           <!-- <div class="f-concate">
+                    <div class="f-cUs">
+                        <p class="f-cTitle">联系我们</p>
+                        <p class="f-cInfo"> <i class="el-icon-phone"></i> 400-xxx-xxxx</p>
+                    </div>
+                    <div class="f-cAD">
+                        <p class="f-cTitle">广告合作</p>
+                        <p class="f-cInfo"> <i class="el-icon-phone-outline"></i> 0792-xxxxxxxx</p>
+                    </div>
+                    <div class="f-cWEB">
+                        <p class="f-cTitle">投稿热线、网战运营</p>
+                        <p class="f-cInfo"> <i class="el-icon-message"></i> 400-xxx-xxxx</p>
+                    </div>
+                </div> -->
+                <div class="f-info">
+                        <p></p>
+                        <span>Copyright © 2019 黄山现代农业产业园管委会 版权所有</span>
+                        <p></p>
+                    </div>
+        </div>
+    </div>
+</body>
+<script>
+
+    // window.filterHelper = new FilterValueHelper();
+    var GETBASE,GETUUID,GETREGIONID,GETAPIROOT;
+    if(typeof(window.getBaseUrl) !='undefined'){
+        GETBASE= window.getBaseUrl();
+        GETUUID= window.getUuid();
+        GETREGIONID= window.getRegionId();
+        GETAPIROOT = window.getApiRoot();
+    }else{
+        // GETBASE= 'http://localhost:16000/api/expert/file/';
+        // GETUUID= '24acfc1215da435cbe76c69beb07f32b';
+        // GETREGIONID= '101221002';
+        // GETAPIROOT = 'http://localhost:16000/api/expert';
+
+        GETBASE= 'http://36.7.159.225:16000/api/expert/file/';
+        GETUUID= '24acfc1215da435cbe76c69beb07f32b';
+        GETREGIONID= '101221002';
+        GETAPIROOT = 'http://36.7.159.225:16000/api/expert';
+    }
+
+    new Vue({ //vue对象
+        el: '#root',
+        data: {
+            baseUrl:GETBASE,
+            uuid:GETUUID,
+            regionID:GETREGIONID,
+            getApiRoot:GETAPIROOT,
+
+            currentPage3: 5,
+            reply: {},
+            tableData: [
+                {
+                    name: '王小虎',
+                    export:'法律法规领域专家',
+                    
+                    msg: '测试回复消息',
+                    time:'1天前',
+                    date: '2018-10-10 13:23'
+                }, {
+                    name: '王小虎',
+                    export:'法律法规领域专家',
+                    msg: '测试回复消息',
+                    time:'2天前',
+                    date: '2018-10-10 13:23'
+                }, {
+                    name: '王小虎',
+                    export:'法律法规领域专家',
+                    msg: '测试回复消息',
+                    time:'3天前',
+                    date: '2018-10-10 13:23'
+                }, {
+                    name: '王小虎',
+                    export:'法律法规领域专家',
+                    msg: '测试回复消息',
+                    time:'4天前',
+                    date: '2018-10-10 13:23'
+                }
+            ]
+        },
+        methods: {
+            onSubmit:function() {
+               
+            }
+        },
+
+        filters:{
+
+        },
+        created:function(){
+
+        },
+        mounted: function () {
+            var self = this;
+
+        }
+
+    });
+</script>
+
+</html>

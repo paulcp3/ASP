@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="./css/index.css">
+    <link rel="stylesheet" href="./css/css.css">
+    <link rel="stylesheet" href="./css/public.css">
+    <link rel="stylesheet" href="./css/headStyle_1.css">
+    <script src="./js/jquery-1.8.3.js" type="text/javascript"></script>
+    <script src="./js/public.js"></script>
+    <script src="./js/vue.min.js"></script>
+    <script src="./js/index.js"></script>
+    <script src="./js/echarts.min .js"></script>
+    <!-- <script src="./js/axios.min.js"></script>-->
+    <script src="./js/jquery.cookie.js" type="text/javascript"></script>
+    <script src="./js/echartHelper/echartHelper.cube.js" type="text/javascript" charset="utf-8"></script>
+    <script src="./js/echartHelper/dataHelper.cube.js" type="text/javascript" charset="utf-8"></script>
+    <script src="./js/expresstool.jquery.js" type="text/javascript"></script>
+    <script src="./js/expresstool.js" type="text/javascript"></script>
+    <script src="./js/echartHelper/echartHelper.callback.default.js" type="text/javascript" charset="utf-8"></script>
+    <script src="./js/echartHelper/echartHelper.callback.custom.js" type="text/javascript" charset="utf-8"></script>
+    <script src="./js/echartHelper/dataTableHelper.js" type="text/javascript" charset="utf-8"></script>
+    <!--<script src="./js/axios.min.js"></script>-->
+
+    <title>农业信息展示平台</title>
+</head>
+
+<body>
+    <div id="root">
+        <div class="head">
+            <div class="area">
+                <div class="login-info">
+                    <div class="say-hi">Hi，欢迎来到农情分析</div>
+                    <div class="codebox">
+                    </div>
+                </div>
+                <ul class="ely-sn-menuwrap">
+                    <li class="item menu user-center">
+                        <a v-if="isLogin" href="./user_center.html" target="_blank">会员中心</a>
+                        <a v-else href="./login.html" target="_blank">登录</a>
+                    </li>
+                </ul>
+                <div class="index-link"><a class="clr-red" href="./index.html" title="农情首页">农情首页</a></div>
+            </div>
+
+        </div>
+        <div style="height: 126px; z-index: 114; position: relative;">
+            <div id="ely-hd" class="ely-hd">
+                <div class="area clearfix">
+                    <div class="logo">
+                        <a title="农业信息展示平台" class="logo-link" href="./index.html">
+                            <img alt="农业信息展示平台" src="./image/logo-2.png">
+                        </a>
+                    </div>
+                    <div class="app-link-wrap"><img src="./image/1557654428.png" alt=""><p>扫一扫,下载农情APP</p></div>
+                    <div class="search">
+                        <el-tabs v-model="SearchName" type="card" @tab-click="searchClick">
+                            <el-tab-pane label="供应" name="供应"></el-tab-pane>
+                            <el-tab-pane label="求购" name="求购"></el-tab-pane>
+                            <el-tab-pane label="农机服务" name="农机服务"></el-tab-pane>
+                        </el-tabs>
+                        <div class="search-froup">
+                            <el-input :placeholder="'请输入关键词搜索' + SearchName" v-model="keyWords" class="search-input">
+                            </el-input>
+                            <el-button icon="el-icon-search" type="success" class="search-btn" @click="onSearch">立即搜索</el-button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="main-nav-wrap" id="nav">
+            <div class="main-nav area clearfix">
+                <div class="menu-box-wrap " id="J_good_map">
+                    <div class="menu-title">
+                        <span class="smap-link">行业分类</span>
+                    </div>
+                </div>
+                <ul>
+                    <li><a class="link" href="./index.html">首页</a></li>
+                    <li><a class="link" href="./product_list.html?catid=0" target="_blank">供应</a></li>
+                    <li><a class="link" href="./seek_list.html" target="_blank">求购</a></li>
+                    <li>
+                        <el-dropdown>
+                            <span class="el-dropdown-link">
+                                农业服务<i class="el-icon-arrow-down el-icon--right"></i>
+                            </span>
+                            <el-dropdown-menu slot="dropdown">
+                                <!-- <el-dropdown-item><a class="link" href="./price_list.html" target="_blank">批发价格</a></el-dropdown-item> -->
+                                <el-dropdown-item><a class="link" href="./sever_list.html" target="_blank">农机服务</a></el-dropdown-item>
+                                <el-dropdown-item><a class="link" href="./control_list.html" target="_blank">统防统治</a></el-dropdown-item>
+                            </el-dropdown-menu>
+                        </el-dropdown>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="body-warp">
+            <div class="choice-classify area clearfix">
+                <div class="box-shadow fl">
+                    <ul class="cc-level">
+                        <li class="bg-1 J_cc_level " @mouseOver="handleOver(item.id)" :class="item.id === menuActive ? 'active' : ''" v-for="item in menuList">
+                            <a :href="item.url" target="_blank" :title="item.label">{{item.label}}</a>
+                            <div class="cc-style left J_cc_style">
+                                <ul class="type J_type J_type_hide">
+                                    <li v-for="menu in item.children">
+                                        <div class="title">
+                                            <p class="type-t"><a :href="menu.url" target="_blank" :title="menu.label">{{menu.label}}</a></p>
+                                        </div>
+                                        <ul class="type-b clearfix">
+                                            <li v-for="list in menu.children">
+                                                <a :href="'./product_list.html?catid=' + list.id" :title="list.label" target="_blank">{{list.label}}</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+
+                                </ul>
+                            </div>
+                        </li>
+
+                    </ul>
+                    <div class="banner">
+                        <el-carousel height="480px">
+                            <el-carousel-item v-for="item in banner" :key="item">
+                                <img :src="baseUrl + item.imageUrl" />
+                            </el-carousel-item>
+                        </el-carousel>
+                    </div>
+                </div>
+            </div>
+            <div class="area contBox clearfix seeion">
+                <div class="fl itemBox wd49">
+                    <div class="item__header">
+                        <h2 class="conTitle">天气预报</h2>
+                        <!-- <a href="" target="_blank" class="more"></a> -->
+                    </div>
+                    <div class="today">
+                        <div class="t">
+                            <div class="sk">
+                                <p class="time"><span>{{weather&&weather.nowTime}}</span></p>
+                                <div class="zs h"><i></i><span>相对湿度</span><em>{{weather&&weather.hum}}</em></div>
+                                <div class="zs w"><i></i><span>{{weather&&weather.winCn}}</span><em>{{weather&&weather.winLevel}}</em></div>
+                                <div class="tem"><span>{{weather&&weather.tem}}</span><em>℃</em></div>
+                                <p></p>
+                                <div class="therm">
+                                    <p><i class="t"></i><i class="c" v-bind:style="weather&&weather.temHeight"></i></p>
+                                </div>
+
+                            </div>
+                            <ul class="clearfix">
+                                <li v-for="item in weather.weatherDay">
+                                    <h1>{{item.day}}</h1>
+                                    <big :class="item.weaIcon"></big>
+                                    <p class="wea" :title="item.wea">{{item.wea}}</p>
+
+                                    <p class="tem">
+                                        <span>{{item.tem}}</span><em>°C</em>
+                                    </p>
+                                    <p class="win">
+                                        <i v-bind:class="item.winEn"></i>
+                                        <span class="" :title="item.winCn">{{item.winLevel}}</span>
+                                    </p>
+                                    <p v-bind:class="item.sunState"><i></i>
+                                        <span>{{item.sunTime}}</span>
+                                    </p>
+                                    <div class="slid"></div>
+                                </li>
+                                <!-- <li>
+                                    <h1>10日夜间</h1>
+                                    <big class="jpg80 n01"></big>
+                                    <p class="wea" title="多云">多云</p>
+
+                                    <p class="tem">
+                                        <span>6</span><em>°C</em>
+                                    </p>
+                                    <p class="win"><i class="SW"></i><span class="" title="西南风">&lt;3级</span></p>
+                                    <p class="sun sunDown"><i></i>
+                                        <span>日落 18:14</span>
+                                    </p>
+                                </li> -->
+                            </ul>
+                        </div>
+                    </div>
+                    <!-- <el-tabs v-model="gqActive" @tab-click="handleClick">
+                        <el-tab-pane label="求购速递" name="0">
+                            <div class="item-contair">
+                                <ul class="qgUl">
+                                    <li v-for="item in gong"><span>[求]</span><a href="" target="_blank">{{item.label}}</a></li>
+                                </ul>
+                            </div>
+                        </el-tab-pane>
+                        <el-tab-pane label="供应速递" name="1">
+                            <div class="item-contair">
+                                <ul class="qgUl">
+                                    <li v-for="item in gong"><span>[供]</span><a href="" target="_blank">{{item.label}}</a></li>
+                                </ul>
+                            </div>
+                        </el-tab-pane>
+                    </el-tabs> -->
+                </div>
+                <div class="fr itemBox wd49">
+                    <div class="item__header">
+                        <h2 class="conTitle">灾害预警</h2>
+                        <a href="./warning_list.html" target="_blank" class="more"></a>
+                    </div>
+                    <div class="item-contair">
+
+                        <ul class="warnUl">
+                            <li v-for="item in warnList">
+                                <a :href="'./warning_detail.html?identifier=' + item.identifier">
+                                    <el-tag :type="item.level | warnTag">{{item.level | warn}}</el-tag>
+                                    <label>{{item.headline}}</label><time>{{item.sendTime}}</time>
+                                    <p>{{item.description}}</p>
+                                </a>
+                            </li>
+
+                        </ul>
+
+
+                    </div>
+                </div>
+            </div>
+            <div class="area contBox clearfix seeion">
+                <div class="fl itemBox wd49">
+                    <div class="item__header">
+                        <h2 class="conTitle">求购速递</h2>
+                        <a href="./seek_list.html" target="_blank" class="more"></a>
+                    </div>
+                    <div class="item-contair">
+                        <ul class="qgUl">
+                            <li v-for="item in qiu" :title="item.title"><span>[求购]</span><a :href="'./seek_detail.html?id='+item.id" target="_blank">{{item.title.substring(0,15)}}...</a></li>
+                        </ul>
+                    </div>
+
+                </div>
+                <div class="fr itemBox wd49">
+                    <div class="item__header">
+                        <h2 class="conTitle">供应速递</h2>
+                        <a href="./product_list.html" target="_blank" class="more"></a>
+                    </div>
+                    <div class="item-contair">
+                        <ul class="qgUl">
+                            <li v-for="item in gong" :title="item.title">
+                                <span>[供应]</span>
+                                <span v-if="item.isStick">[置顶]</span>
+                                <a :href="'./product_detail.html?id='+item.id" target="_blank">{{item.title.substring(0,12)}}...</a>
+                                <span v-if="item.isRecommend">[推荐]</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="area  clearfix seeion">
+                <div class="fl itemBox wd100">
+                    <div class="item__header">
+                        <h2 class="conTitle">农产品供应中心<span>品类全 更新快 信息鲜</span></h2>
+                        <a href="./product_list.html" target="_blank" class="more"></a>
+                    </div>
+                    <div class="item-contair">
+                        <el-row class="row-list">
+                            <el-col>
+                                <el-tag :type="0 === activeIDs.id ? 'info':'success'"  @click="tagClick(0)">全部</el-tag>
+                                <el-tag :type="item.id === activeIDs.id ? 'info':'success'" v-for="item in tjTag" @click="tagClick(item.id)">{{item.name}}</el-tag>
+                            </el-col>
+                        </el-row>
+                        <ul class="tjUl" v-if="tjList.length > 0">
+                            <el-badge v-for="item in tjList" :value="item.industrytype.name" class="item">
+                                <li>
+                                    <span class="TuiJian_01">
+                                        <a v-if="item.imageList[0]" :href="'./product_detail.html?id=' + item.id" target="_blank">
+                                            <img :src="baseUrl + item.imageList[0].imageUrl">
+                                        </a>
+                                        <a v-else :href="'./product_detail.html?id=' + item.id" target="_blank">
+                                            <img src="./image/placeholder.jpg">
+                                        </a>
+                                    </span>
+                                    <span class="TuiJian_02"></span>
+                                    <span class="TuiJian_03">
+                                        <a :href="'./product_detail.html?id=' + item.id" target="_blank">{{item.title.substring(0, 12)}}...</a>
+                                    </span>
+                                </li>
+                            </el-badge>
+                        </ul>
+                        <div class="noData" v-else>
+                            <img src="./image/nodata.png" width="150" />
+                            <p>暂无数据</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="area contBox clearfix seeion">
+                <div class="fl itemBox wd49">
+                    <!-- <a href="" target="_blank" class="more"></a> -->
+                    <div class="item__header">
+                        <h2 class="conTitle">批发价格200指数<span>最新农产品批发价格</span></h2>
+                    </div>
+                    <div class="item-contair">
+                        <div class="content indexChart">
+                            <div class="line line0"></div>
+                            <div class="line line1"></div>
+                            <div class="line line2"></div>
+                            <div class="line lineA0"></div>
+                            <div class="line lineA1"></div>
+                            <div class="line lineA2"></div>
+                            <div class="line lineA3"></div>
+                            <div class="line lineA4"></div>
+                            <div class="line lineB0"></div>
+                            <div class="line lineB1"></div>
+                            <div class="line lineB2"></div>
+
+                            <div class="label zzs200">
+                                <div class="text0" id="todayDate">{{price200List.priceDate}}</div>
+                                <div class="text1">200总指数</div>
+                            </div>
+                            <div class="value zzs200 up">{{price200List.currentPrice200IndexValue}}</div>
+                            <div class="trend zzs200 up">{{price200List.currentPrice200IndexValue}}</div>
+
+                            <div class="label clzcp">
+                                <div class="text0">菜篮子产品</div>
+                                <div class="text1">价格指数</div>
+                            </div>
+                            <div class="value clzcp up">{{price200List.currentPriceCLZIndexValue}}</div>
+                            <div class="trend clzcp up">{{price200List.priceCLZIndexChangeValue}}</div>
+
+                            <div class="label xcp">
+                                <div class="text0">畜产品</div>
+                                <div class="text1">价格指数</div>
+                            </div>
+                            <div class="value xcp up">{{price200List.currentPriceXCPIndexValue}}</div>
+                            <div class="trend xcp up">{{price200List.priceXCPIndexChangeValue}}</div>
+
+                            <div class="label scp">
+                                <div class="text0">水产品</div>
+                                <div class="text1">价格指数</div>
+                            </div>
+                            <div class="value scp up">{{price200List.currentPriceSCPIndexValue}}</div>
+                            <div class="trend scp up">{{price200List.priceSCPIndexChangeValue}}</div>
+
+                            <div class="label sc">
+                                <div class="text0">蔬菜</div>
+                                <div class="text1">价格指数</div>
+                            </div>
+                            <div class="value sc up">{{price200List.currentPriceSCIndexValue}}</div>
+                            <div class="trend sc up">{{price200List.priceSCIndexChangeValue}}</div>
+
+                            <div class="label sg">
+                                <div class="text0">水果</div>
+                                <div class="text1">价格指数</div>
+                            </div>
+                            <div class="value sg down">{{price200List.currentPriceSGIndexValue}}</div>
+                            <div class="trend sg down">{{price200List.priceSGIndexChangeValue}}</div>
+
+                            <div class="label lycp">
+                                <div class="text0">粮油产品</div>
+                                <div class="text1">价格指数</div>
+                            </div>
+                            <div class="value lycp">{{price200List.currentPriceLYCPIndexValue}}</div>
+                            <div class="trend lycp">{{price200List.priceLYCPIndexChangeValue}}</div>
+
+                            <div class="label ls">
+                                <div class="text0">粮食</div>
+                                <div class="text1">价格指数</div>
+                            </div>
+                            <div class="value ls">{{price200List.currentPriceLSIndexValue}}</div>
+                            <div class="trend ls">{{price200List.priceLSIndexChangeValue}}</div>
+
+                            <div class="label syy">
+                                <div class="text0">食用油</div>
+                                <div class="text1">价格指数</div>
+                            </div>
+                            <div class="value syy">{{price200List.currentPriceSYYIndexValue}}</div>
+                            <div class="trend syy">{{price200List.priceSYYIndexChangeValue}}</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="fr itemBox wd49">
+                    <div class="item__header">
+                        <h2 class="conTitle">批发价格200指数趋势<span>农产品批发价格200指数趋势</span></h2>
+                        <!-- <a href="" target="_blank" class="more"></a> -->
+                    </div>
+                    <div class="item-contair">
+                        <el-tabs v-model="chartActive" @tab-click="handleClick">
+                            <el-tab-pane label="日" name="0">
+                                <div class="item-contair">
+                                    <div class="content chart selected" id="chart0" style="height:377px;"></div>
+                                </div>
+                            </el-tab-pane>
+                            <el-tab-pane label="月" name="1">
+                                <div class="item-contair">
+                                    <div class="content chart" id="chart1" style="height:377px;"></div>
+                                </div>
+                            </el-tab-pane>
+                            <el-tab-pane label="历史" name="2">
+                                <div class="content chart" id="chart2" style="height:377px;"></div>
+                            </el-tab-pane>
+                        </el-tabs>
+                    </div>
+                </div>
+            </div>
+            <div class="area contBox clearfix seeion">
+                <!--
+                <div class="fl itemBox wd33">
+                   
+                    <div class="item__header">
+                        <h2 class="conTitle">批发价格</h2> <a href="" target="_blank" class="more"></a>
+                    </div>
+                    <div class="item-contair">
+                        <el-table :data="jsge" height="350" border>
+
+
+                            <el-table-column prop="name" label="名称">
+                            </el-table-column>
+                            <el-table-column prop="agorae" label="市场">
+                            </el-table-column>
+                            <el-table-column prop="wholesalePrice" label="价格">
+                            </el-table-column>
+                            <el-table-column prop="updateTime" label="时间">
+                                <template slot-scope="scope">
+                                    {{scope.row.updateTime | formatDate}}
+                                </template>
+                            </el-table-column>
+                        </el-table>
+                    </div>
+                </div>
+                -->
+                <div class="fl itemBox wd49">
+                    <a href="" target="_blank" class="more"></a>
+                    <div class="item__header">
+                        <h2 class="conTitle">农机服务</h2>
+                        <a href="./sever_list.html" target="_blank" class="more"></a>
+                    </div>
+                    <div class="item-contair">
+                        <ul class="njUl">
+                            <li v-for="item in njUl" :title="item.title">
+                                <a :href="'./sever_detail.html?id='+item.id">
+                                    <label>{{item.title.substring(0,18)}}...</label> <time>{{item.createTime | formatDate}}</time>
+                                </a>
+                            </li>
+
+                        </ul>
+                    </div>
+                </div>
+                <div class="fr itemBox wd49">
+                    <a href="" target="_blank" class="more"></a>
+                    <div class="item__header">
+                        <h2 class="conTitle">统防统治</h2>
+                        <a href="./control_list.html" target="_blank" class="more"></a>
+                    </div>
+                    <div class="item-contair">
+                        <ul class="njUl">
+                            <li v-for="item in tfUl" :title="item.title">
+                                <a :href="'./control_detail.html?id='+item.id">
+                                    <label>{{item.title.substring(0,18)}}...</label> <time>{{item.createTime | formatDate}}</time>
+                                </a>
+                            </li>
+
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div style="clear:both;height:50px;"></div>
+        </div>
+        <div class="pub-footer clearfix">
+            <style>
+                .down-img a img {
+                    margin: 0px;
+                }
+            </style>
+            <div class="con-width-1200 clearfix">
+                <!-- <img class="fxl l-img" src="./image/logo2.png"> -->
+            </div>
+            <div class="down clearfix">
+                <!-- Copyright © 2019 黄山现代农业产业园管委会 <span>版权所有</span> -->
+
+            </div>
+        </div>
+        <script src="./js/app.js"></script>
+</body>
+
+
+</html>

@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="./css/index.css">
+    <link rel="stylesheet" href="./css/css.css">
+    <link rel="stylesheet" href="./css/public.css">
+    <script src="./js/jquery-1.8.3.js" type="text/javascript"></script>
+    <script src="./js/vue.min.js"></script>
+    <script src="./js/index.js"></script>
+    <script src="./js/public.js"></script>
+
+    <script src="./js/axios.min.js"></script>
+
+    <title>注册</title>
+</head>
+
+<body>
+    <div id="root">
+        <div class="head">
+            <div class="area">
+                <div class="login-info">
+                    <div class="say-hi">Hi，欢迎来到农情分析</div>
+                    <div class="login-link-wrap">
+                        请<a rel="nofollow" href="#">登录</a>
+                    </div>
+
+                </div>
+                <ul class="ely-sn-menuwrap">
+                    <li class="item menu user-center">
+                        <a href="#" target="_blank">
+                            会员中心
+                        </a>
+                    </li>
+                </ul>
+                <div class="index-link"><a class="clr-red" href="./index.html" title="农情首页">农情首页</a></div>
+            </div>
+
+        </div>
+        <div style="height: 126px; z-index: 114; position: relative;">
+            <div id="ely-hd" class="ely-hd">
+                <div class="area clearfix">
+                    <div class="logo">
+                        <a title="黄山现代农业产业园" class="logo-link" href="javascript:void(0)">
+                            <!-- <img alt="析数科技" src="./image/logo2.png"> -->
+                        </a>
+                    </div>
+                    <!-- <div class="app-link-wrap"><a href="#" target="_blank"><img src="./image/code.png" alt=""></a>
+                        <p>微信扫一扫,联系官方客服</p>
+                    </div> -->
+                    <!-- <div class="search">
+                        <div class="search-panel">
+                            <div class="search-in">
+                                <div class="search-type search-triggers none" id="js_search_type" attr="new">
+                                    <ul>
+                                        <li data-searchapp="searchgoods" class="J_current-type"></li>
+                                    </ul>
+                                    <div class="arrow"></div>
+                                </div>
+                                <div class="txt">
+                                    <input type="text" class="search-text s_keyword" autocomplete="off" id="s_keyword"
+                                        name="keyword" value="">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="search-btn"><input type="button" class="submit-btn" name="search-btn"></div>
+                        <ul class="search-hots">
+                            <li><a title="草莓" href="https://www.eelly.com/index.php?app=live" target="_blank" rel="nofollow">草莓</a></li>
+                            <li><a title="生鲜" href="https://list.eelly.com/s-category-326.html" target="_blank" rel="nofollow">生鲜</a></li>
+                            <li><a title="蔬菜" href="https://list.eelly.com/s-category-309.html" target="_blank" rel="nofollow">蔬菜</a></li>
+                        </ul>
+                    </div> -->
+
+                </div>
+            </div>
+        </div>
+
+        <div class="body-warp" style="padding-top:20px;">
+            <div class="reg">
+                <el-card>
+                    <div slot="header" class="clearfix">
+                        <span class="head-title">用户注册</span>
+                        <el-button style="float: right; padding: 3px 0" type="text"><a href="./login.html">已经有了账号？立即登陆</a></el-button>
+                    </div>
+                    <el-form ref="form" :model="form" label-width="300px">
+                        <el-form-item label="用户名：">
+                            <el-input v-model="form.account"></el-input>
+                        </el-form-item>
+                        <el-form-item label="真实姓名：">
+                            <el-input v-model="form.realName"></el-input>
+                        </el-form-item>
+
+                        <el-form-item label="密码：">
+                            <el-input v-model="form.password"></el-input>
+                        </el-form-item>
+                        <el-form-item label="确认密码：">
+                            <el-input v-model="form.passWordAgian"></el-input>
+                        </el-form-item>
+                        <!-- <el-form-item label="电子邮箱验证：">
+                               <el-input v-model="form.email">
+                                    <el-button slot="append" type="primary">立即发送</el-button>
+                               </el-input>
+                            </el-form-item> -->
+                        <el-form-item>
+                            <el-button type="primary" @click="onSubmit">立即创建</el-button>
+                        </el-form-item>
+                    </el-form>
+                </el-card>
+            </div>
+            <div style="clear:both;height:50px;"></div>
+        </div>
+        <div class="pub-footer clearfix">
+            <style>
+                .down-img a img {
+                    margin: 0px;
+                }
+            </style>
+            <div class="con-width-1200 clearfix">
+                <img class="fxl l-img" src="./image/logo-2.png">
+            </div>
+            <div class="down clearfix">
+                <!-- Copyright © 2019 黄山现代农业产业园管委会 <span>版权所有</span> -->
+
+            </div>
+        </div>
+</body>
+<script>
+    var GETBASE, GETUUID, GETREGIONID, GETAPIROOT;
+    if (typeof(window.getBaseUrl) != 'undefined') {
+        GETBASE = window.getBaseUrl();
+        GETUUID = window.getUuid();
+        GETREGIONID = window.getRegionId();
+        GETAPIROOT = window.getApiRoot();
+    } else {
+        GETBASE = 'http://36.7.159.225:16000/api/as/file/';
+        GETUUID = '24acfc1215da435cbe76c69beb07f32b';
+        GETREGIONID = '101221002';
+        GETAPIROOT = 'http://36.7.159.225:16000/api/as';
+    }
+    var app = new Vue({ //vue对象
+        el: '#root',
+        data: {
+            getApiRoot: GETAPIROOT,
+            baseUrl: GETBASE,
+            uuid: GETUUID,
+            regionID: GETREGIONID,
+            form: {
+                uuid: this.uuid,
+                account: '',
+                realName: '',
+                password: '',
+                passWordAgian: '',
+                email: ''
+            }
+        },
+        methods: {
+            onSubmit: function() {
+                //modify by liulei
+                this.doAction(this);
+            },
+
+            // 注册 add by liulei
+            doAction: function(obj) {
+                var self = this;
+                var param = '{"account":' + self.form.account + ',"password":' + self.form.password + ',"realName":' + self.form.realName + '}';
+
+                var url = obj.getApiRoot() + '/user/register';
+
+                $.ajax({
+                    type: 'POST',
+                    url: url,
+                    data: JSON.stringify(self.form),
+                    dataType: 'JSON',
+                    contentType: 'application/json',
+                    success: function(res) {
+                        console.log('返回结果:' + JSON.stringify(res));
+                        if (res.code == 1000002) {
+                            location.href = './login.html';
+                            // alert('注册成功,请登录');
+                            self.showMsg('注册成功,请登录');
+                        } else {
+                            // alert('注册失败,请重试');
+                            self.showAlert('提示', '注册失败,请重试', '确定')
+                        }
+                    },
+                    error: function() {
+
+                    }
+                })
+            },
+
+            //提示框
+            showAlert: function(title, msg, btnTitle) {
+                this.$alert(msg, '提示', {
+                    confirmButtonText: btnTitle
+                        // callback: action => {
+                        //     // this.$message({
+                        //     //     type: 'info',
+                        //     //     message: `action: ${ action }`
+                        //     // });
+                        // }
+                });
+            },
+
+            showMsg: function(msg) {
+                this.$message({
+                    type: 'info',
+                    message: msg
+                });
+            }
+
+        },
+        mounted: function() {
+
+        }
+    });
+</script>
+
+</html>
